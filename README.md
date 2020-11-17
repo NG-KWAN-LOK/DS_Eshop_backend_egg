@@ -1,9 +1,7 @@
 # 3U-Eshop_bkd
-### heroku page:https://ds-eshop-backend.herokuapp.com/
-### mysql:
-### Hostname:us-cdbr-east-02.cleardb.com
-### username:b884522f36c7db
-### password:58f1db46
+
+
+
 ## QuickStart
 
 <!-- add docs here for user -->
