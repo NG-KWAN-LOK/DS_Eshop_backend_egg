@@ -1,19 +1,12 @@
-sudo: false
+
 language: node_js
 node_js:
-  - '9'
-notifications:
-  webhooks: https://www.travisbuddy.com/
-  on_success: never
+  - '10'
 before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS realworld_test;'
+  - npm i npminstall -g
 install:
-  - npm i npminstall && npminstall
-before_script:
-  - EGG_SERVER_ENV=unittest npm run migrate:up
+  - npminstall
 script:
   - npm run ci
 after_script:
   - npminstall codecov && codecov
-services:
-  - mysql
