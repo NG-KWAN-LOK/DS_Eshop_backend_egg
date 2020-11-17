@@ -1,30 +1,50 @@
-/* eslint valid-jsdoc: "off" */
-
 'use strict';
 
-/**
- * @param {Egg.EggAppInfo} appInfo app info
- */
 module.exports = appInfo => {
-  /**
-   * built-in config
-   * @type {Egg.EggAppConfig}
-   **/
   const config = exports = {};
 
   // use for cookie sign key, should change to your own and keep security
-  config.keys = appInfo.name + '_1605598991186_6067';
+  config.keys = appInfo.name + '_1523415779575_1091';
 
-  // add your middleware config here
-  config.middleware = [];
+  // add your config here
+  config.middleware = [ 'errorHandler', 'notfoundHandler' ];
 
-  // add your user config here
-  const userConfig = {
-    // myAppName: 'egg',
+  config.jwt = {
+    secret: '123456',
+    getToken(ctx) {
+      if (
+        ctx.headers.authorization &&
+        (ctx.headers.authorization.split(' ')[0] === 'Bearer' ||
+        ctx.headers.authorization.split(' ')[0] === 'Token')
+      ) {
+        return ctx.headers.authorization.split(' ')[1];
+      } else if (ctx.query && ctx.query.token) {
+        return ctx.query.token;
+      }
+      return null;
+    },
   };
 
-  return {
-    ...config,
-    ...userConfig,
+  exports.sequelize = {
+    dialect: 'mysql',
+    database: process.env.DB_DATABASE || 'realworld',
+    host: process.env.DB_HOST || 'localhost',
+    port: process.env.DB_PORT || '3306',
+    username: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '',
+    timezone: '+08:00', // 东八时区
   };
+
+  exports.security = {
+    csrf: {
+      enable: false,
+    },
+  };
+
+  exports.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+  };
+
+  return config;
 };
