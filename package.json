@@ -28,11 +28,11 @@
     "stop": "egg-scripts stop --title=egg-server-3U-Eshop_bkd",
     "dev": "egg-bin dev --sticky",
     "debug": "egg-bin debug",
-    "test": "npm run test-local",
+    "test": "npm run -- --fix && npm run test-local",
     "test-local": "egg-bin test",
     "cov": "egg-bin cov",
     "lint": "eslint .",
-    "ci": "npm run cov",
+    "ci": "npm run  && npm run cov",
     "autod": "autod"
   },
   "ci": {
