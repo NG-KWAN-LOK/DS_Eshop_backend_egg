@@ -23,9 +23,9 @@
     "node": ">=10.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-3U-Eshop_bkd",
+    "start": "egg-scripts start --sticky --workers=1 --title=egg-server-3U-Eshop_bkd",
     "stop": "egg-scripts stop --title=egg-server-3U-Eshop_bkd",
-    "dev": "egg-bin dev",
+    "dev": "egg-bin dev --sticky",
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",
