@@ -12,7 +12,7 @@ class UserController extends Controller {
     const { request, response, model } = ctx;
     const { Users, Roles } = model;
     // 1. Data validation
-    const fieldsOK = ctx.service.utils.assertAttrib(request.body, ['email', 'name', 'password']);
+    const fieldsOK = ctx.service.utils.assertAttrib(request.body, [ 'email', 'name', 'password' ]);
     if (!fieldsOK) throw new ErrorRes(13001, 'Field validation error', 400);
     // 2. Password hash generation
     const pwHash = await ctx.service.utils.getPasswordHash(user.password);
