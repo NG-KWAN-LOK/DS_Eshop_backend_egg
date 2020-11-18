@@ -6,7 +6,6 @@
 
 const Controller = require('egg').Controller;
 const ErrorRes = require('../lib/errorRes');
-const Captcha = require('node-captcha-generator');
 
 class SessionController extends Controller {
   /**
