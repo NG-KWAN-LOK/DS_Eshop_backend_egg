@@ -1,0 +1,107 @@
+1:search goodList
+post request:
+{
+    keywords = "abc",
+    orderBy = "asc",	//可轉desc
+    orderByKeyword = "" //可選name/price/sales
+    category = "",	//可選擇
+}
+
+respond:
+goodList = [{
+    id: "0jkdfgjkfdjgfhdkg",
+    name:
+      "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+    imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+    price: "999",
+  },
+    {
+    id: "1gkldfjgkfdjgkldfjgdfg",
+    name:
+      "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
+    imgURL:
+      "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
+    price: "999",
+  },
+]
+
+2:goodItem
+get request: /?id=1gkldfjgkfdjgkldfjgdfg
+
+respond:
+goodList = 
+{
+    id: "0",
+    name:
+      "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+    imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+    price: "999",
+    sales: "1000",
+    category: "XXXX",
+}
+
+3:login:
+post request:
+{
+    userName = "",
+    password = "",
+}
+
+respond:
+{
+    userToken: "",
+    customerName: "",
+}
+要知道是否successful
+
+4:signUp
+post request:
+{
+    userName : "",
+    password : "",
+    customerName: "",
+    phoneNumber: "",
+    email: "",
+    address: "",
+    
+}
+
+respond:
+{
+    userToken: "",
+    customerName: "",
+}
+要知道是否successful
+
+5:getUserData:
+post request:
+{
+    userToken : "",
+}
+
+respond:
+{
+    customerName: "",
+    phoneNumber: "",
+    email: "",
+    address: "",
+}
+
+6:checkIsLogin:
+{
+    userToken : "",
+}
+
+respond:
+{
+    isLogin : "" //ture or false
+}
+
+7:loginTrigger:(browser每4分鐘call一次用作維持登入狀態)
+{
+    userToken : "",
+}
+
+respond:state code is OK
+
+會員登入系統 使用者browser關閉5分鐘 自動登出
