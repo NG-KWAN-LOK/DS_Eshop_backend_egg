@@ -3,24 +3,6 @@ const ErrorRes = require('../lib/errorRes');
 const Controller = require('egg').Controller;
 
 class UserController extends Controller {
-  /**
-   * /users/create
-   * 建立使用者
-   */
-  async create() {
-    const { ctx } = this;
-    const { request, response, model } = ctx;
-    const { Users, Roles } = model;
-    // 1. Data validation
-    const fieldsOK = ctx.service.utils.assertAttrib(request.body, [ 'email', 'name', 'password' ]);
-    if (!fieldsOK) throw new ErrorRes(13001, 'Field validation error', 400);
-    // 2. Password hash generation
-    const pwHash = await ctx.service.utils.getPasswordHash(user.password);
-    const newUserData = Object.assign({}, request.body, { pwHash });
-    delete newUserData.password;
-    const _res = await model.Users.create(newUserData);
-    response.body = _res;
-  };
 
   /**
    * /users/listRoles
@@ -232,7 +214,7 @@ class UserController extends Controller {
   }
 
     /**
-   * /user/register
+   * /users/signUp
    * 註冊新會員
    */
   async register() {
