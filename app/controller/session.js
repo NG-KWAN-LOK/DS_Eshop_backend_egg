@@ -6,13 +6,34 @@
 
 const Controller = require('egg').Controller;
 const ErrorRes = require('../lib/errorRes');
+const users = require('../model/users');
 
 class SessionController extends Controller {
+  /*/session/login
+  阿就登入啦
+  */
+ async login(){
+  const { ctx } = this;
+  const cID = await Users.findOne({
+    attributes: {id},
+    where:{ name: body.userName,}
+  });
+  const cName = await Users.findOne({
+    attributes: {username},
+    where:{ name: body.userName,}
+  });
+  ctx.body = {
+    userToken: cID ,
+    customerName: cName
+    }
+  }
+
+
   /**
-   * /users/logout
+   * /session/logout
    * 登出路徑
    * @returns {ActionResult}
-   */
+   
   async logout() {
     const { ctx, app } = this;
     const { user } = ctx;
@@ -24,14 +45,8 @@ class SessionController extends Controller {
       success: true
     };
   }
+*/
 
-  /**
-   * /session/register
-   * 註冊新會員
-   */
-  async register() {
-
-  }
 };
 
 module.exports = SessionController;

@@ -231,6 +231,19 @@ class UserController extends Controller {
     response.body = res;
   }
 
+    /**
+   * /user/register
+   * 註冊新會員
+   */
+  async register() {
+    const { ctx } = this;
+    const { request, response, model } = ctx;
+    const { Users} = model;
+    const fieldsOK = ctx.service.utils.assertAttrib(request.body, ['userName', 'password','customerName','phoneNumber','email','address']);
+    if (!fieldsOK) throw new ErrorRes(13001, 'Field validation error', 400);
+    const _res = await model.Users.create(request.body);
+    response.body= _res;
+  }
 };
 
 module.exports = UserController;
