@@ -22,13 +22,11 @@ module.exports = appInfo => {
   const userConfig = {
     // myAppName: 'egg',
   };
-
-  config.sequelize = {
-    dialect: 'mysql',
-    host: 'us-cdbr-east-02.cleardb.com',
-    port: 3306,
-    database: 'heroku_35bed0e2eedf26e',
-  };
+  config.security = {
+    csrf: {
+      enable: false,
+    },
+  }
 
   return {
     ...config,

@@ -4,7 +4,22 @@ module.exports = app => {
   const { Sequelize } = app;
   const sequelize = app.model;
 
+
   const Items = sequelize.define('Items', {
+    id: {
+      primaryKey: true,
+      type: Sequelize.UUID,
+      allowNull: false,
+      defaultValue: Sequelize.UUIDV4,
+    },
+    name: {
+      type: Sequelize.STRING(255),
+    },
+
+    price: {
+      type: Sequelize.INTEGER,
+    },
+    /*
     shop_id: {
       primaryKey: true,
       type: Sequelize.UUID,
@@ -80,7 +95,7 @@ module.exports = app => {
       defaultValue: null,
       allowNull: false,
     },
-
+*/
 
   }, {
     freezeTableName: true,
