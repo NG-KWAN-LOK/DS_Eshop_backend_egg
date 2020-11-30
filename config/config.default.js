@@ -28,6 +28,15 @@ module.exports = appInfo => {
     },
   }
 
+  config.sequelize = {
+    dialect: 'mysql',
+    host: 'us-cdbr-east-02.cleardb.com',
+    username: 'b884522f36c7db',
+    password:'58f1db46',
+    port: 3306,
+    database: 'heroku_35bed0e2eedf26e',
+  };
+
   return {
     ...config,
     ...userConfig,
