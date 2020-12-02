@@ -70,12 +70,11 @@ class UserController extends Controller {
   async register() {
     const { ctx } = this;
     const { request, response, model } = ctx;
-    // const { Users } = model;
 
     const fieldsOK = ctx.service.utils.assertAttrib(request.body, ['username', 'password','name', 'telephone', 'email', 'address']);
     if (!fieldsOK) throw new ErrorRes(13001, 'Field validation error', 400);
-    const pw_Hash = await ctx.service.utils.getPasswordHash(request.body.password);
-    const newUserData = Object.assign({}, request.body, { pw_Hash });
+    const pwhash = await ctx.service.utils.getPasswordHash(request.body.password);
+    const newUserData = Object.assign({}, request.body, { pwhash });
     delete newUserData.password;
     const _res = await ctx.model.Users.create(newUserData)
       .then(() => { response.body = "ok"; })
