@@ -70,7 +70,7 @@ module.exports = app => {
     },
     //商品名稱
     item_name: {
-      type:Sequelize.TEXT,
+      type: Sequelize.TEXT,
       allowNull: false,
     },
     // 商品數

@@ -8,7 +8,6 @@ module.exports = {
       Example:
       return queryInterface.createTable('users', { id: Sequelize.INTEGER });
     */
-    const { INTEGER, DATE, STRING } = Sequelize;
     await queryInterface.createTable('users', {
       id: {
         primaryKey: true,
@@ -73,6 +72,8 @@ module.exports = {
         type: Sequelize.STRING(32),
         allowNull: true,
       },
+      created_at: Sequelize.DATE,
+      updated_at: Sequelize.DATE,
     });
 
   },

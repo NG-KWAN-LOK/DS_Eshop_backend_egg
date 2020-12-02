@@ -1,10 +1,11 @@
 'use strict';
-
 module.exports = app => {
   const { Sequelize } = app;
-  const sequelize = app.model;
+  // const Sequelize = db.Sequelize;
+  // const sequelize = app.model;
+  //below: test sequelize is usefull for connect 
 
-  const Users = sequelize.define('users', {
+  const Users = app.model.define('users', {
     id: {
       primaryKey: true,
       type: Sequelize.UUID,
@@ -22,7 +23,7 @@ module.exports = app => {
       allowNull: true,
     },
     email: {
-      type: Sequelize.STRING(255),
+      type: Sequelize.STRING(254),
       allowNull: false,
       unique: true
     },
@@ -35,28 +36,29 @@ module.exports = app => {
       allowNull: false,
       unique: false
     },
-    pwHash: {
-      type: Sequelize.TEXT,
-      allowNull: false,
-    },
+    // pwHash: {
+    //   type: Sequelize.TEXT,
+    //   allowNull: false,
+    // },
     username: {
       type: Sequelize.STRING(32),
       allowNull: false,
       unique: true,
     },
-    bankAccount: {
-      type: Sequelize.STRING(255),
-      allowNull: true,
-      unique: true,
-      defaultValue: null,
-    },
+
+    // bankAccount: {
+    //   type: Sequelize.STRING(254),
+    //   allowNull: true,
+    //   unique: true,
+    //   defaultValue: null,
+    // },
     is_online: {
       type: Sequelize.BOOLEAN,
       allowNull: false,
       defaultValue: false,
     },
     avatar: {
-      type: Sequelize.STRING(255),
+      type: Sequelize.STRING(254),
       allowNull: true,
     },
     status: {
@@ -73,7 +75,7 @@ module.exports = app => {
     timestamps: true,
     paranoid: true,
     underscored: true,
-    charset: 'utf8mb4'
+    charset: 'utf8'
   });
 
   Users.sync({ force: false });
@@ -86,6 +88,5 @@ module.exports = app => {
     });
 
   };
-
   return Users;
 };

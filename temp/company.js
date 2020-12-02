@@ -48,7 +48,7 @@ module.exports = app => {
       type: Sequelize.UUID,
       allowNull: true,
     },
-    
+
   }, {
     freezeTableName: true,
     timestamps: true,
@@ -57,7 +57,7 @@ module.exports = app => {
     charset: 'utf8mb4'
   });
 
-  Users.sync({ force: false });
+  Company.sync({ force: false });
 
   // Association
   Company.associate = () => {
