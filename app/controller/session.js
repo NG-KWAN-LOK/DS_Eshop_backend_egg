@@ -37,7 +37,7 @@ class SessionController extends Controller {
       console.log(token);
       const res = {
         "userToken": token,
-        "username": user.username,
+        "userName": user.username,
         "customerName": user.name,
         "phoneNumber": user.telephone,
         "email": user.email,
