@@ -19,10 +19,10 @@ module.exports = appInfo => {
   config.middleware = [];
 
   //Encryption keys
-  config.__DATAKEY='FUCK';
-  config.__PWKEY='DATABASE';
-  config.__HMACKEY='SYSTEM';
-  
+  config.__DATAKEY = 'FUCK';
+  config.__PWKEY = 'DATABASE';
+  config.__HMACKEY = 'SYSTEM';
+
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
@@ -37,11 +37,14 @@ module.exports = appInfo => {
     dialect: 'mysql',
     host: 'us-cdbr-east-02.cleardb.com',
     username: 'b884522f36c7db',
-    password:'58f1db46',
+    password: '58f1db46',
     port: 3306,
     database: 'heroku_35bed0e2eedf26e',
   };
-
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH'
+  };
   return {
     ...config,
     ...userConfig,
