@@ -27,23 +27,23 @@ module.exports = app => {
       allowNull: false,
       unique: true
     },
-    last_login: {
-      type: Sequelize.DATE,
-      defaultValue: null
-    },
     name: {
       type: Sequelize.STRING(32),
       allowNull: false,
       unique: false
-    },
-    // pwHash: {
-    //   type: Sequelize.TEXT,
-    //   allowNull: false,
-    // },
+    }, 
+    pwhash: {
+       type: Sequelize.TEXT,
+       allowNull: true,
+     },
     username: {
       type: Sequelize.STRING(32),
       allowNull: false,
       unique: true,
+    },
+    last_login: {
+      type: Sequelize.DATE,
+      defaultValue: null
     },
 
     // bankAccount: {

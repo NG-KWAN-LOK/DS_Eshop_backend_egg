@@ -39,9 +39,9 @@ module.exports = {
         allowNull: false,
         unique: false
       },
-      pwHash: {
+      pwhash: {
         type: Sequelize.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       username: {
         type: Sequelize.STRING(32),

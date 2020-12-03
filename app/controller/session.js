@@ -16,13 +16,14 @@ class SessionController extends Controller {
   const { ctx } = this;
   const cID = await Users.findOne({
     attributes: {id},
-    where:{ name: body.userName,}
+    where:{ name: request.body.userName,}
   });
   const cName = await Users.findOne({
     attributes: {username},
-    where:{ name: body.userName,}
+    where:{ name: request.body.userName,}
   });
-  ctx.body = {
+  console.log('someone is in Ramirez');
+  ctx.response.body = {
     userToken: cID ,
     customerName: cName
     }

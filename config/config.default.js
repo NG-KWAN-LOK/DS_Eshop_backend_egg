@@ -18,6 +18,11 @@ module.exports = appInfo => {
   // add your middleware config here
   config.middleware = [];
 
+  //Encryption keys
+  config.__DATAKEY='FUCK';
+  config.__PWKEY='DATABASE';
+  config.__HMACKEY='SYSTEM';
+  
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
