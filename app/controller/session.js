@@ -7,25 +7,51 @@
 const Controller = require('egg').Controller;
 const ErrorRes = require('../lib/errorRes');
 const users = require('../model/users');
-
+const jwt = require('jsonwebtoken')
 class SessionController extends Controller {
   /*/session/login
   阿就登入啦
   */
- async login(){
-  const { ctx } = this;
-  const cID = await Users.findOne({
-    attributes: {id},
-    where:{ name: request.body.userName,}
-  });
-  const cName = await Users.findOne({
-    attributes: {username},
-    where:{ name: request.body.userName,}
-  });
-  console.log('someone is in Ramirez');
-  ctx.response.body = {
-    userToken: cID ,
-    customerName: cName
+  async login() {
+    const { ctx } = this;
+    const { request } = ctx;
+    const { Users } = ctx.model;
+    let _compareRes = false;
+    console.log('............username: ', ctx.request.body.userName);
+    const _res = await Users.findOne({
+      where: { username: ctx.request.body.userName }
+    })
+      .catch((err) => {
+        console.log('\n...............Error', err);
+        ctx.body = 'can not find user'
+      });
+    const user = _res['dataValues'];
+    console.log('\n..............', user);
+    const userPwdHash = await ctx.service.utils.getPasswordHash(ctx.request.body.password);
+    if (userPwdHash === user.pwhash) {
+      const payload = {
+        user_name: user.name,
+        user_email: user.email
+      }
+      const token = jwt.sign({ payload, exp: Math.floor(Date.now() / 1000) + (60 * 15) }, 'my_secret_key');
+      console.log(token);
+      const res = {
+        "userToken": token,
+        "username": user.username,
+        "customerName": user.name,
+        "phoneNumber": user.telephone,
+        "email": user.email,
+        "address": user.address
+      }
+      ctx.code = 200;
+      ctx.body = (Object.assign(res));
+      console.log(user.name, ' is login');
+    } else {
+      console.log('密碼錯誤');
+      console.log('before: ', user.pwhash);
+      console.log('before: ', userPwdHash);
+      ctx.body = '密碼錯誤';
+      ctx.code = 401;
     }
   }
 

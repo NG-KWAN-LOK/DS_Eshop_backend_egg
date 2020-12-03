@@ -58,12 +58,8 @@ class UserController extends Controller {
       };
     }
   }
-  async test() {
-    const { ctx, model } = this;
-    const { shop } = model;
-    ctx.body = { "姓名": "宗翰", "電話": "09xxxxxx" };
-  }
-  /**
+
+ /**
  * /users/signUp
  * 註冊新會員
  */

@@ -31,11 +31,11 @@ module.exports = app => {
       type: Sequelize.STRING(32),
       allowNull: false,
       unique: false
-    }, 
+    },
     pwhash: {
-       type: Sequelize.TEXT,
-       allowNull: true,
-     },
+      type: Sequelize.TEXT,
+      allowNull: true,
+    },
     username: {
       type: Sequelize.STRING(32),
       allowNull: false,
@@ -73,7 +73,6 @@ module.exports = app => {
   }, {
     freezeTableName: true,
     timestamps: true,
-    paranoid: true,
     underscored: true,
     charset: 'utf8'
   });
