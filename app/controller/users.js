@@ -59,22 +59,25 @@ class UserController extends Controller {
     }
   }
 
- /**
- * /users/signUp
- * 註冊新會員
- */
+  /**
+  * /users/signUp
+  * 註冊新會員
+  */
   async register() {
     const { ctx } = this;
     const { request, response, model } = ctx;
 
-    const fieldsOK = ctx.service.utils.assertAttrib(request.body, ['username', 'password','name', 'telephone', 'email', 'address']);
-    if (!fieldsOK) throw new ErrorRes(13001, 'Field validation error', 400);
+    const fieldsOK = ctx.service.utils.assertAttrib(request.body, ['username', 'password', 'name', 'telephone', 'email', 'address']);
+    if (!fieldsOK) {
+      throw new ErrorRes(13001, 'Field validation error', 400);
+      console.log('Field validation error');
+    }
     const pwhash = await ctx.service.utils.getPasswordHash(request.body.password);
     const newUserData = Object.assign({}, request.body, { pwhash });
     delete newUserData.password;
     const _res = await ctx.model.Users.create(newUserData)
       .then(() => { response.body = "ok"; })
-      .catch(err => { response.body = "404"; console.log(err) });
+      .catch(err => { response.body = "404\ncheck your attribute(s) is duplicate. "; console.log(err) });
 
     // response.body = _res;
   }
