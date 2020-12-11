@@ -11,4 +11,7 @@ module.exports = app => {
   router.post('/items/new', controller.items.create);
   router.get('/sth', controller.home.something);
   router.post('/session/login', controller.session.login);
+  router.post('/session/IsloggedIn',controller.session.IsloggedIn);
+  router.post('/users/getUserData',controller.users.getData);
+  router.post('/session/loginTrigger',controller.session.loginTrigger);
 };

@@ -57,7 +57,20 @@ class SessionController extends Controller {
     }
   }
 
+  /**session/isloggedin */
+  async IsloggedIn(){
+    const {ctx} = this;
+    const {request,response,model} = ctx;
+    const {Users} = model;
+    if (!ctx.user) {response.body=false} else {response.body =true;} 
+  }
 
+  /** 檢查登入狀態 */
+  async loginTrigger(){
+    const {ctx} = this;
+    const {request,response} = ctx;
+    
+  }
   /**
    * /session/logout
    * 登出路徑
