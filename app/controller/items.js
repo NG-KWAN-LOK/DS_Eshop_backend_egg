@@ -131,6 +131,17 @@ class ItemsController extends Controller {
                 return;
             });
     }
+    async deleteItem() {
+        const { ctx } = this;
+        const itemID = ctx.request.body.id;
+        const res = await ctx.model.Items.findOne({ where: { id: itemID } })
+            .then((findedItem) => {
+                findedItem.destroy();
+                ctx.status = 200;
+                ctx.body = 'ok';
+            })
+            .catch((e) => { ctx.status = 404; ctx.body = 'error' + e; })
+    }
 }
 
 module.exports = ItemsController;

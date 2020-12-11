@@ -11,6 +11,7 @@ module.exports = app => {
   router.post('/items/new', controller.items.create);
   router.post('/items/getAllItems', controller.items.getAllItems);
   router.post('/items/updateInfo', controller.items.updateInfo);
+  router.post('/items/deleteItem', controller.items.deleteItem);
   router.get('/items/getItem', controller.items.searchItem);
 
   router.get('/sth', controller.home.something);
