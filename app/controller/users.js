@@ -5,32 +5,20 @@ const Controller = require('egg').Controller;
 class UserController extends Controller {
 
   /**
-   * /users/info
+   * /users/getData
    * 取得當前使用者資料
    */
-  async info() {
+  async getData() {
     const { ctx } = this;
     const { request, response, model } = ctx;
-    // const { Users, Roles, Permissions } = model;
+    const { Users, Roles } = model;
     if (!ctx.user) throw new ErrorRes(14001, 'Not authenticated', 401);
     console.log(ctx.user);
     let _user = await Users.findByPk(ctx.user.id, {
       attributes: {
-        exclude: ['password']
+        exclude: ['pwhash']
       },
       plain: true,
-      include: [
-        {
-          model: Roles,
-          as: 'roles',
-          include: [
-            {
-              model: Permissions,
-              as: 'permissions'
-            }
-          ]
-        }
-      ]
     });
     _user.role = {};
     response.body = _user;
