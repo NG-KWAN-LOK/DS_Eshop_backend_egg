@@ -2,10 +2,10 @@
 const Users = require("./users");
 module.exports = app => {
   const { Sequelize } = app;
-  const sequelize = app.model;
+  // const sequelize = app.model;
 
 
-  const Items = sequelize.define('Items', {
+  const Items = app.model.define('items', {
     id: {
       primaryKey: true,
       type: Sequelize.UUID,
@@ -61,20 +61,28 @@ module.exports = app => {
     description: {
       type: Sequelize.STRING,
       allowNull: false,
-      defaultValue: null,
+      defaultValue: "",
     },
-
+    is_Display: {
+      type: Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    userId: {
+      type: Sequelize.UUID,
+      allowNull: false,
+      defaultValue: Sequelize.UUIDV4,
+    }
   }, {
     freezeTableName: true,
     timestamps: true,
-    underscored: true,
-    charset: 'utf8'
+    derscored: true,
+    arset: 'utf8'
   });
-
-  // Association
-  Items.associate = () => {
-    // Items.belongsToMany(Users, { foreignKey: 'userId', sourceKey: 'id' });
-  };
   Items.sync({ force: false });
+  //Association
+  // Items.associate = () => {
+  //   // Items.belongsToMany(Users, { foreignKey: 'userId', sourceKey: 'id' });
+  // };
   return Items;
 };

@@ -22,7 +22,7 @@ module.exports = appInfo => {
   config.__DATAKEY = 'FUCK';
   config.__PWKEY = 'DATABASE';
   config.__HMACKEY = 'SYSTEM';
-
+  config.SECRETKEY = "my_secret_key";
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',

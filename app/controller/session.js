@@ -13,11 +13,12 @@ class SessionController extends Controller {
   阿就登入啦
   */
   async login() {
-    const { ctx } = this;
+    const { ctx, config } = this;
     const { request } = ctx;
     const { Users } = ctx.model;
     let _compareRes = false;
     console.log('............username: ', ctx.request.body.userName);
+    console.log('............pwd: ', ctx.request.body.password);
     const _res = await Users.findOne({
       where: { username: ctx.request.body.userName }
     })
@@ -31,9 +32,10 @@ class SessionController extends Controller {
     if (userPwdHash === user.pwhash) {
       const payload = {
         user_name: user.name,
-        user_email: user.email
+        user_email: user.email,
+        exp: Math.floor(Date.now() / 1000) + (60 * 15)
       }
-      const token = jwt.sign({ payload, exp: Math.floor(Date.now() / 1000) + (60 * 15) }, 'my_secret_key');
+      const token = jwt.sign({ payload }, "my_secret_key");
       console.log(token);
       const res = {
         "userToken": token,

@@ -1,8 +1,9 @@
 'use strict'
 
 const crypto = require('crypto');
-
+const jwt = require('jsonwebtoken')
 const Service = require('egg').Service;
+const config = require('../../config/config.default.js');
 
 class UtilsService extends Service {
   assertAttrib(obj, keys) {
@@ -48,8 +49,15 @@ class UtilsService extends Service {
    * @returns {String} hashString
    */
   async getPasswordHash(password) {
-    const { app } = this;
+    const { app, config } = this;
     return this.hash(password, app.config.__PWKEY);
-  };
+  }
+  async getTokenData(token) {
+    // 
+    jwt.verify(token, "my_secret_key", (err, data) => {
+      if (err) { console.log('.........false\n', err); return ({ error: true, res: err }); }
+      else { const UserData = Object.assign({}, data['payload'], { error: false }); console.log('.........true', UserData); return (UserData); }
+    });
+  }
 };
 module.exports = UtilsService;
