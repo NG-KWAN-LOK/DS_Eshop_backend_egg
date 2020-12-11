@@ -17,7 +17,7 @@ module.exports = app => {
       type: Sequelize.UUID,
       allowNull: false,
       defaultValue: Sequelize.UUIDV4,
-    }, 
+    },
     name: {
       type: Sequelize.STRING(254),
     },
@@ -29,37 +29,37 @@ module.exports = app => {
       allowNull: false,
     },
     remain_quantity: {
-      type: sequelize.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: false,
       defaultValue: 0,
     },
     pay_parts: {
-      type: sequelize.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
       defaultValue: 0,
     },
     pay_index: {
-      type: sequelize.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: false,
       defaultValue: 0,
     },
     is_discount: {
-      type: sequelize.BOOLEAN,
+      type: Sequelize.BOOLEAN,
       allowNull: false,
       defaultValue: false,
     },
     discount_price: {
-      type: sequelize.INTEGER,
+      type: Sequelize.INTEGER,
       allowNull: false,
       defaultValue: 0,
     },
     image_url: {
-      type: sequelize.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
       defaultValue: "",
     },
     description: {
-      type: sequelize.STRING,
+      type: Sequelize.STRING,
       allowNull: false,
       defaultValue: null,
     },
@@ -73,9 +73,7 @@ module.exports = app => {
 
   // Association
   Items.associate = () => {
-
-    Items.belongsToMany(Users, { foreignKey: 'userId', sourceKey: 'id' });
-
+    // Items.belongsToMany(Users, { foreignKey: 'userId', sourceKey: 'id' });
   };
   Items.sync({ force: false });
   return Items;
