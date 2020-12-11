@@ -1,4 +1,7 @@
 'use strict';
+
+const Items = require("./items");
+
 module.exports = app => {
   const { Sequelize } = app;
   // const Sequelize = db.Sequelize;
@@ -82,9 +85,7 @@ module.exports = app => {
   // Association
   Users.associate = () => {
 
-    Users.hasOne(Users, {
-      foreignKey: 'id'
-    });
+    Users.hasMany(Items);
 
   };
   return Users;
