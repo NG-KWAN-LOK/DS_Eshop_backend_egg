@@ -91,6 +91,22 @@ class ItemsController extends Controller {
             })
             .catch((err) => { ctx.status = 400; ctx.body = '404 for token error'; return; });
     }
+    async searchItem() {
+        const { ctx } = this;
+        const itemID = ctx.request.query.id;
+        const res = await ctx.model.Items.findOne(
+            {
+                attributes: ['id', 'name', ['image_url', 'imgURL'], 'description', 'price', 'sales', 'category', ['remain_quantity', 'stock']],
+                where: { id: itemID }
+            })
+            .then((res) => {
+                //console.log(res['dataValues']);
+                let resData = res['dataValues'];
+                ctx.status = 200;
+                ctx.body = resData;
+            })
+            .catch((err) => { ctx.status = 404; ctx.body = '404 for search can\' find item ' });
+    }
 }
 
 module.exports = ItemsController;
