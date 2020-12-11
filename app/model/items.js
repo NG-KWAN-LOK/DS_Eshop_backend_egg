@@ -63,15 +63,14 @@ module.exports = app => {
       allowNull: false,
       defaultValue: "",
     },
-    is_Display: {
+    is_display: {
       type: Sequelize.BOOLEAN,
       allowNull: false,
       defaultValue: false,
     },
-    userId: {
+    user_id: {
       type: Sequelize.UUID,
       allowNull: false,
-      defaultValue: Sequelize.UUIDV4,
     }
   }, {
     freezeTableName: true,
@@ -81,8 +80,8 @@ module.exports = app => {
   });
   Items.sync({ force: false });
   //Association
-  // Items.associate = () => {
-  //   // Items.belongsToMany(Users, { foreignKey: 'userId', sourceKey: 'id' });
-  // };
+  Items.associate = () => {
+    Items.belongsTo(app.model.Users, { foreignKey: 'user_id', targetKey: 'id' });
+  };
   return Items;
 };

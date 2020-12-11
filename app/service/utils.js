@@ -52,12 +52,16 @@ class UtilsService extends Service {
     const { app, config } = this;
     return this.hash(password, app.config.__PWKEY);
   }
-  async getTokenData(token) {
-    // 
-    jwt.verify(token, "my_secret_key", (err, data) => {
-      if (err) { console.log('.........false\n', err); return ({ error: true, res: err }); }
-      else { const UserData = Object.assign({}, data['payload'], { error: false }); console.log('.........true', UserData); return (UserData); }
-    });
-  }
+  // async getTokenData(token) {
+  //   // 
+  //   jwt.verify(token, "my_secret_key", (err, data) => {
+  //     if (err) { console.log('.........false\n', err); return ({ error: true, res: err }); }
+  //     else {
+  //       const UserData = Object.assign({}, data['payload']);
+  //       console.log('.........true', UserData);
+  //       return ("ok");
+  //     }
+  //   });
+  // }
 };
 module.exports = UtilsService;
