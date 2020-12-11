@@ -62,7 +62,13 @@ class SessionController extends Controller {
     const {Users} = model;
     if (!ctx.user) {response.body=false} else {response.body =true;} 
   }
-  
+
+  /** 檢查登入狀態 */
+  async loginTrigger(){
+    const {ctx} = this;
+    const {request,response} = ctx;
+    
+  }
   /**
    * /session/logout
    * 登出路徑
