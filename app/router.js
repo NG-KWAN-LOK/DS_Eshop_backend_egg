@@ -10,7 +10,9 @@ module.exports = app => {
   router.post('/users/signUp', controller.users.register);
   router.post('/items/new', controller.items.create);
   router.post('/items/getAllItems', controller.items.getAllItems);
+  router.post('/items/updateInfo', controller.items.updateInfo);
   router.get('/items/getItem', controller.items.searchItem);
+
   router.get('/sth', controller.home.something);
   router.post('/session/login', controller.session.login);
   router.post('/session/IsloggedIn', controller.session.IsloggedIn);

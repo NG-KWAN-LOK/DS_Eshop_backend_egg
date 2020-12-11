@@ -107,6 +107,30 @@ class ItemsController extends Controller {
             })
             .catch((err) => { ctx.status = 404; ctx.body = '404 for search can\' find item ' });
     }
+    async updateInfo() {
+        const { ctx } = this;
+        const itemID = ctx.request.body.id;
+        const res = await ctx.model.Items.findOne(
+            { where: { id: itemID } }
+        )
+            .then((findedItem) => {
+                return findedItem.update({
+                    "name": ctx.request.body.name,
+                    "image_url": ctx.request.body.imgURL,
+                    "description": ctx.request.body.description,
+                    "price": ctx.request.body.price,
+                    "sales": ctx.request.body.sales,
+                    "category": ctx.request.body.category,
+                    "remain_quantity": ctx.request.body.stock
+                }).then((r) => { ctx.status = 200; ctx.body = 'ok'; return; })
+                    .catch((e) => { ctx.status = 400; ctx.body = ('error' + e); return; });
+            })
+            .catch(e => {
+                ctx.status = 400;
+                ctx.body = 'error' + e;
+                return;
+            });
+    }
 }
 
 module.exports = ItemsController;
