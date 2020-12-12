@@ -14,13 +14,9 @@ class UserController extends Controller {
     const { Users, Roles } = model;
     if (!ctx.user) throw new ErrorRes(14001, 'Not authenticated', 401);
     console.log(ctx.user);
-    let _user = await Users.findByPk(ctx.user.id, {
-      attributes: {
-        exclude: ['pwhash']
-      },
-      plain: true,
-    });
-    _user.role = {};
+    let _user = await Users.findOne({
+      where: { username: ctx.request.body.userName }
+    })
     response.body = _user;
   }
 
