@@ -1,0 +1,156 @@
+1:seller更改訂單狀態
+post request:
+{
+    goodId: "0",
+    status: "0",
+}
+
+respond:
+OK
+
+2:seller刪除商品
+post request:
+{
+    goodId: "0",
+}
+respond:
+OK
+
+2.1:seller更改商品上下架狀態
+post request:
+{
+    goodId: "0",
+    isDisplay: "true" //是否上架
+}
+respond:
+OK
+
+3:customer更改用戶資料
+post request:
+{
+    userToken: "",
+    customerName: "",
+    phoneNumber: "",
+    email: "",
+    address: "",
+    
+}
+respond:
+{
+    customerName: "",
+    phoneNumber: "",
+    email: "",
+    address: "",
+}
+
+4:加入Shopping Cart，加入後商品數量減1
+{
+    userToken : "",
+    goodId: "",
+}
+respond:
+OK
+
+5:刪除Shopping Cart，加入後商品數量加1
+{
+    userToken : "",
+    goodId: "",
+}
+respond:
+OK
+
+6:增加訂單，增加後所持優惠卷刪除
+{
+    userToken : "", //將購物車資料增加至訂單中
+    usedCoupon: "", //所使用的優惠卷 ""為無使用
+}
+respond:
+OK
+
+7:customer取得優惠卷
+{
+    userToken : "",
+    couponId: "",
+}
+8:取得customer可領取的優惠卷
+{
+    userToken : "",
+}
+respond:
+{
+    couponList:[
+        {
+            couponId: "0",
+            couponName: "",
+            discountContent: "",
+            startDate:"",
+            endDate: "",
+        },
+        {
+            couponId: "1",
+            couponName: "",
+            discountContent: "",
+            startDate:"",
+            endDate: "",
+        },
+    ]
+}
+9:取得customer所持有的優惠卷
+{
+    userToken : "",
+}
+respond:
+{
+    couponList:[
+        {
+            couponId: "0",
+            couponName: "",
+            discountContent: "",
+            startDate:"",
+            endDate: "",
+        },
+        {
+            couponId: "1",
+            couponName: "",
+            discountContent: "",
+            startDate:"",
+            endDate: "",
+        },
+    ]
+}
+10:增加comment
+{
+    userToken : "",
+    goodsId: "",
+    content: "很不錯的產品"
+}
+respond:OK
+
+11:取得商品comment
+{
+    goodsId: "",
+}
+respond:
+{
+  commentData = [
+  {
+    commentId: "0",
+    userName: "admin",
+    date: "2020-12-07",
+    content: "很不錯的產品"
+  },
+  {
+    commentId: "1",
+    userName: "peter",
+    date: "2020-12-07",
+    content: "爽的咧"
+  },
+];
+}
+12:再買一次商品 (完成訂單後想再買一次商品功能，將訂單內的商品再一次放到購物車)
+{
+    userToken:"",
+    orderId: "",
+}
+respond:
+OK

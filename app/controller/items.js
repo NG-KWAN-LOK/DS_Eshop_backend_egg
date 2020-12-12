@@ -75,9 +75,14 @@ class ItemsController extends Controller {
             ctx.body = "not find the user, contact with backend";
             console.log('usename is ::::', findedUserName);
         }
+<<<<<<< HEAD
 
         await ctx.model.Items.findAll({
             attributes: ['id', 'name', ['image_url', 'imgURL'], 'price', ['is_display', 'isDisplay']],
+=======
+        const res = await ctx.model.Items.findAll({
+            attributes: ['id', 'name', ['image_url', 'imgURL'], 'price',["remain_quantity","stock"], ['is_display', 'isDisplay']],
+>>>>>>> 5a3d3a6b054540656c45f20afa9482bad84bb86d
             where: {
                 user_id: findedUserID,
             }
