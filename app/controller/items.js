@@ -73,7 +73,7 @@ class ItemsController extends Controller {
             console.log('usename is ::::', findedUserName);
         }
         const res = await ctx.model.Items.findAll({
-            attributes: ['id', 'name', ['image_url', 'imgURL'], 'price', ['is_display', 'isDisplay']],
+            attributes: ['id', 'name', ['image_url', 'imgURL'], 'price',["remain_quantity","stock"] ['is_display', 'isDisplay']],
             where: {
                 user_id: findedUserID,
             }

@@ -9,5 +9,3 @@ api1-12
 api1-13:
   router.post('/items/deleteItem', controller.items.deleteItem);
 
-
-
