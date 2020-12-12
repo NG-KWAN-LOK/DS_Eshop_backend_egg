@@ -53,26 +53,30 @@ class ItemsController extends Controller {
         let findedUserID;
         let findedUserName;
         jwt.verify(userToken, "my_secret_key", (err, data) => {
-            if (err) { console.log('.........faild retrieve token', err); ctx.status = 400; ctx.body = "usertoken error"; return; }
+            if (err) { console.log('.........faild retrieve token', err); ctx.status = 400; ctx.body = "404 for retrieve usertoken"; return; }
             else {
                 userData = Object.assign({}, data['payload']);
                 findedUserName = userData['user_name'];
-                //console.log('payload', data['payload']);
+                // console.log('payload', findedUserName);
             }
         });
         if (findedUserName != null) {
-            const findedUser = await ctx.model.Users.findOne({ where: { username: findedUserName } });
-            if (findedUser) {
-                console.log('userid is ::', findedUser['dataValues']['id']);
-                findedUserID = findedUser['dataValues']['id'];
-            }
+            await ctx.model.Users.findOne({ where: { name: findedUserName } })
+                .then((findedUser) => {
+                    console.log('userid is ::', findedUser['dataValues']['id']);
+                    findedUserID = findedUser['dataValues']['id'];
+                    console.log('USerid:', findedUserID);
+                    return
+                })
+                .catch(err => { console.log('err for find user:', err); ctx.status = 400; ctx.body = 'err for find user:' + err; return; });
         }
         else {
             ctx.status = 400;
             ctx.body = "not find the user, contact with backend";
             console.log('usename is ::::', findedUserName);
         }
-        const res = await ctx.model.Items.findAll({
+
+        await ctx.model.Items.findAll({
             attributes: ['id', 'name', ['image_url', 'imgURL'], 'price', ['is_display', 'isDisplay']],
             where: {
                 user_id: findedUserID,
@@ -80,7 +84,7 @@ class ItemsController extends Controller {
         })
             .then((res) => {
                 ctx.status = 200;
-                console.log('------res1.....', res, 'length: ', res.length);
+                console.log('Datares.....:', res, 'length: ', res.length);
                 let resData = [];
                 for (let i = 0; i < res.length; i++) {
                     resData.push(res[i].dataValues);
@@ -89,7 +93,7 @@ class ItemsController extends Controller {
                 console.log('finally', resData);
                 ctx.body = resData;
             })
-            .catch((err) => { ctx.status = 400; ctx.body = '404 for token error'; return; });
+            .catch((err) => { ctx.status = 400; ctx.body = '404 for get userData'; return; });
     }
     async searchItem() {
         const { ctx } = this;
