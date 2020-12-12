@@ -31,8 +31,9 @@ class SessionController extends Controller {
     const userPwdHash = await ctx.service.utils.getPasswordHash(ctx.request.body.password);
     if (userPwdHash === user.pwhash) {
       const payload = {
-        user_name: user.name,
-        user_email: user.email,
+        username: user.username,
+        name: user.name,
+        email: user.email,
         exp: Math.floor(Date.now() / 1000) + (60 * 15)
       }
       const token = jwt.sign({ payload }, "my_secret_key");
@@ -58,18 +59,18 @@ class SessionController extends Controller {
   }
 
   /**session/isloggedin */
-  async IsloggedIn(){
-    const {ctx} = this;
-    const {request,response,model} = ctx;
-    const {Users} = model;
-    if (!ctx.user) {response.body=false} else {response.body =true;} 
+  async IsloggedIn() {
+    const { ctx } = this;
+    const { request, response, model } = ctx;
+    const { Users } = model;
+    if (!ctx.user) { response.body = false } else { response.body = true; }
   }
 
   /** 檢查登入狀態 */
-  async loginTrigger(){
-    const {ctx} = this;
-    const {request,response} = ctx;
-    
+  async loginTrigger() {
+    const { ctx } = this;
+    const { request, response } = ctx;
+
   }
   /**
    * /session/logout

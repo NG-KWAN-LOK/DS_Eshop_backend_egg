@@ -8,29 +8,36 @@ class ItemsController extends Controller {
     async create() {
         const { ctx } = this;
         const { request, response, model } = ctx;
-        let userName;
+        let findedUsername;
         let userData;
         let findedUserID;
         const userToken = ctx.request.body.userToken;
         jwt.verify(userToken, "my_secret_key", (err, data) => {
-            if (err) { console.log('.........faild retrieve token', err); ctx.body = "token error"; return; }
+            if (err) { console.log('faild retrieve token', err); ctx.body = "404 for retrieve usertoken"; return; }
             else {
                 userData = Object.assign({}, data['payload']);
-                userName = userData['user_name'];
+                findedUsername = userData['username'];
                 //console.log('payload', data['payload']);
             }
         });
-        if (userName != null) {
-            const findedUser = await model.Users.findOne({ where: { username: userName } });
-            if (findedUser) {
-                //console.log('userId is :', findedUser['dataValues']['id']);
-                findedUserID = findedUser['dataValues']['id'];
-            }
+        if (findedUsername != null) {
+            await model.Users.findOne({ where: { username: findedUsername } })
+                .then(findedUser => {
+                    findedUserID = findedUser['dataValues']['id'];
+                    console.log('Userid is finded: ', findedUserID);
+                    return;
+                })
+                .catch(err => {
+                    console.log(err);
+                    ctx.status = 400;
+                    ctx.body = '404 for not find user';
+                    return;
+                });
         }
         else {
             ctx.status = 400;
             ctx.body = "not find the user, contact with backend";
-            console.log('usename is ::::', userName);
+            console.log('usename is ::::', findedUsername);
         }
         const itemData = {
             "name": ctx.request.body.name,
@@ -42,30 +49,29 @@ class ItemsController extends Controller {
             "user_id": findedUserID
         };
         //console.log('Userdata is :', itemData);
-        const _res = await ctx.model.Items.create(itemData)
-            .then(() => { ctx.status = 200; ctx.body = "ok"; })
-            .catch((err) => { console.log(err); ctx.status = 400; ctx.body = "some error" });
+        await ctx.model.Items.create(itemData)
+            .then(() => { ctx.status = 200; ctx.body = "ok"; return; })
+            .catch((err) => { console.log(err); ctx.status = 400; ctx.body = "404 error for add Item"; return; });
     }
     async getAllItems() {
         const { ctx, app } = this;
         const userToken = ctx.request.body.userToken;
         let userData = {};
         let findedUserID;
-        let findedUserName;
+        let findedUsername;
         jwt.verify(userToken, "my_secret_key", (err, data) => {
             if (err) { console.log('.........faild retrieve token', err); ctx.status = 400; ctx.body = "404 for retrieve usertoken"; return; }
             else {
                 userData = Object.assign({}, data['payload']);
-                findedUserName = userData['user_name'];
-                // console.log('payload', findedUserName);
+                findedUsername = userData['username'];
+                // console.log('payload', findedUsername);
             }
         });
-        if (findedUserName != null) {
-            await ctx.model.Users.findOne({ where: { name: findedUserName } })
+        if (findedUsername != null) {
+            await ctx.model.Users.findOne({ where: { username: findedUsername } })
                 .then((findedUser) => {
-                    console.log('userid is ::', findedUser['dataValues']['id']);
                     findedUserID = findedUser['dataValues']['id'];
-                    console.log('USerid:', findedUserID);
+                    console.log('USerid is be searched:', findedUserID);
                     return
                 })
                 .catch(err => { console.log('err for find user:', err); ctx.status = 400; ctx.body = 'err for find user:' + err; return; });
@@ -73,7 +79,7 @@ class ItemsController extends Controller {
         else {
             ctx.status = 400;
             ctx.body = "not find the user, contact with backend";
-            console.log('usename is ::::', findedUserName);
+            // console.log('usename is ::::', findedUsername);
         }
         await ctx.model.Items.findAll({
             attributes: ['id', 'name', ['image_url', 'imgURL'], 'price', ["remain_quantity", "stock"], ['is_display', 'isDisplay']],
@@ -83,13 +89,13 @@ class ItemsController extends Controller {
         })
             .then((res) => {
                 ctx.status = 200;
-                console.log('Datares.....:', res, 'length: ', res.length);
+                // console.log('Datares.....:', res, 'length: ', res.length);
                 let resData = [];
                 for (let i = 0; i < res.length; i++) {
                     resData.push(res[i].dataValues);
-                    console.log(i, 'is :', res[i].dataValues);
+                    // console.log(i, 'is :', res[i].dataValues);
                 }
-                console.log('finally', resData);
+                console.log('finished search');
                 ctx.body = resData;
             })
             .catch((err) => { ctx.status = 400; ctx.body = '404 for get userData'; return; });
