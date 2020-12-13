@@ -1,6 +1,7 @@
 'use strict';
 const ErrorRes = require('../lib/errorRes');
 const Controller = require('egg').Controller;
+const jwt = require('jsonwebtoken');
 
 class UserController extends Controller {
 
@@ -11,13 +12,46 @@ class UserController extends Controller {
   async getData() {
     const { ctx } = this;
     const { request, response, model } = ctx;
-    const { Users, Roles } = model;
-    if (!ctx.user) throw new ErrorRes(14001, 'Not authenticated', 401);
-    console.log(ctx.user);
-    let _user = await Users.findOne({
-      where: { username: ctx.request.body.userName }
-    })
-    response.body = _user;
+    const { Users} = model;
+    let findedUsername;
+    let userData;
+    let findedUserID;
+    const userToken = ctx.request.body.userToken;
+    jwt.verify(userToken, "my_secret_key", (err, data) => {
+        if (err) { console.log('faild retrieve token', err); ctx.body = "404 for retrieve usertoken"; return; }
+        else {
+            userData = Object.assign({}, data['payload']);
+            findedUsername = userData['username'];
+            //console.log('payload', data['payload']);
+        }
+    });
+    if (findedUsername != null) {
+        await model.Users.findOne({ where: { username: findedUsername } })
+            .then(findedUser => {
+                findedUserID = findedUser['dataValues']['id'];
+                console.log('Userid is finded: ', findedUserID);
+                return;
+            })
+            .catch(err => {
+                console.log(err);
+                ctx.status = 400;
+                ctx.body = '404 for not find user';
+                return;
+            });
+    }
+    else {
+        ctx.status = 400;
+        ctx.body = "not find the user, contact with backend";
+        console.log('usename is ::::', findedUsername);
+    }
+    const _user = await Users.findOne({where: {username: findedUsername}});
+    const res = {
+        "customerName": findedUsername,
+        "phoneNumber": _user.telephone,
+        "email": _user.email,
+        "address": _user.address
+    };
+    ctx.body = Object.assign(res);
   }
 
   /**
