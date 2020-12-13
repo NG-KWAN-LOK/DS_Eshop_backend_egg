@@ -46,7 +46,8 @@ class UserController extends Controller {
     }
     const _user = await Users.findOne({where: {username: findedUsername}});
     const res = {
-        "customerName": findedUsername,
+        "userName" : findedUsername,
+        "customerName": _user.name,
         "phoneNumber": _user.telephone,
         "email": _user.email,
         "address": _user.address
