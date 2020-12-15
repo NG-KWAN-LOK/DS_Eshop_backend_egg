@@ -12,14 +12,12 @@ module.exports = app => {
       allowNull: false,
     },
     user_id: {
-      primaryKey: true,
       foreignKey: true,
       type: Sequelize.UUID,
       allowNull: false,
       defaultValue: Sequelize.UUIDV4,
     },
     seller_id: {
-      primaryKey: true,
       foreignKey: true,
       type: Sequelize.UUID,
       allowNull: false,
@@ -31,18 +29,21 @@ module.exports = app => {
       defaultValue: "",
     },
     items_id: {
-      primaryKey: true,
       foreignKey: true,
       type: Sequelize.UUID,
       allowNull: false,
       defaultValue: Sequelize.UUIDV4,
     },
     itemsSub_Id: {
-      primaryKey: true,
       foreignKey: true,
       type: Sequelize.UUID,
       allowNull: false,
       defaultValue: Sequelize.UUIDV4,
+    },
+    items_name: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      defaultValue: "",
     },
     items_url: {
       type: Sequelize.STRING,
@@ -50,11 +51,6 @@ module.exports = app => {
       defaultValue: "",
     },
     items_image_url: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      defaultValue: "",
-    },
-    items_name: {
       type: Sequelize.STRING,
       allowNull: false,
       defaultValue: "",
@@ -67,7 +63,7 @@ module.exports = app => {
     charset: 'utf8'
   });
 
-  ShoppingCart.sync({ force: false });
+  ShoppingCart.sync({ force: true });
   ShoppingCart.associate = () => {
     const { Users, Items, } = app.model;
     Users.belongsToMany(Items, { through: ShoppingCart, foreignKey: 'user_id' });

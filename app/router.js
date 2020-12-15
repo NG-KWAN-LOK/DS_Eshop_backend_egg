@@ -21,4 +21,5 @@ module.exports = app => {
   router.post('/session/loginTrigger', controller.session.loginTrigger);
 
   router.post('/shoppingCart/getAll', controller.shoppingCart.getCartAll);
+  router.post('/shoppingCart/addGoods', controller.shoppingCart.addItemtoCart);
 };
