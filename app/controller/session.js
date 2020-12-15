@@ -34,7 +34,7 @@ class SessionController extends Controller {
         username: user.username,
         name: user.name,
         email: user.email,
-        exp: Math.floor(Date.now() / 1000) + (60 * 15)
+        exp: Math.floor(Date.now() / 1000) + (60 * 30)
       }
       const token = jwt.sign({ payload }, "my_secret_key");
       console.log(token);

@@ -1,0 +1,313 @@
+1:search goodList
+post request:
+{
+    keywords = "abc",
+    orderBy = "asc",	//可轉desc
+    orderByKeyword = "" //可選name/price/sales
+    category = "",	//可選擇
+}
+
+respond:
+goodList = [{
+    id: "0jkdfgjkfdjgfhdkg",
+    name:
+      "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+    imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+    price: "999",
+  },
+    {
+    id: "1gkldfjgkfdjgkldfjgdfg",
+    name:
+      "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
+    imgURL:
+      "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
+    price: "999",
+  },
+  {
+    id: "1gkldfjgkfdjgkldfjgdfg",
+    name:
+      "賣老婆3 西野加奈 nishino kana 可愛日本人妻 明星 美女",
+    imgURL:
+      "https://img-mdpr.freetls.fastly.net/article/f3vH/nm/f3vHiaNO-ztQzQNTADH6W8gpbgB32ZocMbufVbJNSXw.jpg",
+    price: "999",
+  },
+]
+
+2:get goodItem
+get request: /?id=1gkldfjgkfdjgkldfjgdfg
+
+respond:
+goodList = 
+{
+    id: "0",
+    name:
+      "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+    imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+    description: "",
+    price: "999",
+    sales: "1000",
+    category: "XXXX",
+    stock: "10",
+}
+
+3:login:
+post request:
+{
+    userName = "",
+    password = "",
+}
+
+respond:
+{
+    userToken: "",
+    userName : "",
+    customerName: "",
+    phoneNumber: "",
+    email: "",
+    address: "",
+}
+要知道是否successful
+
+4:signUp
+post request:
+{
+    userName : "",
+    password : "",
+    customerName: "",
+    phoneNumber: "",
+    email: "",
+    address: "",
+    
+}
+
+respond:
+{
+    userToken: "",
+    userName : "",
+    customerName: "",
+    phoneNumber: "",
+    email: "",
+    address: "",
+}
+要知道是否successful
+
+5:getUserData:
+post request:
+{
+    userToken : "",
+}
+
+respond:
+{
+    customerName: "",
+    phoneNumber: "",
+    email: "",
+    address: "",
+}
+
+7:Seller Page My Product
+{
+    userToken : "",
+    
+}
+respond:
+{
+    goodList = [{
+    id: "0jkdfgjkfdjgfhdkg",
+    name:
+      "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+    imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+    price: "999",
+    isDisplay: "true", //是否上架
+  },
+    {
+    id: "1gkldfjgkfdjgkldfjgdfg",
+    name:
+      "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
+    imgURL:
+      "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
+    price: "999",
+    isDisplay: "true" //是否上架
+  },
+]
+}
+
+8:Seller Page New Product
+{
+    userToken : "",
+    name:"",
+    description:"",
+    imgURL:"",
+    price:"",
+    stock:""
+    is_Display: "false"
+}
+respond:state code is OK
+
+9:Seller Page My order
+{
+    userToken : "",
+    
+}
+respond:
+{
+    orderId: "0",
+    status: "1", //狀態(0:已取消,1:備貨中,2:待出貨,3:待收貨,4已完成)
+    goodsList: [{
+      goodId: "0",
+      name:
+        "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+      imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+      price: "999",
+      count: 99,
+    }, {
+      goodId: "1",
+      imgURL:
+        "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
+      name:
+        "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
+      price: "999",
+      count: 99,
+    },]
+  },
+  {
+    orderId: "1",
+    status: "4", //狀態(0:已取消,1:備貨中,2:待出貨,3:待收貨,4已完成)
+    goodsList: [{
+      goodId: "0",
+      name:
+        "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+      imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+      price: "999",
+      count: 3,
+    }, {
+      goodId: "1",
+      imgURL:
+        "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
+      name:
+        "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
+      price: "999",
+      count: 4,
+    },]
+  }
+
+10:Shopping Cart display list
+{
+    userToken : "",
+    
+}
+respond:
+{
+shoppingCartData = [
+  {
+    shoppingCartID: "0",
+    sellerUserName: "admin",
+    goodsList: [{
+      goodId: "0",
+      name:
+        "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+      imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+      price: "999",
+      count: 99,
+    }, {
+      goodId: "1",
+      imgURL:
+        "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
+      name:
+        "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
+      price: "999",
+      count: 99,
+    },]
+  },
+  {
+    shoppingCartID: "1",
+    sellerUserName: "admin",
+    goodsList: [{
+      goodId: "0",
+      name:
+        "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+      imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+      price: "999",
+      count: 3,
+    }, {
+      goodId: "1",
+      imgURL:
+        "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
+      name:
+        "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
+      price: "999",
+      count: 4,
+    },]
+  },
+];
+}
+
+11:Customer Page My Order
+{
+    userToken : "",
+    
+}
+respond:
+{
+    orderId: "0",
+    status: "1", //狀態(0:已取消,1:備貨中,2:待出貨,3:待收貨,4已完成)
+    sellerName: "",
+    goodsList: [{
+      goodId: "0",
+      name:
+        "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+      imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+      price: "999",
+      count: 99,
+    }, {
+      goodId: "1",
+      imgURL:
+        "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
+      name:
+        "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
+      price: "999",
+      count: 99,
+    },]
+  },
+  {
+    orderId: "1",
+    status: "4", //狀態(0:已取消,1:備貨中,2:待出貨,3:待收貨,4已完成)
+    sellerName: "",
+    goodsList: [{
+      goodId: "0",
+      name:
+        "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+      imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+      price: "999",
+      count: 3,
+    }, {
+      goodId: "1",
+      imgURL:
+        "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
+      name:
+        "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
+      price: "999",
+      count: 4,
+    },]
+  }
+12:edit goods info
+post requset
+{
+    id: "0",
+    name:"賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+    imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+    description: "",
+    price: "999",
+    sales: "1000",
+    category: "XXXX",
+    stock: "10",
+}
+respond:state code is OK
+
+13:delete goods
+
+post requset
+{
+    id: "0",
+}
+respond:state code is OK
