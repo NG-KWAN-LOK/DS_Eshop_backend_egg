@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken')
 const Service = require('egg').Service;
 const config = require('../../config/config.default.js');
+const ErrorRes = require('../lib/errorRes');
 
 class UtilsService extends Service {
   assertAttrib(obj, keys) {
