@@ -97,25 +97,6 @@ respond:
     address: "",
 }
 
-6:checkIsLogin:
-{
-    userToken : "",
-}
-
-respond:
-{
-    isLogin : "" //ture or false
-}
-
-7:loginTrigger:(browser每4分鐘call一次用作維持登入狀態)
-{
-    userToken : "",
-}
-
-respond:state code is OK
-
-會員登入系統 使用者browser關閉5分鐘 自動登出
-
 7:Seller Page My Product
 {
     userToken : "",
@@ -244,9 +225,7 @@ respond:
 {
     orderId: "0",
     status: "1", //狀態(0:已取消,1:備貨中,2:待出貨,3:待收貨,4已完成)
-    customerName: "",
-    customerPhone: "",
-    customerAddress: "",
+    sellerName: "",
     goodsList: [{
       goodId: "0",
       name:
@@ -267,9 +246,7 @@ respond:
   {
     orderId: "1",
     status: "4", //狀態(0:已取消,1:備貨中,2:待出貨,3:待收貨,4已完成)
-    customerName: "",
-    customerPhone: "",
-    customerAddress: "",
+    sellerName: "",
     goodsList: [{
       goodId: "0",
       name:
