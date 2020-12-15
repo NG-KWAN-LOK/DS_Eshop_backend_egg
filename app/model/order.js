@@ -2,9 +2,8 @@
 
 module.exports = app => {
   const { Sequelize } = app;
-  const sequelize = app.model;
 
-  const Order = sequelize.define('order', {
+  const Order = app.model.define('order', {
     no: {
       primaryKey: true,
       type: Sequelize.UUID,
@@ -13,6 +12,7 @@ module.exports = app => {
       defaultValue: Sequelize.UUIDV4,
     },
     user_id: {
+      foreignKey: true,
       type: Sequelize.UUID,
       allowNull: false,
       unique: false,
@@ -27,22 +27,6 @@ module.exports = app => {
       type: Sequelize.INTEGER(1).UNSIGNED,
       allowNull: false,
       defaultValue: 0
-    },
-    MerchantID: {
-      type: Sequelize.STRING(20),
-      allowNull: false,
-    },
-    MerchantTradeDate: {
-      // 交易時間
-      // 格式: yyyy/MM/dd HH:mm:ss
-      type: Sequelize.STRING(20),
-      allowNull: false,
-    },
-    TradeDesc: {
-      // 交易敘述
-      type: Sequelize.STRING(200),
-      defaultValue: '交易',
-      allowNull: false,
     },
     OrderResultURL: {
       // 結帳完成後導回URL
@@ -68,10 +52,8 @@ module.exports = app => {
   // Association
   Order.associate = () => {
     const { Users, Items, } = app.model;
-
-    Users.hasMany(Order, {
-      foreignKey: 'user_id',
-    });
+    // Users.hasMany(Order, { foreignKey: 'user_id', });
+    Items.belongsTo(Users, { foreignKey: 'user_id', targetKey: 'id' });
   };
 
   return Order;

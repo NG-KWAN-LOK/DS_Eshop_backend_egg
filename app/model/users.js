@@ -85,6 +85,7 @@ module.exports = app => {
   // Association
   Users.associate = () => {
     Users.hasMany(app.model.Items, { foreignKey: 'user_id', sourceKey: 'id' });
+    Users.hasMany(app.model.Order, { foreignKey: 'user_id', sourceKey: 'id' });
   };
   return Users;
 };

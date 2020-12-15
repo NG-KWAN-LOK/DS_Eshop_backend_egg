@@ -1,5 +1,7 @@
 'use strict';
 
+const items = require("./items");
+
 module.exports = app => {
   const { Sequelize } = app;
   const sequelize = app.model;
@@ -10,14 +12,14 @@ module.exports = app => {
       defaultValue: 0,
       allowNull: false,
     },
-    usersId: {
+    user_id: {
       primaryKey: true,
       foreignKey: true,
       type: Sequelize.UUID,
       allowNull: false,
       defaultValue: Sequelize.UUIDV4,
     },
-    itemsId: {
+    items_id: {
       primaryKey: true,
       foreignKey: true,
       type: Sequelize.UUID,
@@ -42,11 +44,8 @@ module.exports = app => {
   ShoppingCart.sync({ force: false });
   ShoppingCart.associate = () => {
     const { Users, Items, } = app.model;
-
-    Users.hasMany(ShoppingCart, {
-      foreignKey: 'user_id',
-    });
-    Items.hasMany(ShoppingCart);
+    Users.belongsToMany(Items, { through: ShoppingCart, foreignKey: 'user_id' });
+    Items.belongsToMany(Users, { through: ShoppingCart, foreignKey: 'items_id' });
   };
 
   return ShoppingCart;
