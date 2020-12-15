@@ -19,4 +19,6 @@ module.exports = app => {
   router.post('/session/IsloggedIn', controller.session.IsloggedIn);
   router.post('/users/getUserData', controller.users.getData);
   router.post('/session/loginTrigger', controller.session.loginTrigger);
+
+  router.post('/shoppingCart/getAll', controller.shoppingCart.getCartAll);
 };
