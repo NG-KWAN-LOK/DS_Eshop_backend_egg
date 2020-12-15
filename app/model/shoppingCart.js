@@ -49,7 +49,7 @@ module.exports = app => {
       allowNull: false,
       defaultValue: "",
     },
-    items_imgURL: {
+    items_image_url: {
       type: Sequelize.STRING,
       allowNull: false,
       defaultValue: "",

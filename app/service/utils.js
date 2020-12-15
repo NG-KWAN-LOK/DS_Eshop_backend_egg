@@ -64,7 +64,7 @@ class UtilsService extends Service {
       else {
         UserData.data = Object.assign({}, data['payload']);
         UserData.error = "ok";
-        console.log('utlis_token.........true');
+        console.log('utlis_token.........pass');
       }
     });
     return UserData;
