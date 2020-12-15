@@ -25,6 +25,11 @@ module.exports = app => {
       allowNull: false,
       defaultValue: Sequelize.UUIDV4,
     },
+    seller_name: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      defaultValue: "",
+    },
     items_id: {
       primaryKey: true,
       foreignKey: true,
@@ -38,6 +43,21 @@ module.exports = app => {
       type: Sequelize.UUID,
       allowNull: false,
       defaultValue: Sequelize.UUIDV4,
+    },
+    items_url: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      defaultValue: "",
+    },
+    items_imgURL: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      defaultValue: "",
+    },
+    items_name: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      defaultValue: "",
     },
 
   }, {
