@@ -4,8 +4,9 @@ const items = require("./items");
 
 module.exports = app => {
   const { Sequelize } = app;
+  const sequelize = app.model;
 
-  const ShoppingCart = app.model.define('shoppingCart', {
+  const ShoppingCartItems = app.model.define('shoppingCartItems', {
     quantity: {
       type: Sequelize.INTEGER,
       defaultValue: 0,
@@ -47,13 +48,13 @@ module.exports = app => {
     charset: 'utf8'
   });
 
-  ShoppingCart.sync({ force: false });
-  ShoppingCart.associate = () => {
+  ShoppingCartItems.sync({ force: false });
+  ShoppingCartItems.associate = () => {
     const { Users, Items, } = app.model;
-    Users.belongsToMany(Items, { through: ShoppingCart, foreignKey: 'user_id' });
-    Items.belongsToMany(Users, { through: ShoppingCart, foreignKey: 'items_id' });
+    Users.belongsToMany(Items, { through: ShoppingCartItems, foreignKey: 'user_id' });
+    Items.belongsToMany(Users, { through: ShoppingCartItems, foreignKey: 'items_id' });
   };
 
-  return ShoppingCart;
+  return ShoppingCartItems;
 
 }

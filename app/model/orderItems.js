@@ -4,7 +4,7 @@ module.exports = app => {
   const { Sequelize } = app;
 
   const OrderItems = app.model.define('orderItems', {
-    items_id: {
+    item_id: {
       foreignKey: true,
       type: Sequelize.UUID,
       allowNull: false,
@@ -13,6 +13,12 @@ module.exports = app => {
       foreignKey: true,
       type: Sequelize.UUID,
       allowNull: false,
+    },
+    seller_id: {
+      foreignKey: true,
+      type: Sequelize.UUID,
+      allowNull: false,
+      defaultValue: ""
     },
     items_quantity: {
       type: Sequelize.INTEGER,
@@ -28,7 +34,7 @@ module.exports = app => {
       type: Sequelize.STRING,
       allowNull: false,
       defaultValue: ""
-    }
+    },
   }, {
     freezeTableName: true,
     timestamps: true,
@@ -40,9 +46,10 @@ module.exports = app => {
 
   // Association
   OrderItems.associate = () => {
-    const { Order, Items, } = app.model;
+    const { Order, Items, Users } = app.model;
     Order.belongsToMany(Items, { through: OrderItems, foreignKey: 'order_no' });
-    Items.belongsToMany(Order, { through: OrderItems, foreignKey: 'items_id' });
+    Items.belongsToMany(Order, { through: OrderItems, foreignKey: 'item_id' });
+    Users.belongsToMany(Items, { through: OrderItems, foreignKey: 'seller_id', targetKey: 'id' });
   };
 
   return OrderItems;
