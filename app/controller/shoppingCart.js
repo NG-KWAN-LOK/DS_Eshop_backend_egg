@@ -52,38 +52,30 @@ class ShoppingCartController extends Controller {
 
         if (result === 'ok') {
             console.log('result is :', result);
-            // await ctx.service.items.minusItemsQuantities(goodInfo.data.id, 1)
-            //     .then(res => {
-            //         ctx.body = 'ok';
-            //         ctx.status = 200;
-            //     })
-            //     .catch(err => {
-            //         throw new ErrorRes(13001, err.data, 400);
-            //     })
-            ctx.body = 'ok';
+            ctx.body = result;
             ctx.status = 200;
 
         }
         else { console.log('error is :', result); ctx.status = 400; ctx.body = 'add goods error'; }
     }
-    // async reduceGoodsAmount() {
-    //     const { ctx } = this;
-    //     const usertoken = ctx.request.body.userToken;
-    //     let userPayload;
-    //     console.log('Enter');
-    //     // Get user's token payload 
-    //     const userData = await ctx.service.utils.getTokenData(usertoken)
-    //         .catch((err) => { ctx.status = 400; ctx.body = err; });
-    //     if (userData.error === "ok") { userPayload = userData.data; }
-    //     else { ctx.status = 400; ctx.body = err; return; }
+    async reduceGoodsAmount() {
+        const { ctx } = this;
+        const usertoken = ctx.request.body.userToken;
+        let userPayload;
+        console.log('Enter');
+        // Get user's token payload 
+        const userData = await ctx.service.utils.getTokenData(usertoken)
+            .catch((err) => { ctx.status = 400; ctx.body = err; });
+        if (userData.error === "ok") { userPayload = userData.data; }
+        else { ctx.status = 400; ctx.body = err; return; }
 
-    //     // use username finded by token get user's ID.
-    //     const user_id = await ctx.service.user.getUserID(userPayload.username);
-    //     const result = await ctx.service.shoppingCart.reduceGoods(user_id, 1, request.body.goodId)
-    //         .then(res => { ctx.status = 200; return 'ok'; })
-    //         .catch(err => { ctx.status = 400; return err; });
-    //     ctx.body = result;
-    // }
+        // use username finded by token get user's ID.
+        const user_id = await ctx.service.user.getUserID(userPayload.username);
+        const result = await ctx.service.shoppingCart.reduceGoods(user_id, 1, ctx.request.body.goodId)
+            .then(res => { if (res === 'ok') { ctx.status = 200; } else { return res; } })
+            .catch(err => { ctx.status = 400; return err; });
+        ctx.body = result;
+    }
 }
 
 module.exports = ShoppingCartController;
