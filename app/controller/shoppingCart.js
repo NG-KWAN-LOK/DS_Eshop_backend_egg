@@ -21,17 +21,15 @@ class ShoppingCartController extends Controller {
         // console.log('finded userid is : ', user_id);
 
         // find all user's item in shoppingCart
-        await ShoppingCart.findAll({
+        const res = await ShoppingCart.findAll({
             where: { user_id: user_id },
-            group: 'seller_id',
-            order: ['updated_at', 'DESC'],
+            // group: 'seller_id',
+            // order: ['updated_at', 'DESC'],
         }).then(res => {
-            ctx.body = res;
             ctx.status = 200;
-        })
-            .catch(err => { ctx.body = err; ctx.status = 400; });
-        console.log('get: ', result);
-
+            return res;
+        }).catch(err => { ctx.status = 400; return err; });
+        ctx.body = res;
 
     }
     async addItemtoCart() {

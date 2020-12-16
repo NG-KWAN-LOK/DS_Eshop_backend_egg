@@ -58,9 +58,7 @@ class ShoppingCartService extends Service {
                 user_id: consumerID,
                 items_id: goodId,
             }
-        })
-            .catch(err => { return err; })
-
+        }).catch(err => { return err; })
         if (findedItem === null) { return 'not find cart item' };
         let left_quantity = findedItem['dataValues']['quantity'] - amount;
         console.log('remain', findedItem['dataValues']['quantity'], 'amount', amount, 'left_quantity ', left_quantity);
