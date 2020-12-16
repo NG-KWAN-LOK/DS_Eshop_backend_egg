@@ -8,7 +8,7 @@ post request:
 respond:
 OK
 
-2:seller刪除商品
+2(ok):seller刪除商品
 post request:
 {
     goodId: "0",
@@ -16,7 +16,7 @@ post request:
 respond:
 OK
 
-2.1:seller更改商品上下架狀態
+2.(ok)1:seller更改商品上下架狀態
 post request:
 {
     goodId: "0",
@@ -43,7 +43,7 @@ respond:
     address: "",
 }
 
-4:加入Shopping Cart，加入後商品數量減1
+4(ok):加入Shopping Cart，加入後商品數量減1
 {
     userToken : "",
     goodId: "",
@@ -51,7 +51,7 @@ respond:
 respond:
 OK
 
-5:刪除Shopping Cart，加入後商品數量加1
+5(ok):刪除Shopping Cart，加入後商品數量加1
 {
     userToken : "",
     goodId: "",

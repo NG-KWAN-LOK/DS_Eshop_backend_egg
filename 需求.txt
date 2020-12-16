@@ -33,7 +33,7 @@ goodList = [{
   },
 ]
 
-2:get goodItem
+2(ok):get goodItem
 get request: /?id=1gkldfjgkfdjgkldfjgdfg
 
 respond:
@@ -50,7 +50,7 @@ goodList =
     stock: "10",
 }
 
-3:login:
+3(ok):login:
 post request:
 {
     userName = "",
@@ -68,7 +68,7 @@ respond:
 }
 要知道是否successful
 
-4:signUp
+4(ok):signUp
 post request:
 {
     userName : "",
@@ -91,7 +91,7 @@ respond:
 }
 要知道是否successful
 
-5:getUserData:
+5:(ok)getUserData:
 post request:
 {
     userToken : "",
@@ -105,7 +105,7 @@ respond:
     address: "",
 }
 
-7:Seller Page My Product
+7(ok):Seller Page My Product
 {
     userToken : "",
     
@@ -132,7 +132,7 @@ respond:
 ]
 }
 
-8:Seller Page New Product
+8(ok):Seller Page New Product
 {
     userToken : "",
     name:"",
@@ -290,7 +290,7 @@ respond:
       count: 4,
     },]
   }
-12:edit goods info
+12(ok):edit goods info
 post requset
 {
     id: "0",
@@ -304,7 +304,7 @@ post requset
 }
 respond:state code is OK
 
-13:delete goods
+13(ok):delete goods
 
 post requset
 {
