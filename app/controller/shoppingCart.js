@@ -48,7 +48,7 @@ class ShoppingCartController extends Controller {
         // use username finded by token get user's ID.
         const user_id = await ctx.service.user.getUserID(userPayload.username);
         const goodInfo = await ctx.service.items.getItemsInfo(ctx.request.body.goodId);
-        const result = await ctx.service.shoppingCart.addGoods(user_id, 1, goodInfo.data);
+        const result = await ctx.service.shoppingCart.addGoods(user_id, ctx.request.body.count, goodInfo.data);
 
         if (result === 'ok') {
             console.log('result is :', result);
