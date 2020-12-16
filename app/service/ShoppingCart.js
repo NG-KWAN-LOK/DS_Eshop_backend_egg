@@ -6,7 +6,6 @@ const ErrorRes = require('../lib/errorRes');
 class ShoppingCartService extends Service {
     async addGoods(consumerID, quantity, goodInfo) {
         const { ctx } = this;
-        const { ShoppingCart } = ctx.model;
         console.log("goodeInfo is : ", goodInfo);
         const seller_name = await ctx.service.user.getNameByID(goodInfo.user_id);
         // console.log('info is : ', goodInfo);
@@ -23,6 +22,44 @@ class ShoppingCartService extends Service {
         })
             .catch(err => { console.log('add goods error', err); return err; });
         return 'ok';
+    }
+
+    async reduceGoods(consumerID, amount, goodId) {
+        const { ctx } = this;
+
+        const res = await ctx.model.ShoppingCart.findOne({
+            where: {
+                user_id: consumerID,
+                items_id: goodId,
+            }
+        })
+            .then(findedItem => {
+                let left_quantity = findedItem['dataValues']['quantity'] - amount;
+                if (left_quantity > 0) {
+                    findedItem.increment('quantity', { by: amount })
+                        .then((result) => { return 'ok'; })
+                        .catch((err) => { return err; });
+                }
+                else { return ctx.service.ShoppingCart.deleteCartItem(consumerID, goodId); }
+            })
+            .catch(err => { return err; })
+        return res;
+        // .catch(err => { console.log('add goods error', err); return err; });
+    }
+    async deleteCartItem(consumerID, goodId) {
+        const { ctx } = this;
+        const result = await ctx.model.ShoppingCart.findOne({
+            where: {
+                user_id: consumerID,
+                items_id: goodId,
+            }
+        })
+            .then(findedItem => {
+                findedItem.destroy();
+                return 'ok';
+            })
+            .catch(err => { return err; });
+        return result;
     }
 }
 

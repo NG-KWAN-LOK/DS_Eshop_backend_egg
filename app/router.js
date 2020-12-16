@@ -22,4 +22,5 @@ module.exports = app => {
 
   router.post('/shoppingCart/getAll', controller.shoppingCart.getCartAll);
   router.post('/shoppingCart/addGoods', controller.shoppingCart.addItemtoCart);
+  // router.post('/shoppingCart/reduceGoodsAmount', controller.shoppingCart.reduceGoodsAmount);
 };

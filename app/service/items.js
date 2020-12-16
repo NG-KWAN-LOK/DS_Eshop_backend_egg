@@ -26,12 +26,12 @@ class ItemsService extends Service {
     let result;
     await ctx.model.Items.findByPk(item_id)
       .then((findedItem) => {
-        result.success = true; result.data = 'ok';
+        result = 'ok';
         findedItem.update({
           remain_quantity: (findedItem['dataValues']['remain_quantity'] - amount),
         });
       })
-      .catch(err => { result.success = false; result.data = err; });
+      .catch(err => { result = err; });
     return result;
   }
 
