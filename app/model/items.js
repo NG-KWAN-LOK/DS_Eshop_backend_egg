@@ -13,7 +13,7 @@ module.exports = app => {
       defaultValue: Sequelize.UUIDV4,
     },
     sub_id: {
-      primaryKey: true,
+      // primaryKey: true,
       type: Sequelize.UUID,
       allowNull: false,
       defaultValue: Sequelize.UUIDV4,

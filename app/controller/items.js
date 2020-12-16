@@ -143,13 +143,21 @@ class ItemsController extends Controller {
     async deleteItem() {
         const { ctx } = this;
         const itemID = ctx.request.body.id;
-        const res = await ctx.model.Items.findOne({ where: { id: itemID } })
+        await ctx.model.Items.findOne({ where: { id: itemID } })
             .then((findedItem) => {
                 findedItem.destroy();
                 ctx.status = 200;
                 ctx.body = 'ok';
             })
             .catch((e) => { ctx.status = 404; ctx.body = 'error' + e; })
+    }
+    async updateDisplayState() {
+        const { ctx } = this;
+        const res = await ctx.model.Items.findByPk(ctx.request.body.goodId)
+            .then(findedItem => { findedItem.update({ is_display: ctx.request.body.status }); ctx.status = 200; return 'ok' })
+            .catch(err => { ctx.status = 400; return err; });
+        console.log(res);
+        ctx.body = res;
     }
 }
 
