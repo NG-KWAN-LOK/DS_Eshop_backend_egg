@@ -21,17 +21,19 @@ class ItemsService extends Service {
       .catch(err => { result.success = false; result.data = err; });
     return result;
   }
-  // async minusItemsQuantities(item_id,amount) {
-  //   const { ctx } = this;
-  //   await ctx.model.Items.findByPk(item_id)
-  //     .then((findedItem) => { 
-  //       let 
-  //       findedItem.update({
-
-  //       });
-  //       result.success = true; result.data = findeddata['dataValues']; })
-  //     .catch(err => { result.success = false; result.data = err; });
-  // }
+  async minusItemsQuantities(item_id, amount) {
+    const { ctx } = this;
+    let result;
+    await ctx.model.Items.findByPk(item_id)
+      .then((findedItem) => {
+        result.success = true; result.data = 'ok';
+        findedItem.update({
+          remain_quantity: (findedItem['dataValues']['remain_quantity'] - amount),
+        });
+      })
+      .catch(err => { result.success = false; result.data = err; });
+    return result;
+  }
 
 }
 
