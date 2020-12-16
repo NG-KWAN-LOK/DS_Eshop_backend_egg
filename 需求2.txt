@@ -43,7 +43,7 @@ respond:
     address: "",
 }
 
-4(ok):加入Shopping Cart，加入後商品數量減1
+4(ok):加入Shopping Cart
 {
     userToken : "",
     goodId: "",
@@ -51,7 +51,7 @@ respond:
 respond:
 OK
 
-5(ok):刪除Shopping Cart，加入後商品數量加1
+5:刪除Shopping Cart
 {
     userToken : "",
     goodId: "",
@@ -59,7 +59,7 @@ OK
 respond:
 OK
 
-6:增加訂單，增加後所持優惠卷刪除
+6:增加訂單(買單)，增加後所持優惠卷刪除，減商品數量
 {
     userToken : "", //將購物車資料增加至訂單中
     usedCoupon: "", //所使用的優惠卷 ""為無使用
