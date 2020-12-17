@@ -1,4 +1,4 @@
-1:search goodList
+1:search goodList (只顯示isDisplay == true的商品)
 post request:
 {
     keywords = "abc",
