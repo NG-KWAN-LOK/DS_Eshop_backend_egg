@@ -132,18 +132,6 @@ respond:
     },]
   }
 #########################################################################
-4.
-seller更改訂單狀態
-post request:
-{
-    goodId: "0",
-    status: "0",
-}
-
-respond:
-OK
-
-#########################################################################
 5.
 customer更改用戶資料
 post request:
@@ -234,6 +222,64 @@ shoppingCartData = [
   },
 ];
 }
+########################################################################
+1:Admin Page get all Product (Get)
+respond:
+{
+    goodList = [{
+    id: "0jkdfgjkfdjgfhdkg",
+    name:
+      "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+    imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+    price: "999",
+    stock: "999",
+    isDisplay: "true", //是否上架
+  },
+    {
+    id: "1gkldfjgkfdjgkldfjgdfg",
+    name:
+      "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
+    imgURL:
+      "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
+    price: "999",
+    stock: "999",
+    isDisplay: "true" //是否上架
+  },
+]
+}
+########################################################################
+2:Admin Page get all Member (Get)
+respond:
+{
+memberList = [
+  {
+    id: "0",
+    userName: "admin",
+    customerName: "陳小明",
+    address: "台北市中正區忠孝東路二段87號",
+    email: "chenming@gmail.com",
+    phoneNumber: "0912345678",
+    createTime: "2020-12-16 04:41:14"
+  },
+  {
+    id: "1",
+    userName: "peter",
+    customerName: "on9",
+    address: "台北市中正區忠孝東路二段87號",
+    email: "chenming@gmail.com",
+    phoneNumber: "0912345678",
+    createTime: "2020-12-16 04:41:14"
+  },
+];
+}
+########################################################################
+3:Admin Page delete member (連同meber的商品/shoppingCart/coupond也要delete)
+request:
+{
+    userId:"",
+}
+respond:
+OK
 ########################################################################
 7:customer取得優惠卷
 {
@@ -332,6 +378,3 @@ respond:
 }
 respond:
 OK
-
-
-
