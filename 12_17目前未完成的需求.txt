@@ -33,6 +33,33 @@ goodList = [{
   },
 ]
 ###############################################################
+增加一個：跟/items/getAllItems一樣功能，但要sorting by IsDisplay==true
+{
+    userToken : "",
+    isDisplay: true/ false
+    
+}
+respond:
+{
+    goodList = [{
+    id: "08a2a8e3-6d0f-4324-915b-13d8a65466db"
+    imgURL: "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg"
+    isDisplay: true
+    name: "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女"
+    price: 1234
+    stock: 1234
+  },
+    {
+    id: "08a2a8e3-6d0f-4324-915b-13d8a65466db"
+    imgURL: "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg"
+    isDisplay: true
+    name: "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女"
+    price: 1234
+    stock: 1234
+  },
+]
+}
+###############################################################
 2.
 Seller Page My order
 {
