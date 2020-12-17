@@ -10,6 +10,7 @@ module.exports = app => {
   router.post('/users/signUp', controller.users.register);
   router.post('/items/new', controller.items.create);
   router.post('/items/getAllItems', controller.items.getAllItems);
+  router.post('/items/getItemsbyIsDisplay', controller.items.getItemsbyIsDisplay);
   router.post('/items/updateInfo', controller.items.updateInfo);
   router.post('/items/deleteItem', controller.items.deleteItem);
   router.post('/item/updateDisplayState', controller.items.updateDisplayState);

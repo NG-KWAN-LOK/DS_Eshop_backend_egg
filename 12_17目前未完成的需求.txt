@@ -33,6 +33,7 @@ goodList = [{
   },
 ]
 ###############################################################
+(ok)
 增加一個：跟/items/getAllItems一樣功能，但要sorting by IsDisplay==true
 {
     userToken : "",
