@@ -51,6 +51,11 @@ module.exports = {
         allowNull: false,
         defaultValue: "",
       },
+      items_price: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: "",
+      },
       items_url: {
         type: Sequelize.STRING,
         allowNull: false,
