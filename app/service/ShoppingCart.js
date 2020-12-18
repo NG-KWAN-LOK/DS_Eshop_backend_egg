@@ -11,9 +11,12 @@ class ShoppingCartService extends Service {
         // console.log('info is : ', goodInfo);
         console.log('quantity is : ', amount);
         const findedItem = await ctx.model.ShoppingCart.findOne({
-            "user_id": consumerID,
-            "items_id": goodInfo.id
+            where: {
+                "user_id": consumerID,
+                "items_id": goodInfo.id
+            }
         });
+        console.log('data is : ', findedItem);
         if (findedItem) { await findedItem.increment('quantity', { by: amount }); }
         else {
             const res = await ctx.model.ShoppingCart.create({
