@@ -6,18 +6,29 @@ module.exports = app => {
   const { Sequelize } = app;
 
   const ShoppingCart = app.model.define('shoppingCart', {
-    quantity: {
-      type: Sequelize.INTEGER,
-      defaultValue: 0,
-      allowNull: false,
-    },
+
     user_id: {
+      primaryKey: true,
       foreignKey: true,
       type: Sequelize.UUID,
       allowNull: false,
       defaultValue: Sequelize.UUIDV4,
     },
     seller_id: {
+      primaryKey: true,
+      foreignKey: true,
+      type: Sequelize.UUID,
+      allowNull: false,
+      defaultValue: Sequelize.UUIDV4,
+    },
+    items_id: {
+      primaryKey: true,
+      foreignKey: true,
+      type: Sequelize.UUID,
+      allowNull: false,
+      defaultValue: Sequelize.UUIDV4,
+    },
+    items_sub_id: {
       foreignKey: true,
       type: Sequelize.UUID,
       allowNull: false,
@@ -28,17 +39,15 @@ module.exports = app => {
       allowNull: false,
       defaultValue: "",
     },
-    items_id: {
-      foreignKey: true,
-      type: Sequelize.UUID,
+    quantity: {
+      type: Sequelize.INTEGER,
+      defaultValue: 0,
       allowNull: false,
-      defaultValue: Sequelize.UUIDV4,
     },
-    itemsSub_Id: {
-      foreignKey: true,
-      type: Sequelize.UUID,
+    remain_quantity: {
+      type: Sequelize.INTEGER,
+      defaultValue: 0,
       allowNull: false,
-      defaultValue: Sequelize.UUIDV4,
     },
     items_name: {
       type: Sequelize.STRING,
@@ -63,7 +72,7 @@ module.exports = app => {
     charset: 'utf8'
   });
 
-  ShoppingCart.sync({ force: true });
+  ShoppingCart.sync({ force: false });
   ShoppingCart.associate = () => {
     const { Users, Items, } = app.model;
     Users.belongsToMany(Items, { through: ShoppingCart, foreignKey: 'user_id' });

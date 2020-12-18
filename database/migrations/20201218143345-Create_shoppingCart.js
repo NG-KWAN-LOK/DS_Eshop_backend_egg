@@ -3,23 +3,30 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('shoppingCart', {
+
       user_id: {
-        foreignKey: true,
         primaryKey: true,
+        foreignKey: true,
         type: Sequelize.UUID,
         allowNull: false,
         defaultValue: Sequelize.UUIDV4,
       },
       seller_id: {
-        foreignKey: true,
         primaryKey: true,
+        foreignKey: true,
         type: Sequelize.UUID,
         allowNull: false,
         defaultValue: Sequelize.UUIDV4,
       },
       items_id: {
-        foreignKey: true,
         primaryKey: true,
+        foreignKey: true,
+        type: Sequelize.UUID,
+        allowNull: false,
+        defaultValue: Sequelize.UUIDV4,
+      },
+      items_sub_id: {
+        foreignKey: true,
         type: Sequelize.UUID,
         allowNull: false,
         defaultValue: Sequelize.UUIDV4,
@@ -29,21 +36,20 @@ module.exports = {
         allowNull: false,
         defaultValue: "",
       },
-      itemsSub_Id: {
-        foreignKey: true,
-        type: Sequelize.UUID,
+      quantity: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
         allowNull: false,
-        defaultValue: Sequelize.UUIDV4,
+      },
+      remain_quantity: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
       },
       items_name: {
         type: Sequelize.STRING,
         allowNull: false,
         defaultValue: "",
-      },
-      quantity: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-        allowNull: false,
       },
       items_url: {
         type: Sequelize.STRING,

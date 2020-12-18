@@ -21,6 +21,7 @@ class ShoppingCartService extends Service {
         else {
             const res = await ctx.model.ShoppingCart.create({
                 "quantity": amount,
+                "remain_quantity": goodInfo.amount,
                 "user_id": consumerID,
                 "seller_id": goodInfo.user_id,
                 "seller_name": seller_name,
