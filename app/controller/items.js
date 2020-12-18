@@ -108,13 +108,12 @@ class ItemsController extends Controller {
         // console.log(userPayload);
         const user_id = await ctx.model.Users.findOne({ where: { username: userPayload['data']['username'] } })
             .then(res => { return res['dataValues']['id']; })
-            .catch(err => { ctx.status = 400; ctx.body = err; _err = true; return err; });
+            .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err; _err = true; return err; });
         if (_err === true) { return; }
         const is_display = (ctx.request.body.isDisplay === 'true') ? true : false;
         // console.log('isDisplay: ', is_display);
         const findedItems = await ctx.model.Items.findAll({ attributes: ['id', 'image_url', 'is_display', 'name', 'price', 'remain_quantity'], where: { user_id: user_id, is_display: is_display } })
             .then((res) => {
-                ctx.status = 200;
                 let resData = [];
                 let data = {};
                 // console.log('res :', res);
@@ -133,13 +132,12 @@ class ItemsController extends Controller {
                 // console.log('finished search');
                 return resData;
             }).catch((err) => {
-                console.log('err');
+                console.log('err2');
                 _err = true;
-                ctx.status = 400;
-                return err
+                return err;
             });
         // console.log('is2 :', findedItems);
-        if (_err = true) { ctx.status = 400; }
+        if (_err === true) { console.log('err3'); ctx.status = 400; }
         else { ctx.status = 200; }
         ctx.body = findedItems;
 
