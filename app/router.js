@@ -23,7 +23,7 @@ module.exports = app => {
   router.post('/users/getUserData', controller.users.getData);
   router.post('/session/loginTrigger', controller.session.loginTrigger);
 
-  router.post('/shoppingCart/getAll', controller.shoppingCart.getCartAll);
+  router.post('/shoppingCart/getCartAll', controller.shoppingCart.getCartAll);
   router.post('/shoppingCart/addGoods', controller.shoppingCart.addItemtoCart);
   router.post('/shoppingCart/reduceGoodsAmount', controller.shoppingCart.reduceGoodsAmount);
 };
