@@ -28,6 +28,7 @@ class ShoppingCartService extends Service {
                 "items_id": goodInfo.id,
                 "itemsSub_Id": goodInfo.sub_id,
                 "items_name": goodInfo.name,
+                "items_price": goodInfo.price,
                 "items_image_url": goodInfo.image_url
             })
                 .catch(err => { console.log('add goods error', err); return err; });
@@ -80,6 +81,7 @@ class ShoppingCartService extends Service {
                 .catch(err => { return err; })
             return result;
         }
+        
     }
 
 }
