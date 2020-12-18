@@ -36,7 +36,7 @@ class ShoppingCartController extends Controller {
                 let goodInfo = {
                     "goodId": res[i].dataValues.items_id,
                     "imgURL": res[i].dataValues.items_image_url,
-                    "name": res[i].dataValues.name,
+                    "name": res[i].dataValues.items_name,
                     "price": res[i].dataValues.items_price,
                     "stock": res[i].dataValues.remain_quantity,
                     "count": res[i].dataValues.quantity,
