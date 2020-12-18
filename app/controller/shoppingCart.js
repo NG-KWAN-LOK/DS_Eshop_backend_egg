@@ -7,7 +7,10 @@ class ShoppingCartController extends Controller {
     async getCartAll() {
         const { ctx } = this;
         const { ShoppingCart } = ctx.model;
+        let allSeller = [];
         let userPayload, user_id;
+        let _errStatus = true;
+        let result = [];
         const usertoken = ctx.request.body.userToken;
 
         // Get user's token payload 
@@ -22,14 +25,40 @@ class ShoppingCartController extends Controller {
 
         // find all user's item in shoppingCart
         const res = await ShoppingCart.findAll({
+            // attributes: ['seller_id'],
             where: { user_id: user_id },
-            // group: 'seller_id',
-            // order: ['updated_at', 'DESC'],
         }).then(res => {
-            ctx.status = 200;
+
+            //儲存抓出不重複的seller_ID
+            for (let i = 0; i < res.length; i++) {
+                // console.log('i: ', i, 'res', res[i]);
+                let seller_index = allSeller.findIndex(element => element === res[i].dataValues.seller_id);
+                let goodInfo = {
+                    "goodId": res[i].dataValues.items_id,
+                    "imgURL": res[i].dataValues.items_image_url,
+                    "name": res[i].dataValues.name,
+                    "price": res[i].dataValues.items_price,
+                    "stock": res[i].dataValues.remain_quantity,
+                    "count": res[i].dataValues.quantity,
+                };
+                if (seller_index != -1) {
+                    result[seller_index].goodsList.push(goodInfo);
+                }
+                else {
+                    result.push({
+                        "sellerUserName": res[i].dataValues.seller_name,
+                        "goodsList": [goodInfo]
+                    });
+                    allSeller.push(res[i].dataValues.seller_id);
+                }
+            }
+            _errStatus = false;
             return res;
-        }).catch(err => { ctx.status = 400; return err; });
-        ctx.body = res;
+        }).catch(err => { console.log(err); return err; });
+
+
+        if (_errStatus) { ctx.status = 400; ctx.body = res; }
+        else { ctx.status = 200; ctx.body = result; }
 
     }
     async addItemtoCart() {
@@ -43,9 +72,11 @@ class ShoppingCartController extends Controller {
         if (userData.error === "ok") { userPayload = userData.data; }
         else { throw new ErrorRes(13001, userData.data, 400); }
 
-        // use username finded by token get user's ID.
+        // get user's ID by username finded in token .
         const user_id = await ctx.service.user.getUserID(userPayload.username);
+        //get goods Information
         const goodInfo = await ctx.service.items.getItemsInfo(ctx.request.body.goodId);
+        //add goods to shoppingCart
         const result = await ctx.service.shoppingCart.addGoods(user_id, ctx.request.body.count, goodInfo.data);
 
         if (result === 'ok') {
@@ -70,9 +101,9 @@ class ShoppingCartController extends Controller {
         // use username finded by token get user's ID.
         const user_id = await ctx.service.user.getUserID(userPayload.username);
         const result = await ctx.service.shoppingCart.reduceGoods(user_id, 1, ctx.request.body.goodId)
-            .then(res => { if (res === 'ok') { ctx.status = 200; } else { return res; } })
-            .catch(err => { ctx.status = 400; return err; });
-        ctx.body = result;
+            .then(res => { if (res === 'ok') { ctx.status = 200; ctx.body = res } else { return res; } })
+            .catch(err => { ctx.status = 400; ctx.body = err; return err; });
+
     }
 }
 
