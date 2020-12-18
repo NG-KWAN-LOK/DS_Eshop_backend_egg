@@ -14,6 +14,8 @@ goodList = [{
       "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
     imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
     price: "999",
+    sales: 10,
+    stock: 99,
   },
     {
     id: "1gkldfjgkfdjgkldfjgdfg",
@@ -22,6 +24,8 @@ goodList = [{
     imgURL:
       "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
     price: "999",
+    sales: 10,
+    stock: 99,
   },
   {
     id: "1gkldfjgkfdjgkldfjgdfg",
@@ -30,8 +34,44 @@ goodList = [{
     imgURL:
       "https://img-mdpr.freetls.fastly.net/article/f3vH/nm/f3vHiaNO-ztQzQNTADH6W8gpbgB32ZocMbufVbJNSXw.jpg",
     price: "999",
+    sales: 10,
+    stock: 99,
   },
 ]
+###############################################################
+取得最熱賣商品：(get){12個就夠了}
+request{
+goodList = [{
+    id: "0jkdfgjkfdjgfhdkg",
+    name:
+      "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+    imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+    price: "999",
+    sales: 10,
+    stock: 99,
+  },
+    {
+    id: "1gkldfjgkfdjgkldfjgdfg",
+    name:
+      "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
+    imgURL:
+      "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
+    price: "999",
+    sales: 10,
+    stock: 99,
+  },
+  {
+    id: "1gkldfjgkfdjgkldfjgdfg",
+    name:
+      "賣老婆3 西野加奈 nishino kana 可愛日本人妻 明星 美女",
+    imgURL:
+      "https://img-mdpr.freetls.fastly.net/article/f3vH/nm/f3vHiaNO-ztQzQNTADH6W8gpbgB32ZocMbufVbJNSXw.jpg",
+    price: "999",
+    sales: 10,
+    stock: 99,
+  },
+]
+}
 ###############################################################
 (ok)
 增加一個：跟/items/getAllItems一樣功能，但要sorting by IsDisplay==true
@@ -309,16 +349,21 @@ request:
 respond:
 OK
 ########################################################################
+增新優惠卷
+respon:
+{
+    couponName: "",
+    discountContent: "",
+    startDate:"",
+    endDate: "",
+}
+request:
+OK
+########################################################################
 7:customer取得優惠卷
 {
     userToken : "",
     couponId: "",
-}
-
-########################################################################
-8:取得customer可領取的優惠卷
-{
-    userToken : "",
 }
 respond:
 {
@@ -336,6 +381,32 @@ respond:
             discountContent: "",
             startDate:"",
             endDate: "",
+        },
+    ]
+}
+########################################################################
+8:取得customer可領取的優惠卷(會顯示所有有效期內的所有優惠卷，會有一個位置存customer是否有領到)
+{
+    userToken : "",
+}
+respond:
+{
+    couponList:[
+        {
+            couponId: "0",
+            couponName: "訂單減100元",
+            discountContent: "100",
+            startDate:"2020/12/18",
+            endDate: "2020/12/20",
+            isTook: true,(在前端會顯示可以讓他按的按鈕)
+        },
+        {
+            couponId: "1",
+            couponName: "訂單減50元",
+            discountContent: "50",
+            startDate:"2020/12/18",
+            endDate: "2020/12/30",
+            isTook: false,(在前端會顯示他已領取，按鈕會灰掉)
         },
     ]
 }
