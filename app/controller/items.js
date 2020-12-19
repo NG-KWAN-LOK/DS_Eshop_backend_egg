@@ -82,10 +82,13 @@ class ItemsController extends Controller {
             // console.log('usename is ::::', findedUsername);
         }
         await ctx.model.Items.findAll({
-            attributes: ['id', 'name', ['image_url', 'imgURL'], 'price', ["remain_quantity", "stock"], ['is_display', 'isDisplay']],
+            attributes: ['id', 'name', ['image_url', 'imgURL'], 'price', ["remain_quantity", "stock"], ['is_display', 'isDisplay'], 'updated_at'],
             where: {
                 user_id: findedUserID,
-            }
+            },
+            order: [
+                ['updated_at', 'DESC']
+            ],
         })
             .then((res) => {
                 ctx.status = 200;
