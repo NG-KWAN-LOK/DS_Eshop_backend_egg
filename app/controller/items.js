@@ -3,7 +3,8 @@
 const Controller = require('egg').Controller;
 const jwt = require('jsonwebtoken');
 const items = require('../model/items');
-
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 class ItemsController extends Controller {
     async create() {
         const { ctx } = this;
@@ -204,6 +205,41 @@ class ItemsController extends Controller {
         console.log(res);
         ctx.body = res;
     }
+    async searchGoodsbyKeyword() {
+        const { ctx } = this;
+        let _err = false;
+        // console.log('key : ', ctx.request.body.keywords);
+        // const keywords = ctx.request.body.keywords.split(' ');
+        const keywords = ctx.request.body.keywords;
+        console.log('keywords ', keywords);
+        const res = await ctx.model.Items.findAll({
+            attributes: ['id', 'name', 'image_url', 'price', 'remain_quantity'],//'sales',
+            order: [[ctx.request.body.orderByKeyword, ctx.request.body.orderBy]],
+            where: {
+                name: { [Op.substring]: keywords },
+                is_display: true
+            }
+        }).then(res => {
+            let goodlist = [];
+            for (let i = 0; i < res.length; i++) {
+                goodlist.push({
+                    "id": res[i].dataValues.id,
+                    "name": res[i].dataValues.name,
+                    "imgURL": res[i].dataValues.image_url,
+                    "price": res[i].dataValues.price,
+                    // "sales": res[i].dataValues.sales,
+                    "stock": res[i].dataValues.remain_quantity,
+                });
+            }
+            return goodlist;
+        })
+            .catch(err => { _err = true; console.log(err); return err; });
+        if (_err === true) { ctx.body = '404 ' + res; ctx.status = 400; return; }
+        ctx.status = 200;
+        ctx.body = res;
+
+    }
+
 }
 
 module.exports = ItemsController;

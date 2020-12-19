@@ -1,4 +1,5 @@
 1:search goodList (只顯示isDisplay == true的商品)
+
 post request:
 {
     keywords = "abc",
@@ -245,6 +246,7 @@ respond:
 OK
 
 ########################################################################
+(ok)
 10:Shopping Cart display list
 {
     userToken : "",
