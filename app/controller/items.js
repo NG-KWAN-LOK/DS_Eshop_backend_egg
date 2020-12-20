@@ -227,7 +227,7 @@ class ItemsController extends Controller {
                     "name": res[i].dataValues.name,
                     "imgURL": res[i].dataValues.image_url,
                     "price": res[i].dataValues.price,
-                    // "sales": res[i].dataValues.sales,
+                    "sales": res[i].dataValues.sales,
                     "stock": res[i].dataValues.remain_quantity,
                 });
             }
