@@ -7,7 +7,7 @@ class OrderController extends Controller {
     
   }
 
-  async SellerGetOrder() {
+  /*async SellerGetOrder() {
     const { ctx } = this;
     const { orderItems,Order,Items } = ctx.model;
     let username, user_id;
@@ -46,9 +46,9 @@ class OrderController extends Controller {
       });
     }
   ctx.body = res;
-  }
+  }*/
 
-  /*async SellerSetOrderStatus(){
+  async SellerSetOrderStatus(){
     const { ctx } = this;
     const usertoken = ctx.request.body.userToken;
     const ID = ctx.request.body.orderId;
@@ -63,7 +63,7 @@ class OrderController extends Controller {
     const result = await ctx.service.order.setOrderStatus(ID,newstat)
         .then(res => { if (res === 'ok') { ctx.status = 200} else { ctx.status = 400} })
         .catch(err => { ctx.status = 400;});
-  }*/
+  }
 
 }
 
