@@ -46,7 +46,24 @@ class OrderController extends Controller {
       });
     }
   ctx.body = res;
-}
+  }
+
+  async SellerSetOrderStatus(){
+    const { ctx } = this;
+    const usertoken = ctx.request.body.userToken;
+    const ID = ctx.request.body.orderId;
+    const newstat = ctx.request.body.status;
+    let userPayload;
+    console.log('Enter');
+    // Extract token data 
+    const userData = await ctx.service.utils.getTokenData(usertoken)
+        .catch((err) => { ctx.status = 400; ctx.body = err; });
+    if (userData.error === "ok") { userPayload = userData.data; }
+    else { ctx.status = 400; ctx.body = err; return; }
+    const result = await ctx.service.order.setOrderStatus(ID,newstat)
+        .then(res => { if (res === 'ok') { ctx.status = 200} else { ctx.status = 400} })
+        .catch(err => { ctx.status = 400;});
+  }
 
 }
 

@@ -30,4 +30,5 @@ module.exports = app => {
   router.post('/shoppingCart/reduceGoodsAmount', controller.shoppingCart.reduceGoodsAmount);
 
   router.post('/sellermenu/getmyorders',controller.order.SellerGetOrder);
+  router.post('/sellermenu/setorderstate',controller.order.SellerSetOrderStatus);
 };
