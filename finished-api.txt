@@ -1,0 +1,179 @@
+(ok)
+增加一個：跟/items/getAllItems一樣功能，但要sorting by IsDisplay==true
+{
+    userToken : "",
+    isDisplay: true/ false
+    
+}
+respond:
+{
+    goodList = [{
+    id: "08a2a8e3-6d0f-4324-915b-13d8a65466db"
+    imgURL: "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg"
+    isDisplay: true
+    name: "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女"
+    price: 1234
+    stock: 1234
+  },
+    {
+    id: "08a2a8e3-6d0f-4324-915b-13d8a65466db"
+    imgURL: "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg"
+    isDisplay: true
+    name: "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女"
+    price: 1234
+    stock: 1234
+  },
+]
+}
+###############################################################
+(ok)
+10:Shopping Cart display list
+{
+    userToken : "",
+    
+}
+respond:
+{
+shoppingCartData = [
+  {
+    shoppingCartID: "0",
+    sellerUserName: "admin",
+    goodsList: [{
+      goodId: "0",
+      name:
+        "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+      imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+      price: "999",
+      stock: "100",
+      count: 99,
+    }, {
+      goodId: "1",
+      imgURL:
+        "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
+      name:
+        "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
+      price: "999",
+      stock: "100",
+      count: 99,
+    },]
+  },
+  {
+    shoppingCartID: "1",
+    sellerUserName: "admin",
+    goodsList: [{
+      goodId: "0",
+      name:
+        "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+      imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+      price: "999",
+      stock: "100",
+      count: 3,
+    }, {
+      goodId: "1",
+      imgURL:
+        "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
+      name:
+        "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
+      price: "999",
+      stock: "100",
+      count: 4,
+    },]
+  },
+];
+}
+########################################################################
+取得最熱賣商品：(get){12個就夠了}
+output:
+[
+    {
+        "id": "00608e9b-0a39-4da5-9777-ebbad38ee5e0",
+        "name": "哈利波特2",
+        "imgURL": "https://www.movieffm.net/wp-content/uploads/2002/11/%E5%93%88%E5%88%A9%E6%B3%A2%E7%89%B92%EF%BC%9A%E6%B6%88%E5%A4%B1%E7%9A%84%E5%AF%86%E5%AE%A4-Movieffm%E9%9B%BB%E5%BD%B1%E7%B7%9A%E4%B8%8A%E7%9C%8B.jpg",
+        "price": 200,
+        "sales": 0,
+        "stock": 10,
+        "category": ""
+    },
+    {
+        "id": "08018716-11d0-4658-aa4b-58139c7036e7",
+        "name": "康軒版 自然課本5下 國小教科書 ",
+        "imgURL": "https://cf.shopee.tw/file/48b63605a1fa8032806c775e86b953cf",
+        "price": 120,
+        "sales": 0,
+        "stock": 20,
+        "category": ""
+    },
+    {
+        "id": "08a2a8e3-6d0f-4324-915b-13d8a65466db",
+        "name": "updatedto00301",
+        "imgURL": "www.urlforitem0301.com",
+        "price": 1102,
+        "sales": 0,
+        "stock": 20,
+        "category": ""
+    },
+    {
+        "id": "099325dc-3300-42cc-b6ee-f18c50843aaa",
+        "name": "國小 課本 社會 康軒 五下 教科書 國民小學",
+        "imgURL": "https://img.ruten.com.tw/s1/3/13/27/21826281171751_525.JPG",
+        "price": 120,
+        "sales": 0,
+        "stock": 31,
+        "category": ""
+    },
+    {
+        "id": "0a09658a-9c52-4d56-9fb6-e1b9fd49cef8",
+        "name": "UNIQLO男裝束口褲",
+        "imgURL": "https://www.uniqlo.com/tw/news/topics/2019061701/img/303T_190613cQ6RLS.jpg",
+        "price": 690,
+        "sales": 0,
+        "stock": 7,
+        "category": ""
+    },
+    {
+        "id": "0a36c15b-f720-4957-805b-bbb6dd7ec876",
+        "name": "ROG Strix Scope RGB 機械式電競鍵盤",
+        "imgURL": "https://img-tw1.asus.com/D/show/DW000013/2019/0326/DM0000001/201903DM260000001_15536720155536770072158.jpg!t500x500",
+        "price": 7200,
+        "sales": 0,
+        "stock": 10,
+        "category": ""
+    },
+    {
+        "id": "0f13f855-8053-4ce6-94b9-cb41ba19674a",
+        "name": "羅技 M705 2.4G無線雷射滑鼠",
+        "imgURL": "https://media.etmall.com.tw/nximg/002241/2241488/2241488_xxl.jpg?t=17505699189",
+        "price": 1200,
+        "sales": 0,
+        "stock": 8,
+        "category": ""
+    },
+    {
+        "id": "0f7941e5-1282-4cfb-ae6a-9290bef0134a",
+        "name": "Redragon 紅龍 M607 遊戲滑鼠 ",
+        "imgURL": "https://img.ruten.com.tw/s2/f/15/04/21920415175940_401.jpg",
+        "price": 1500,
+        "sales": 0,
+        "stock": 15,
+        "category": ""
+    },
+    {
+        "id": "1310dc9a-e07e-460a-8b5d-a7aab4a08214",
+        "name": "彩色繽紛3.5mm耳機",
+        "imgURL": "https://www.myfone.com.tw/website_twmf/uploads_product/website_1644/026/150/ECP0164402615025_1_11400015.jpg",
+        "price": 1200,
+        "sales": 0,
+        "stock": 20,
+        "category": ""
+    },
+    {
+        "id": "1588c605-5af6-435d-b1e7-b684677f0f25",
+        "name": "最大160cm✔Marvel超級英雄聯名Uniqlo衣服童裝",
+        "imgURL": "https://img.ruten.com.tw/s1/f/99/03/21833502217475_655.jpg",
+        "price": 420,
+        "sales": 0,
+        "stock": 12,
+        "category": ""
+    }
+]
+###############################################################

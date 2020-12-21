@@ -40,68 +40,6 @@ goodList = [{
   },
 ]
 ###############################################################
-取得最熱賣商品：(get){12個就夠了}
-request{
-goodList = [{
-    id: "0jkdfgjkfdjgfhdkg",
-    name:
-      "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
-    imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
-    price: "999",
-    sales: 10,
-    stock: 99,
-  },
-    {
-    id: "1gkldfjgkfdjgkldfjgdfg",
-    name:
-      "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
-    imgURL:
-      "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
-    price: "999",
-    sales: 10,
-    stock: 99,
-  },
-  {
-    id: "1gkldfjgkfdjgkldfjgdfg",
-    name:
-      "賣老婆3 西野加奈 nishino kana 可愛日本人妻 明星 美女",
-    imgURL:
-      "https://img-mdpr.freetls.fastly.net/article/f3vH/nm/f3vHiaNO-ztQzQNTADH6W8gpbgB32ZocMbufVbJNSXw.jpg",
-    price: "999",
-    sales: 10,
-    stock: 99,
-  },
-]
-}
-###############################################################
-(ok)
-增加一個：跟/items/getAllItems一樣功能，但要sorting by IsDisplay==true
-{
-    userToken : "",
-    isDisplay: true/ false
-    
-}
-respond:
-{
-    goodList = [{
-    id: "08a2a8e3-6d0f-4324-915b-13d8a65466db"
-    imgURL: "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg"
-    isDisplay: true
-    name: "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女"
-    price: 1234
-    stock: 1234
-  },
-    {
-    id: "08a2a8e3-6d0f-4324-915b-13d8a65466db"
-    imgURL: "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg"
-    isDisplay: true
-    name: "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女"
-    price: 1234
-    stock: 1234
-  },
-]
-}
-###############################################################
 2.
 Seller Page My order
 {
@@ -245,62 +183,6 @@ OK
 respond:
 OK
 
-########################################################################
-(ok)
-10:Shopping Cart display list
-{
-    userToken : "",
-    
-}
-respond:
-{
-shoppingCartData = [
-  {
-    shoppingCartID: "0",
-    sellerUserName: "admin",
-    goodsList: [{
-      goodId: "0",
-      name:
-        "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
-      imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
-      price: "999",
-      stock: "100",
-      count: 99,
-    }, {
-      goodId: "1",
-      imgURL:
-        "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
-      name:
-        "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
-      price: "999",
-      stock: "100",
-      count: 99,
-    },]
-  },
-  {
-    shoppingCartID: "1",
-    sellerUserName: "admin",
-    goodsList: [{
-      goodId: "0",
-      name:
-        "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
-      imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
-      price: "999",
-      stock: "100",
-      count: 3,
-    }, {
-      goodId: "1",
-      imgURL:
-        "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
-      name:
-        "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
-      price: "999",
-      stock: "100",
-      count: 4,
-    },]
-  },
-];
-}
 ########################################################################
 1:Admin Page get all Product (Get)
 respond:

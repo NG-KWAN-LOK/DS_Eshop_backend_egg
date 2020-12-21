@@ -219,7 +219,7 @@ class ItemsController extends Controller {
         const keywords = ctx.request.body.keywords;
         console.log('keywords ', keywords);
         const res = await ctx.model.Items.findAll({
-            attributes: ['id', 'name', 'image_url', 'price', 'remain_quantity', 'sales', 'category'],//'sales',
+            attributes: ['id', 'name', 'image_url', 'price', 'remain_quantity', 'sales', 'category'],
             order: [[ctx.request.body.orderByKeyword, ctx.request.body.orderBy]],
             where: {
                 name: { [Op.substring]: keywords },
@@ -246,7 +246,34 @@ class ItemsController extends Controller {
         ctx.body = res;
 
     }
+    async getHotsalesGoods() {
+        const { ctx } = this;
+        let _err = false;
+        const res = await ctx.model.Items.findAll({
+            attributes: ['id', 'name', 'image_url', 'price', 'remain_quantity', 'sales', 'sales', 'category'],
+            order: [['sales', 'desc']],
+            limit: 12
+        }).then(res => {
+            let goodlist = [];
+            for (let i = 0; i < res.length; i++) {
+                goodlist.push({
+                    "id": res[i].dataValues.id,
+                    "name": res[i].dataValues.name,
+                    "imgURL": res[i].dataValues.image_url,
+                    "price": res[i].dataValues.price,
+                    "sales": res[i].dataValues.sales,
+                    "stock": res[i].dataValues.remain_quantity,
+                    "category": res[i].dataValues.category,
+                });
+            }
+            return goodlist;
+        })
+            .catch(err => { _err = true; console.log(err); return err; });
+        if (_err === true) { ctx.body = '404 ' + res; ctx.status = 400; return; }
+        ctx.status = 200;
+        ctx.body = res;
 
+    }
 }
 
 module.exports = ItemsController;

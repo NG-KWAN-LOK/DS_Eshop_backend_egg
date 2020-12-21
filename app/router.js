@@ -16,6 +16,7 @@ module.exports = app => {
   router.post('/item/updateDisplayState', controller.items.updateDisplayState);
   router.get('/items/getItem', controller.items.searchItem);
   router.post('/items/searchGoodsbyKeyword', controller.items.searchGoodsbyKeyword);
+  router.get('/items/getHotsalesGoods', controller.items.getHotsalesGoods);
 
 
   router.get('/sth', controller.home.something);

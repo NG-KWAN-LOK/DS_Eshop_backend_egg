@@ -103,8 +103,8 @@ class ShoppingCartController extends Controller {
         const result = await ctx.service.shoppingCart.reduceGoods(user_id, 1, ctx.request.body.goodId)
             .then(res => { if (res === 'ok') { ctx.status = 200; ctx.body = res } else { return res; } })
             .catch(err => { ctx.status = 400; ctx.body = err; return err; });
-
     }
+    
 }
 
 module.exports = ShoppingCartController;
