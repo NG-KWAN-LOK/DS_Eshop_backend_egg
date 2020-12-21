@@ -47,7 +47,9 @@ class ItemsController extends Controller {
             "price": ctx.request.body.price,
             "remain_quantity": ctx.request.body.stock,
             "is_display": ctx.request.body.is_Display,
-            "user_id": findedUserID
+            "user_id": findedUserID,
+            "sales": 0,
+            "category": ctx.request.body.category
         };
         //console.log('Userdata is :', itemData);
         await ctx.model.Items.create(itemData)
@@ -83,7 +85,7 @@ class ItemsController extends Controller {
             // console.log('usename is ::::', findedUsername);
         }
         await ctx.model.Items.findAll({
-            attributes: ['id', 'name', ['image_url', 'imgURL'], 'price', ["remain_quantity", "stock"], ['is_display', 'isDisplay'], 'updated_at'],
+            attributes: ['id', 'name', ['image_url', 'imgURL'], 'price', ["remain_quantity", "stock"], ['is_display', 'isDisplay'], 'sales', 'category', 'updated_at'],
             where: {
                 user_id: findedUserID,
             },
@@ -96,6 +98,8 @@ class ItemsController extends Controller {
                 // console.log('Datares.....:', res, 'length: ', res.length);
                 let resData = [];
                 for (let i = 0; i < res.length; i++) {
+
+                    // console.log('1', res[i].dataValues.category);    
                     resData.push(res[i].dataValues);
                     // console.log(i, 'is :', res[i].dataValues);
                 }
@@ -116,19 +120,22 @@ class ItemsController extends Controller {
         if (_err === true) { return; }
         const is_display = (ctx.request.body.isDisplay === 'true') ? true : false;
         // console.log('isDisplay: ', is_display);
-        const findedItems = await ctx.model.Items.findAll({ attributes: ['id', 'image_url', 'is_display', 'name', 'price', 'remain_quantity'], where: { user_id: user_id, is_display: is_display } })
+        const findedItems = await ctx.model.Items.findAll({ attributes: ['id', 'image_url', 'is_display', 'name', 'price', 'remain_quantity', 'sales', 'category'], where: { user_id: user_id, is_display: is_display } })
             .then((res) => {
                 let resData = [];
                 let data = {};
                 // console.log('res :', res);
                 for (let i = 0; i < res.length; i++) {
+                    // console.log('1',res[i].dataValues.category);    
                     data = {
                         'id': res[i].dataValues.id,
                         'imgURL': res[i].dataValues.image_url,
                         'isDisplay': res[i].dataValues.is_display,
                         'name': res[i].dataValues.name,
                         'price': res[i].dataValues.price,
-                        'stock': res[i].dataValues.remain_quantity
+                        'stock': res[i].dataValues.remain_quantity,
+                        'sales': res[i].dataValues.sales,
+                        'category': res[i].dataValues.category
                     }
                     resData.push(data);
                     // console.log('is1 :', data);
@@ -174,11 +181,10 @@ class ItemsController extends Controller {
                     "image_url": ctx.request.body.imgURL,
                     "description": ctx.request.body.description,
                     "price": ctx.request.body.price,
-                    "sales": ctx.request.body.sales,
                     "category": ctx.request.body.category,
                     "remain_quantity": ctx.request.body.stock
                 }).then((r) => { ctx.status = 200; ctx.body = 'ok'; return; })
-                    .catch((e) => { ctx.status = 400; ctx.body = ('error' + e); return; });
+                    .catch((e) => { ctx.status = 400; console.log(e); ctx.body = ('error' + e); return; });
             })
             .catch(e => {
                 ctx.status = 400;
@@ -213,7 +219,7 @@ class ItemsController extends Controller {
         const keywords = ctx.request.body.keywords;
         console.log('keywords ', keywords);
         const res = await ctx.model.Items.findAll({
-            attributes: ['id', 'name', 'image_url', 'price', 'remain_quantity'],//'sales',
+            attributes: ['id', 'name', 'image_url', 'price', 'remain_quantity', 'sales', 'category'],//'sales',
             order: [[ctx.request.body.orderByKeyword, ctx.request.body.orderBy]],
             where: {
                 name: { [Op.substring]: keywords },
@@ -229,6 +235,7 @@ class ItemsController extends Controller {
                     "price": res[i].dataValues.price,
                     "sales": res[i].dataValues.sales,
                     "stock": res[i].dataValues.remain_quantity,
+                    "category": res[i].dataValues.category,
                 });
             }
             return goodlist;

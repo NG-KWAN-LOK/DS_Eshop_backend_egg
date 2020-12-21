@@ -1,0 +1,126 @@
+1.
+post
+/items/getAllItems
+
+input:
+{
+    "userToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJuYW1lIjoiYWRtaW4iLCJuYW1lIjoi6Zmz5bCP5piOIiwiZW1haWwiOiJjaGVubWluZ0BnbWFpbC5jb20iLCJleHAiOjE2MDgwNDkxNDN9LCJpYXQiOjE2MDgwNDczNDN9.F-iKD_bW1_nCFCGX44sOpNwnamBq1f32Bw4zILldJ9c"
+}
+
+output:
+[
+    {
+        "id": "08a2a8e3-6d0f-4324-915b-13d8a65466db",
+        "name": "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
+        "imgURL": "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
+        "price": 1234,
+        "stock": 1234,
+        "isDisplay": 1,
+        "sales": 0,
+        "category": "",
+        "updated_at": "2020-12-18T05:30:30.000Z"
+    },
+    {
+        "id": "a54b5e52-a7cc-495f-af4e-827c518d520e",
+        "name": "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+        "imgURL": "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+        "price": 1234,
+        "stock": 1234,
+        "isDisplay": 1,
+        "sales": 0,
+        "category": "",
+        "updated_at": "2020-12-17T17:36:39.000Z"
+    }
+]
+
+
+2.
+post
+/items/new
+
+input:
+{
+    "userToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJuYW1lIjoiYWRtaW4iLCJuYW1lIjoi6Zmz5bCP5piOIiwiZW1haWwiOiJjaGVubWluZ0BnbWFpbC5jb20iLCJleHAiOjE2MDc3ODU3NTd9LCJpYXQiOjE2MDc3ODQ4NTd9.x6eW__Db74S3beyLNQzgxCzKjZjvv-okS08zalR-ASc",
+    "name":"item87",
+    "description":"none",
+    "imgURL":"www.urlforitem87.com",
+    "price":"104",
+    "stock":"22",
+    "is_Display": "false",
+    "category":""
+}
+
+output:
+ok
+
+3.
+post
+/items/getItemsbyIsDisplay
+
+input:
+{
+    "userToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7InVzZXJuYW1lIjoiYWRtaW4iLCJuYW1lIjoi6Zmz5bCP5piOIiwiZW1haWwiOiJjaGVubWluZ0BnbWFpbC5jb20iLCJleHAiOjE2MDgwNDkxNDN9LCJpYXQiOjE2MDgwNDczNDN9.F-iKD_bW1_nCFCGX44sOpNwnamBq1f32Bw4zILldJ9c"
+}
+
+output:
+[
+    {
+        "id": "e803f515-af6c-4b26-8dfe-f0af4a8c9041",
+        "imgURL": "www.urlforitem87.com",
+        "isDisplay": false,
+        "name": "item87",
+        "price": 104,
+        "stock": 22,
+        "sales": 0,
+        "category": ""
+    }
+]
+
+4.
+post
+/items/updateInfo
+
+input:
+{
+    "id":"08a2a8e3-6d0f-4324-915b-13d8a65466db",
+    "name":"updatedto00301",
+    "imgURL":"www.urlforitem0301.com",
+    "description":"yeah it's saturday now 0031",
+    "price":"1102",
+    "category":"情趣",
+    "stock":"20"
+}
+output:
+
+5.
+post
+/items/searchGoodsbyKeyword
+
+input:
+{
+    "keywords" : "賣老婆",
+    "orderBy" :"asc",
+    "orderByKeyword" : "name" 
+}
+
+output:
+[
+    {
+        "id": "a54b5e52-a7cc-495f-af4e-827c518d520e",
+        "name": "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+        "imgURL": "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+        "price": 1234,
+        "sales": 0,
+        "stock": 1234,
+        "category": ""
+    },
+    {
+        "id": "269dd754-ac8c-4944-9aa5-36ea7a2362ed",
+        "name": "賣老婆3 西野加奈 nishino kana 可愛日本人妻 明星 美女",
+        "imgURL": "https://img-mdpr.freetls.fastly.net/article/f3vH/nm/f3vHiaNO-ztQzQNTADH6W8gpbgB32ZocMbufVbJNSXw.jpg",
+        "price": 1234,
+        "sales": 0,
+        "stock": 1234,
+        "category": ""
+    }
+]
