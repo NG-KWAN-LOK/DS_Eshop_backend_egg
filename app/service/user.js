@@ -11,6 +11,7 @@ class UserService extends Service {
         const userID = result['dataValues']['id'];
         return userID;
     }
+
     async getNameByID(user_id) {
         const { ctx } = this;
         // console.log("seller Id is : ", user_id);
@@ -20,6 +21,23 @@ class UserService extends Service {
         const name = result['dataValues']['name'];
 
         return name;
+    }
+
+    async ChangeInfo(userID,NewData) {
+        const { ctx } = this;
+        let result;
+        await ctx.model.Order.findByPk(OrderID)
+            .then((foundOrder) => {
+            result = 'ok';
+            foundOrder.update({
+                name : NewData.customerName,
+                telephone : NewData.phoneNumber,
+                email : NewData.email,
+                address : NewData.address
+            });
+            })
+            .catch(err => { result = err; });
+    return result;
     }
 }
 
