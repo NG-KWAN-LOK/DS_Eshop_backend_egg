@@ -129,6 +129,7 @@ respond:
     customerName: "",
     customerAddress:"",
     customerPhoneNumber:"",
+    createDate:"2020-12-07",
     goodsList: [{
       goodId: "0",
       name:
@@ -187,8 +188,10 @@ respond:
 {
     orderId: "0",
     status: "1", //狀態(0:已取消,1:備貨中,2:待出貨,3:待收貨,4已完成)
+    sellerUserId:"",
     sellerUserName:"",
     sellerName: "",
+    createDate:"2020-12-07",
     goodsList: [{
       goodId: "0",
       name:
@@ -209,7 +212,9 @@ respond:
   {
     orderId: "1",
     status: "4", //狀態(0:已取消,1:備貨中,2:待出貨,3:待收貨,4已完成)
+    sellerUserId:"",
     sellerName: "",
+    createDate:"2020-12-07",
     goodsList: [{
       goodId: "0",
       name:
