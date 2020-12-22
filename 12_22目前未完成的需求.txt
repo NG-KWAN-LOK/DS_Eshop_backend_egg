@@ -5,7 +5,9 @@ post request:
     keywords = "abc",
     orderBy = "asc",	//可轉desc
     orderByKeyword = "" //可選name/price/sales
-    category = "",	//可選擇
+    category = "女裝",	//sort,可選擇(如是""則忽略)
+    minPrice = "0",     //sort價錢範圍(minPrice - maxPrice)如是""則忽略
+    maxPrice = "100"    //
 }
 
 respond:
@@ -17,6 +19,7 @@ goodList = [{
     price: "999",
     sales: 10,
     stock: 99,
+    category: "其他類別",
   },
     {
     id: "1gkldfjgkfdjgkldfjgdfg",
@@ -27,6 +30,7 @@ goodList = [{
     price: "999",
     sales: 10,
     stock: 99,
+    category: "其他類別",
   },
   {
     id: "1gkldfjgkfdjgkldfjgdfg",
@@ -37,8 +41,36 @@ goodList = [{
     price: "999",
     sales: 10,
     stock: 99,
+    category: "其他類別",
   },
 ]
+###############################################################
+12:edit goods info
+post requset
+{
+    id: "0",
+    name:"賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+    imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+    description: "",
+    price: "999",
+    sales: "1000",
+    category: "其他類別",
+    stock: "10",
+}
+respond:state code is OK
+###############################################################
+8:Seller Page New Product
+{
+    userToken : "",
+    name:"",
+    description:"",
+    imgURL:"",
+    price:"",
+    stock:"",
+    is_Display: "false",
+    category: "其他類別",
+}
+respond:state code is OK
 ###############################################################
 
 5:刪除Shopping Cart
@@ -93,6 +125,10 @@ respond:
 {
     orderId: "0",
     status: "1", //狀態(0:已取消,1:備貨中,2:待出貨,3:待收貨,4已完成)
+    customerUserName:"",
+    customerName: "",
+    customerAddress:"",
+    customerPhoneNumber:"",
     goodsList: [{
       goodId: "0",
       name:
@@ -151,6 +187,7 @@ respond:
 {
     orderId: "0",
     status: "1", //狀態(0:已取消,1:備貨中,2:待出貨,3:待收貨,4已完成)
+    sellerUserName:"",
     sellerName: "",
     goodsList: [{
       goodId: "0",
@@ -230,6 +267,7 @@ respond:
     price: "999",
     stock: "999",
     isDisplay: "true", //是否上架
+    category: "其他類別",
   },
     {
     id: "1gkldfjgkfdjgkldfjgdfg",
@@ -240,6 +278,7 @@ respond:
     price: "999",
     stock: "999",
     isDisplay: "true" //是否上架
+    category: "其他類別",
   },
 ]
 }

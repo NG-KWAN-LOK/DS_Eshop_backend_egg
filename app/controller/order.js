@@ -30,19 +30,19 @@ class OrderController extends Controller {
       where: { id: ItemsinOrder.item_id }
     });
     var i;
-    const res;
+    const res = {};
     for (i = 0; i < Ordercount; i++) {
       const ItemsWanted = {
-        goodId = ItemsinOrder.item_id,
-        name = ItemsinOrder.items_name,
-        imgURL = ItemsinOrder.items_url,
-        price = ItemsInfo.price,
-        count = ItemsinOrder.items_quantity
+        goodId: ItemsinOrder.item_id,
+        name: ItemsinOrder.items_name,
+        imgURL: ItemsinOrder.items_url,
+        price: ItemsInfo.price,
+        count: ItemsinOrder.items_quantity
       }
       Object.assign(res, {
-        orderID = Ordersfound.orderID,
-        status = Ordersfound.status,
-        goodsList = ItemsWanted,
+        orderID: Ordersfound.orderID,
+        status: Ordersfound.status,
+        goodsList: ItemsWanted,
       });
     }
     ctx.body = res;
