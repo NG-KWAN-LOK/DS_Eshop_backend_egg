@@ -9,7 +9,7 @@ class OrderController extends Controller {
 
   async SellerGetOrder() {
     const { ctx } = this;
-    const { orderItems,Order,Items } = ctx.model;
+    const { orderItems,Order,Items,Users } = ctx.model;
     let username, user_id;
     const usertoken = ctx.request.body.userToken;
 
@@ -20,28 +20,29 @@ class OrderController extends Controller {
     else { throw new ErrorRes(13001, userData.data, 400); }
     // find id by username
     user_id = await ctx.service.user.getUserID(userPayload.username);
-    username = await ctx.service.user.getNameByID(user_id);
-    const Orders = await Order.findAll();
-    const Ordercount = await Order.count({ where : {seller_id : user_id}});
-    const ItemsinOrder = await orderItems.findAll({
-        where : {order_no:Orders.orderID}
-    });
-    const ItemsInfo = await Items.findAll({
-        where : {id : ItemsinOrder.item_id}
-    });
+    const OrderList = await orderItems.aggregate('order_no','DISTINCT',{plain : false},{where : {seller_id : user_id}});
     var i;
     const res={};
-    for (i=0;i<Ordercount;i++){
+    for (const OrderID in OrderList){
+      const CurrentOrder = await Order.findOne({where : {no : OrderID}});
+      const ItemList = await orderItems.findAll({where : {seller_id : user_id}});
+      const ItemsInfo = await Items.findOne({
+        where : {id : ItemList.item_id}
+      });
       const ItemsWanted = {
-        goodId : ItemsinOrder.item_id,
-        name : ItemsinOrder.items_name,
-        imgURL : ItemsinOrder.items_url,
+        goodId : ItemList.item_id,
+        name : ItemList.items_name,
+        imgURL : ItemList.items_url,
         price : ItemsInfo.price,
-        count : ItemsinOrder.items_quantity
+        count : ItemList.items_quantity
       }
       Object.assign(res,{
-        orderID : Ordersfound.orderID,
-        status : Ordersfound.status,
+        orderID : CurrentOrder.orderID,
+        status : CurrentOrder.status,
+        customerUserName : await ctx.service.user.getNameByID(CurrentOrder.user_id),
+        customerName : await ctx.service.user.getUNameByID(CurrentOrder.user_id),
+        customerAddress : userData.address,
+        customerPhoneNumber : userData.telephone,
         goodsList : ItemsWanted,
       });
     }
