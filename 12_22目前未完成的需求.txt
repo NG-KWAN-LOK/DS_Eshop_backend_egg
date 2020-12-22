@@ -5,7 +5,7 @@ post request:
     keywords = "abc",
     orderBy = "asc",	//可轉desc
     orderByKeyword = "" //可選name/price/sales
-    category = "女裝",	//sort,可選擇(如是""則忽略)
+    category = "1",	//sort,可選擇(如是""則忽略)
     minPrice = "0",     //sort價錢範圍(minPrice - maxPrice)如是""則忽略
     maxPrice = "100"    //
 }
