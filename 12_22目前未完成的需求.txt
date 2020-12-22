@@ -44,33 +44,7 @@ goodList = [{
     category: "其他類別",
   },
 ]
-###############################################################
-12:edit goods info
-post requset
-{
-    id: "0",
-    name:"賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
-    imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
-    description: "",
-    price: "999",
-    sales: "1000",
-    category: "其他類別",
-    stock: "10",
-}
-respond:state code is OK
-###############################################################
-8:Seller Page New Product
-{
-    userToken : "",
-    name:"",
-    description:"",
-    imgURL:"",
-    price:"",
-    stock:"",
-    is_Display: "false",
-    category: "其他類別",
-}
-respond:state code is OK
+
 ###############################################################
 
 5:刪除Shopping Cart
