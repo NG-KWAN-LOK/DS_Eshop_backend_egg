@@ -9,9 +9,8 @@ class OrderController extends Controller {
 
   async SellerGetOrder() {
     const { ctx } = this;
-    const { orderItems,Order,Items,Users } = ctx.model;
     const { orderItems, Order, Items } = ctx.model;
-    let username, user_id;
+    let user_id;
     const usertoken = ctx.request.body.userToken;
 
     // extract data from token
@@ -22,7 +21,6 @@ class OrderController extends Controller {
     // find id by username
     user_id = await ctx.service.user.getUserID(userPayload.username);
     const OrderList = await orderItems.aggregate('order_no','DISTINCT',{plain : false},{where : {seller_id : user_id}});
-    var i;
     const res={};
     for (const OrderID in OrderList){
       const CurrentOrder = await Order.findOne({where : {no : OrderID}});
@@ -44,6 +42,7 @@ class OrderController extends Controller {
         customerName : await ctx.service.user.getUNameByID(CurrentOrder.user_id),
         customerAddress : userData.address,
         customerPhoneNumber : userData.telephone,
+        createDate : CurrentOrder.created_at,
         goodsList : ItemsWanted,
       });
     }
@@ -67,6 +66,47 @@ class OrderController extends Controller {
       .catch(err => { ctx.status = 400; });
   }
 
+  async BuyerGetOrder() {
+    const { ctx } = this;
+    const { orderItems, Order, Items } = ctx.model;
+    let username, user_id;
+    const usertoken = ctx.request.body.userToken;
+
+    // extract data from token
+    const userData = await ctx.service.utils.getTokenData(usertoken)
+      .catch((err) => { throw new ErrorRes(13001, err, 400); });
+    if (userData.error === "ok") { userPayload = userData.data; }
+    else { throw new ErrorRes(13001, userData.data, 400); }
+    // find id by username
+    userid = await ctx.service.user.getUserID(userPayload.username);
+    const OrderList = await Order.aggregate('order_no','DISTINCT',{plain : false},{where : {user_id: userid}});
+    const res={};
+    for (const OrderID in OrderList){
+      const CurrentOrder = await Order.findOne({where : {no : OrderID}});
+      const ItemList = await orderItems.findAll({where : {order_no: OrderID}});
+      const ItemsInfo = await Items.findOne({
+        where : {id : ItemList.item_id}
+      });
+      const ItemsWanted = {
+        goodId : ItemList.item_id,
+        name : ItemList.items_name,
+        imgURL : ItemList.items_url,
+        price : ItemsInfo.price,
+        count : ItemList.items_quantity
+      }
+      Object.assign(res,{
+        orderID : CurrentOrder.orderID,
+        status : CurrentOrder.status,
+        customerUserName : await ctx.service.user.getNameByID(CurrentOrder.userid),
+        customerName : await ctx.service.user.getUNameByID(CurrentOrder.userid),
+        customerAddress : userData.address,
+        customerPhoneNumber : userData.telephone,
+        createDate : CurrentOrder.created_at,
+        goodsList : ItemsWanted,
+      });
+    }
+    ctx.body = res;
+  }
 }
 
 module.exports = OrderController;
