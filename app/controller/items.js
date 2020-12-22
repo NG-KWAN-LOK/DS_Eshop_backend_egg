@@ -217,8 +217,9 @@ class ItemsController extends Controller {
         let res;
         const _minPrice = (ctx.request.body.minPrice === "") ? 0 : ctx.request.body.minPrice;
         const _maxPrice = (ctx.request.body.maxPrice === "") ? 9999999 : ctx.request.body.maxPrice;
+        const splitKeywords = ctx.request.body.keywords.split(' ');
         const reqData = {
-            keywords: ctx.request.body.keywords,
+            keywords: splitKeywords,
             orderBy: ctx.request.body.orderBy,	//可轉desc
             orderByKeyword: ctx.request.body.orderByKeyword,//可選name/price/sales
             category: ctx.request.body.category,//sort,可選擇(如是""則忽略)
@@ -226,7 +227,7 @@ class ItemsController extends Controller {
             maxPrice: _maxPrice   //
         }
         if (ctx.request.body.category === "") { res = await ctx.service.items.searchGoodsbyKeyword(reqData); }
-        else { res = await ctx.service.items.searchGoodsbyKeyword(reqData); }
+        else { res = await ctx.service.items.searchGoodsWithCategory(reqData); }
 
 
         if (res === 'err') { ctx.body = '404 ' + res; console.log(res); ctx.status = 400; return; }

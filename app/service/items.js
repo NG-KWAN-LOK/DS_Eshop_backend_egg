@@ -39,16 +39,14 @@ class ItemsService extends Service {
   async searchGoodsbyKeyword(requestData) {
     const { ctx } = this;
     let _err = false;
-    console.log('requestData : ', requestData);
-    // const keywords = ctx.request.body.keywords.split(' ');
-    // console.log('requestData : ', requestData.keywords);
-
     const res = await ctx.model.Items.findAll({
       attributes: ['id', 'name', 'image_url', 'price', 'remain_quantity', 'sales', 'category'],
       order: [[requestData.orderByKeyword, requestData.orderBy]],
       where: {
-        name: { [Op.substring]: requestData.keywords },
+        //多個關鍵字keyword 用or尋找實現
+        name: { [Op.regexp]: requestData.keywords.join('|') },
         is_display: true,
+        price: { [Op.between]: [requestData.minPrice, requestData.maxPrice], },
       }
     }).then(res => {
       let goodlist = [];
@@ -72,18 +70,18 @@ class ItemsService extends Service {
 
   }
 
-  async searchGoodsWithCategory() {
+  async searchGoodsWithCategory(requestData) {
     const { ctx } = this;
     let _err = false;
-    // console.log('key : ', ctx.request.body.keywords);
     // const keywords = ctx.request.body.keywords.split(' ');
     const res = await ctx.model.Items.findAll({
       attributes: ['id', 'name', 'image_url', 'price', 'remain_quantity', 'sales', 'category'],
-      order: [[requestData.orderByKeyword, requestData.orderSeq]],
+      order: [[requestData.orderByKeyword, requestData.orderBy]],
       where: {
-        name: { [Op.substring]: requestData.keywords },
+        name: { [Op.regexp]: requestData.keywords.join('|') },
         is_display: true,
         price: { [Op.between]: [requestData.minPrice, requestData.maxPrice], },
+        category: requestData.category,
       }
     }).then(res => {
       let goodlist = [];
