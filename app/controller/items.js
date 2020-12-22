@@ -214,34 +214,22 @@ class ItemsController extends Controller {
     async searchGoodsbyKeyword() {
         const { ctx } = this;
         let _err = false;
-        // console.log('key : ', ctx.request.body.keywords);
-        // const keywords = ctx.request.body.keywords.split(' ');
-        const keywords = ctx.request.body.keywords;
-        console.log('keywords ', keywords);
-        const res = await ctx.model.Items.findAll({
-            attributes: ['id', 'name', 'image_url', 'price', 'remain_quantity', 'sales', 'category'],
-            order: [[ctx.request.body.orderByKeyword, ctx.request.body.orderBy]],
-            where: {
-                name: { [Op.substring]: keywords },
-                is_display: true
-            }
-        }).then(res => {
-            let goodlist = [];
-            for (let i = 0; i < res.length; i++) {
-                goodlist.push({
-                    "id": res[i].dataValues.id,
-                    "name": res[i].dataValues.name,
-                    "imgURL": res[i].dataValues.image_url,
-                    "price": res[i].dataValues.price,
-                    "sales": res[i].dataValues.sales,
-                    "stock": res[i].dataValues.remain_quantity,
-                    "category": res[i].dataValues.category,
-                });
-            }
-            return goodlist;
-        })
-            .catch(err => { _err = true; console.log(err); return err; });
-        if (_err === true) { ctx.body = '404 ' + res; ctx.status = 400; return; }
+        let res;
+        const _minPrice = (ctx.request.body.minPrice === "") ? 0 : ctx.request.body.minPrice;
+        const _maxPrice = (ctx.request.body.maxPrice === "") ? 9999999 : ctx.request.body.maxPrice;
+        const reqData = {
+            keywords: ctx.request.body.keywords,
+            orderBy: ctx.request.body.orderBy,	//可轉desc
+            orderByKeyword: ctx.request.body.orderByKeyword,//可選name/price/sales
+            category: ctx.request.body.category,//sort,可選擇(如是""則忽略)
+            minPrice: _minPrice,    //sort價錢範圍(minPrice - maxPrice)如是""則忽略
+            maxPrice: _maxPrice   //
+        }
+        if (ctx.request.body.category === "") { res = await ctx.service.items.searchGoodsbyKeyword(reqData); }
+        else { res = await ctx.service.items.searchGoodsbyKeyword(reqData); }
+
+
+        if (res === 'err') { ctx.body = '404 ' + res; console.log(res); ctx.status = 400; return; }
         ctx.status = 200;
         ctx.body = res;
 

@@ -71,6 +71,16 @@ module.exports = app => {
     user_id: {
       type: Sequelize.UUID,
       allowNull: false,
+    },
+    sales: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      defaultValue: 0
+    },
+    category: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      defaultValue: "",
     }
   }, {
     freezeTableName: true,
