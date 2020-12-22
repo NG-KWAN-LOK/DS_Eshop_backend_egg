@@ -47,8 +47,9 @@ class ShoppingCartService extends Service {
             }
         })
             .then(findedItem => {
-                console.log(findedItem);
+                // console.log(findedItem);
                 findedItem.destroy();
+                return 'ok'
             })
             .catch(err => { console.log(err); return err; });
         console.log('delete : ', result);
@@ -81,7 +82,7 @@ class ShoppingCartService extends Service {
                 .catch(err => { return err; })
             return result;
         }
-        
+
     }
 
 }

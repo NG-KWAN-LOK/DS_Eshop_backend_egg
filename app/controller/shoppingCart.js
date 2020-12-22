@@ -21,14 +21,12 @@ class ShoppingCartController extends Controller {
 
         // use username finded by token get user's ID.
         user_id = await ctx.service.user.getUserID(userPayload.username);
-        // console.log('finded userid is : ', user_id);
 
         // find all user's item in shoppingCart
         const res = await ShoppingCart.findAll({
             // attributes: ['seller_id'],
             where: { user_id: user_id },
         }).then(res => {
-
             //儲存抓出不重複的seller_ID
             for (let i = 0; i < res.length; i++) {
                 // console.log('i: ', i, 'res', res[i]);
@@ -104,7 +102,30 @@ class ShoppingCartController extends Controller {
             .then(res => { if (res === 'ok') { ctx.status = 200; ctx.body = res } else { return res; } })
             .catch(err => { ctx.status = 400; ctx.body = err; return err; });
     }
-    
+
+    async deleteCartGood() {
+        const { ctx } = this;
+        const usertoken = ctx.request.body.userToken;
+        let userPayload;
+        console.log('Enter');
+        // Get user's token payload 
+        const userData = await ctx.service.utils.getTokenData(usertoken)
+            .catch((err) => { ctx.status = 400; ctx.body = err; });
+        if (userData.error === "ok") { userPayload = userData.data; }
+        else { ctx.status = 400; ctx.body = err; return; }
+
+        // use username finded by token get user's ID.
+        const user_id = await ctx.service.user.getUserID(userPayload.username);
+
+        //delete cart good
+        const result = await ctx.service.shoppingCart.deleteCartItem(user_id, ctx.request.body.goodId)
+            .then(res => { if (res === 'ok') { return 'ok' } else { return res; } })
+            .catch(err => { return err; });
+        if (result === 'ok') { ctx.body = result; ctx.status = 200; return }
+        else { ctx.body = result; ctx.status = 400; }
+
+    }
+
 }
 
 module.exports = ShoppingCartController;
