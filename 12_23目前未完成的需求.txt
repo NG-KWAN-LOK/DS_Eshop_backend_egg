@@ -30,7 +30,69 @@ respond:
   },
 ];
 }
-
+#######################################################################
+8:Seller Page New Product
+{
+    userToken : "",
+    name:"",
+    description:"",
+    imgURL:"",
+    price:"",
+    stock:"",
+    is_Display: "false",
+    category: "其他類別",
+    deleteHash:"",
+}
+respond:state code is OK
+########################################################################
+12:edit goods info
+post requset
+{
+    name:"賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+    imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+    description: "",
+    price: "999",
+    category: "其他類別",
+    stock: "10",
+    deleteHash:"",
+}
+respond:state code is OK
+#######################################################################
+7:Seller Page My Product
+{
+    userToken : "",
+    
+}
+respond:
+{
+    goodList = [{
+    id: "0jkdfgjkfdjgfhdkg",
+    name:
+      "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+    imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+    price: "999",
+    isDisplay: "true", //是否上架
+    sales: "10",
+    category: "其他類別",
+    stock: "10",
+    deleteHash:"",
+    
+  },
+    {
+    id: "1gkldfjgkfdjgkldfjgdfg",
+    name:
+      "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
+    imgURL:
+      "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
+    price: "999",
+    isDisplay: "true" //是否上架
+    category: "其他類別",
+    sales: "10",
+    stock: "10",
+    deleteHash:"",
+  },
+]
+}
 ########################################################################
 
 2.
@@ -86,10 +148,9 @@ respond:
     },]
   }
 ##################################################################
-seller 設定訂單物流狀態
+設定訂單物流狀態
 request:
 {
-    userToken : "",
     orderId: "0",
     status: "1", //狀態(0:已取消,1:備貨中,2:待出貨,3:待收貨,4已完成)
 }
@@ -170,7 +231,7 @@ respond:
     address: "",
 }
 ########################################################################
-6:增加訂單(買單)，增加後所持優惠卷刪除，減商品數量
+6:增加訂單(買單)，增加後所持優惠卷刪除，減商品數量，商品加sales數量
 {
     userToken : "", //將購物車資料增加至訂單中
     usedCoupon: "", //所使用的優惠卷 ""為無使用
