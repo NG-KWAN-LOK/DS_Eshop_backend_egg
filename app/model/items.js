@@ -82,7 +82,7 @@ module.exports = app => {
       allowNull: false,
       defaultValue: "",
     },
-    deleteHash: {
+    delete_hash: {
       type: Sequelize.STRING,
       allowNull: false,
       defaultValue: "",

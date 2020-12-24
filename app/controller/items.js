@@ -50,7 +50,7 @@ class ItemsController extends Controller {
             "user_id": findedUserID,
             "sales": 0,
             "category": ctx.request.body.category,
-            "deleteHash": ctx.request.body.deleteHash
+            "delete_hash": ctx.request.body.deleteHash
         };
         //console.log('Userdata is :', itemData);
         await ctx.model.Items.create(itemData)
@@ -86,7 +86,7 @@ class ItemsController extends Controller {
             // console.log('usename is ::::', findedUsername);
         }
         await ctx.model.Items.findAll({
-            attributes: ['id', 'name', ['image_url', 'imgURL'], 'price', ["remain_quantity", "stock"], ['is_display', 'isDisplay'], 'sales', 'category','deleteHash', 'updated_at'],
+            attributes: ['id', 'name', ['image_url', 'imgURL'], 'price', ["remain_quantity", "stock"], ['is_display', 'isDisplay'], 'sales', 'category', ['delete_hash', 'deleteHash'], 'updated_at'],
             where: {
                 user_id: findedUserID,
             },
@@ -99,7 +99,6 @@ class ItemsController extends Controller {
                 // console.log('Datares.....:', res, 'length: ', res.length);
                 let resData = [];
                 for (let i = 0; i < res.length; i++) {
-
                     // console.log('1', res[i].dataValues.category);    
                     resData.push(res[i].dataValues);
                     // console.log(i, 'is :', res[i].dataValues);
@@ -107,7 +106,7 @@ class ItemsController extends Controller {
                 console.log('finished search');
                 ctx.body = resData;
             })
-            .catch((err) => { ctx.status = 400; ctx.body = '404 for get userData'; return; });
+            .catch((err) => { ctx.status = 400; ctx.body = '404 for get userData'; console.log(err); return; });
     }
     async getItemsbyIsDisplay() {
         const { ctx } = this;
@@ -184,7 +183,7 @@ class ItemsController extends Controller {
                     "price": ctx.request.body.price,
                     "category": ctx.request.body.category,
                     "remain_quantity": ctx.request.body.stock,
-                    "deleteHash": ctx.request.body.deleteHash
+                    "delete_hash": ctx.request.body.deleteHash
                 }).then((r) => { ctx.status = 200; ctx.body = 'ok'; return; })
                     .catch((e) => { ctx.status = 400; console.log(e); ctx.body = ('error' + e); return; });
             })
