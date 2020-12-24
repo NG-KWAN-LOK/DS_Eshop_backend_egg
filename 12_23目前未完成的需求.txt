@@ -32,6 +32,7 @@ respond:
 }
 #######################################################################
 8:Seller Page New Product
+: /items/new
 {
     userToken : "",
     name:"",
@@ -46,6 +47,8 @@ respond:
 respond:state code is OK
 ########################################################################
 12:edit goods info
+: /items/updateInfo
+
 post requset
 {
     name:"賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
@@ -59,6 +62,7 @@ post requset
 respond:state code is OK
 #######################################################################
 7:Seller Page My Product
+: /items/getAllItems
 {
     userToken : "",
     

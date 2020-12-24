@@ -49,7 +49,8 @@ class ItemsController extends Controller {
             "is_display": ctx.request.body.is_Display,
             "user_id": findedUserID,
             "sales": 0,
-            "category": ctx.request.body.category
+            "category": ctx.request.body.category,
+            "deleteHash": ctx.request.body.deleteHash
         };
         //console.log('Userdata is :', itemData);
         await ctx.model.Items.create(itemData)
@@ -85,7 +86,7 @@ class ItemsController extends Controller {
             // console.log('usename is ::::', findedUsername);
         }
         await ctx.model.Items.findAll({
-            attributes: ['id', 'name', ['image_url', 'imgURL'], 'price', ["remain_quantity", "stock"], ['is_display', 'isDisplay'], 'sales', 'category', 'updated_at'],
+            attributes: ['id', 'name', ['image_url', 'imgURL'], 'price', ["remain_quantity", "stock"], ['is_display', 'isDisplay'], 'sales', 'category','deleteHash', 'updated_at'],
             where: {
                 user_id: findedUserID,
             },
@@ -182,7 +183,8 @@ class ItemsController extends Controller {
                     "description": ctx.request.body.description,
                     "price": ctx.request.body.price,
                     "category": ctx.request.body.category,
-                    "remain_quantity": ctx.request.body.stock
+                    "remain_quantity": ctx.request.body.stock,
+                    "deleteHash": ctx.request.body.deleteHash
                 }).then((r) => { ctx.status = 200; ctx.body = 'ok'; return; })
                     .catch((e) => { ctx.status = 400; console.log(e); ctx.body = ('error' + e); return; });
             })
