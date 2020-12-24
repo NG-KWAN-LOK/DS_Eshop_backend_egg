@@ -19,6 +19,7 @@ module.exports = app => {
   router.post('/items/searchGoodsbyKeyword', controller.items.searchGoodsbyKeyword);
   router.get('/items/getHotsalesGoods', controller.items.getHotsalesGoods);
 
+  router.post('/comment/create', controller.comment.create);
 
   router.get('/sth', controller.home.something);
   router.post('/session/login', controller.session.login);

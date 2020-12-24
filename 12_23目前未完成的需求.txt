@@ -1,5 +1,5 @@
-
 10:增加comment
+: /comment/create
 {
     userToken : "",
     goodsId: "",
