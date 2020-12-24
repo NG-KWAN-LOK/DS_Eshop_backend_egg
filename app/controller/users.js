@@ -105,7 +105,12 @@ class UserController extends Controller {
     const {ctx} = this;
     const {request,response} = ctx;
     const usertoken = ctx.request.body.userToken;
-    const NewData = (request.body.customerName,request.body.phoneNumber,request.body.email,request.body.address);
+    const NewData = {
+      customerName : request.body.customerName,
+      phoneNumber : request.body.phoneNumber,
+      email : request.body.email,
+      address : request.body.address
+    };
     let userPayload;
     console.log('Enter');
     // Extract token data 
@@ -114,9 +119,13 @@ class UserController extends Controller {
     if (userData.error === "ok") { userPayload = userData.data; }
     else { ctx.status = 400; ctx.body = err; return; }
     const result = await ctx.service.user.ChangeInfo(userData.id, NewData);
-    const res = NewData;
-    ctx.body = NewData;
-    ctx.status = 200;
+    if (result=='ok'){
+      const res = NewData;
+      ctx.body = res;
+      ctx.status = 200;
+    } else {
+      throw new ErrorRes(15001, 'Input or server error, please check your request or contact backend', 400);  
+    }
   }
 };
 
