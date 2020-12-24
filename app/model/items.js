@@ -81,6 +81,11 @@ module.exports = app => {
       type: Sequelize.STRING,
       allowNull: false,
       defaultValue: "",
+    },
+    deleteHash: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      defaultValue: "",
     }
   }, {
     freezeTableName: true,
