@@ -17,6 +17,11 @@ module.exports = app => {
       type: Sequelize.UUID,
       allowNull: false,
     },
+    user_name: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      defaultValue: ""
+    },
     content: {
       type: Sequelize.STRING,
       allowNull: false
