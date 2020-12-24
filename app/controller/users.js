@@ -111,14 +111,12 @@ class UserController extends Controller {
       email : request.body.email,
       address : request.body.address
     };
-    let userPayload;
     console.log('Enter');
     // Extract token data 
     const userData = await ctx.service.utils.getTokenData(usertoken)
+    const user_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
       .catch((err) => { ctx.status = 400; ctx.body = err; });
-    if (userData.error === "ok") { userPayload = userData.data; }
-    else { ctx.status = 400; ctx.body = err; return; }
-    const result = await ctx.service.user.ChangeInfo(userData.id, NewData);
+    const result = await ctx.service.user.ChangeInfo(user_id, NewData);
     if (result=='ok'){
       const res = NewData;
       ctx.body = res;
