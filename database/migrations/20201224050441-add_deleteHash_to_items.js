@@ -10,7 +10,7 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('items');
+    // await queryInterface.dropTable('items');
     /*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.
