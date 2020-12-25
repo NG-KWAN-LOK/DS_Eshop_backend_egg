@@ -158,7 +158,7 @@ class ItemsController extends Controller {
         const itemID = ctx.request.query.id;
         const res = await ctx.model.Items.findOne(
             {
-                attributes: ['id', 'name', ['image_url', 'imgURL'], 'description', 'price', 'sales', 'category', ['remain_quantity', 'stock'], ['is_display', 'isDisplay']],
+                attributes: ['id', 'name', ['image_url', 'imgURL'], 'description', 'price', 'sales', 'category', ['remain_quantity', 'stock'], ['is_display', 'isDisplay'], ['delete_hash', 'deleteHash']],
                 where: { id: itemID }
             })
             .then((res) => {
