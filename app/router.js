@@ -38,4 +38,5 @@ module.exports = app => {
   router.post('/buyermenu/getmyorders', controller.order.BuyerGetOrder);
 
   router.post('/coupon/create',controller.coupon.create);
+  router.post('/coupon/modify',controller.coupon.Modify);
 };

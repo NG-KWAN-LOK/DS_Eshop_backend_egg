@@ -291,15 +291,21 @@ response:
 OK
 ########################################################################
 Admin 修改優惠卷
-respon:
+request:
 {
     couponName: "",
+    NewcouponName: "",
     discountContent: "",
     startDate:"",
     endDate: "",
 }
-request:
-OK
+response:
+{
+      couponName : "",
+      discount_rate : "",
+      startdate : "",
+      enddate : ""
+}
 ########################################################################
 7:customer取得優惠卷
 {

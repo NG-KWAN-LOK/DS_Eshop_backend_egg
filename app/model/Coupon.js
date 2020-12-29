@@ -4,15 +4,10 @@ module.exports = app => {
   const { Sequelize } = app;
 
   const Coupon = app.model.define('Coupon', {
-    coupon_id: {
-      primaryKey: true,
-      type: Sequelize.UUID,
-      unique: true,
-      allowNull: false,
-      defaultValue: Sequelize.UUIDV4,
-    },
     content: {
+      primaryKey:true,
       type: Sequelize.STRING,
+      unique: true,
       allowNull: false,
     },
     discount_rate: {
