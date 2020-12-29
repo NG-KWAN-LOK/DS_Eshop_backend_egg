@@ -31,6 +31,7 @@ class CommentController extends Controller {
   async findAll() {
     const { ctx } = this;
     let _err = false;
+    //找comment 所有資料 by goodId
     const res = await ctx.model.Comment.findAll({
       attributes: [['user_id', 'userId'], ['user_name', 'userName'], ['updated_at', 'date'], 'content'],
       where: { items_id: ctx.request.body.goodsId },
