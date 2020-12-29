@@ -25,7 +25,7 @@ post request:
 respond:
 OK
 
-3:customer更改用戶資料
+3:(ok)customer更改用戶資料
 post request:
 {
     userToken: "",

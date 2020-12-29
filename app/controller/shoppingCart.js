@@ -135,6 +135,10 @@ class ShoppingCartController extends Controller {
         if (userData.error === "ok") { userData = tokenPayload.data; }
         else { ctx.status = 400; ctx.body = err; return; }
         const user_id = await ctx.service.user.getUserID(userData.username);
+        // find all user's item in shoppingCart
+        const cartcontent = await ShoppingCart.findAll({
+            where: { user_id: user_id },
+        })
         
     }
 }
