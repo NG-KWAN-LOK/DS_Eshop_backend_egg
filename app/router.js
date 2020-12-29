@@ -36,4 +36,6 @@ module.exports = app => {
   router.post('/sellermenu/setorderstate', controller.order.SellerSetOrderStatus);
 
   router.post('/buyermenu/getmyorders', controller.order.BuyerGetOrder);
+
+  router.post('/coupon/create',controller.coupon.create);
 };

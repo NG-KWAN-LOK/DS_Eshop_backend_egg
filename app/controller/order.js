@@ -18,8 +18,8 @@ class OrderController extends Controller {
     const user_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
       .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err; _err = true; return err; });
     // find id by username
-    const OrderList = await OrderItems.aggregate('orderNo','DISTINCT',{plain : false},{where : {seller_id : user_id}});
-    const res={};
+    const OrderList = await OrderItems.aggregate('order_no','DISTINCT',{plain : false},{where : {seller_id : user_id}});
+    let res={};
     for (const OrderID in OrderList){
       const CurrentOrder = await Order.findOne({where : {no : OrderID}});
       const ItemList = await orderItems.findAll({where : {seller_id : user_id}});
@@ -44,7 +44,7 @@ class OrderController extends Controller {
         goodsList : ItemsWanted,
       });
     }
-    ctx.body = OrderList;
+    ctx.body = res;
   }
 
   async SellerSetOrderStatus() {
@@ -66,19 +66,19 @@ class OrderController extends Controller {
 
   async BuyerGetOrder() {
     const { ctx } = this;
-    const { orderItems, Order, Items } = ctx.model;
-    let username, user_id;
+    const { OrderItems, Order, Items } = ctx.model;
     const usertoken = ctx.request.body.userToken;
+    let userPayload;
 
     // extract data from token
     const userData = await ctx.service.utils.getTokenData(usertoken)
       .catch((err) => { throw new ErrorRes(13001, err, 400); });
+    const userid = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
+      .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err; _err = true; return err; });
     if (userData.error === "ok") { userPayload = userData.data; }
     else { throw new ErrorRes(13001, userData.data, 400); }
-    // find id by username
-    userid = await ctx.service.user.getUserID(userPayload.username);
-    const OrderList = await Order.aggregate('order_no','DISTINCT',{plain : false},{where : {user_id: userid}});
-    const res={};
+    const OrderList = await OrderItems.aggregate('order_no','DISTINCT',{plain : false},{where : {user_id: userid}});
+    let res={};
     for (const OrderID in OrderList){
       const CurrentOrder = await Order.findOne({where : {no : OrderID}});
       const ItemList = await orderItems.findAll({where : {order_no: OrderID}});

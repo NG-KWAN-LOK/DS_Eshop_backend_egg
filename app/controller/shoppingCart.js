@@ -125,7 +125,18 @@ class ShoppingCartController extends Controller {
         else { ctx.body = result; ctx.status = 400; }
 
     }
-
+    async Checkout(){
+        const {ctx} = this;
+        const usertoken = ctx.request.body.userToken;
+       let userData;
+        // Extrac userdata 
+        const tokenPayload = await ctx.service.utils.getTokenData(usertoken)
+            .catch((err) => { ctx.status = 400; ctx.body = err; });
+        if (userData.error === "ok") { userData = tokenPayload.data; }
+        else { ctx.status = 400; ctx.body = err; return; }
+        const user_id = await ctx.service.user.getUserID(userData.username);
+        
+    }
 }
 
 module.exports = ShoppingCartController;

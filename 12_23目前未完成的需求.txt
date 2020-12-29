@@ -209,25 +209,6 @@ respond:
       count: 4,
     },]
   }
-#########################################################################
-5.
-customer更改用戶資料
-post request:
-{
-    userToken: "",
-    customerName: "",
-    phoneNumber: "",
-    email: "",
-    address: "",
-    
-}
-respond:
-{
-    customerName: "",
-    phoneNumber: "",
-    email: "",
-    address: "",
-}
 ########################################################################
 6:增加訂單(買單)，增加後所持優惠卷刪除，減商品數量，商品加sales數量
 {
@@ -299,14 +280,14 @@ respond:
 OK
 ########################################################################
 Admin 增新優惠卷
-respon:
+request:
 {
     couponName: "",
     discountContent: "",
     startDate:"",
     endDate: "",
 }
-request:
+response:
 OK
 ########################################################################
 Admin 修改優惠卷
