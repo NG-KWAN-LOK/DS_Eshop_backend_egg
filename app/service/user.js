@@ -26,7 +26,7 @@ class UserService extends Service {
     async ChangeInfo(userID,NewData) {
         const { ctx } = this;
         let result;
-        await ctx.model.Order.findByPk(userID)
+        await ctx.model.Users.findByPk(userID)
             .then((foundOrder) => {
             result = 'ok';
             foundOrder.update({

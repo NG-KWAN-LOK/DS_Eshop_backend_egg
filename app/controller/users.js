@@ -111,13 +111,16 @@ class UserController extends Controller {
       email : request.body.email,
       address : request.body.address
     };
+    let sumtingwong = false;
     console.log('Enter');
     // Extract token data 
     const userData = await ctx.service.utils.getTokenData(usertoken)
     const user_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
-      .catch((err) => { ctx.status = 400; ctx.body = err; });
+      .then(res => { return res['dataValues']['id']; })
+      .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err; sumtingwong = true; return err; });
+    if (sumtingwong === true) { return; }
     const result = await ctx.service.user.ChangeInfo(user_id, NewData);
-    if (result=='ok'){
+    if (result==='ok'){
       const res = NewData;
       ctx.body = res;
       ctx.status = 200;
