@@ -3,25 +3,36 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('orderItems', {
-      orderNo: {
-        primaryKey: true,
+      item_id: {
         foreignKey: true,
         type: Sequelize.UUID,
+        allowNull: false,
       },
-      itemsId: {
-        primaryKey: true,
+      order_no: {
         foreignKey: true,
         type: Sequelize.UUID,
+        allowNull: false,
       },
-      itemsSub_Id: {
-        primaryKey: true,
+      seller_id: {
         foreignKey: true,
         type: Sequelize.UUID,
+        allowNull: false,
+        defaultValue: ""
       },
-      quantity: {
+      items_quantity: {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 0,
+      },
+      items_url: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ""
+      },
+      items_name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ""
       },
       created_at: Sequelize.DATE,
       updated_at: Sequelize.DATE,

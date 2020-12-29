@@ -9,18 +9,16 @@ class OrderController extends Controller {
 
   async SellerGetOrder() {
     const { ctx } = this;
-    const { orderItems, Order, Items } = ctx.model;
-    let user_id;
+    const { OrderItems, Order, Items } = ctx.model;
     const usertoken = ctx.request.body.userToken;
 
     // extract data from token
     const userData = await ctx.service.utils.getTokenData(usertoken)
       .catch((err) => { throw new ErrorRes(13001, err, 400); });
-    if (userData.error === "ok") { userPayload = userData.data; }
-    else { throw new ErrorRes(13001, userData.data, 400); }
+    const user_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
+      .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err; _err = true; return err; });
     // find id by username
-    user_id = await ctx.service.user.getUserID(userPayload.username);
-    const OrderList = await orderItems.aggregate('order_no','DISTINCT',{plain : false},{where : {seller_id : user_id}});
+    const OrderList = await OrderItems.aggregate('orderNo','DISTINCT',{plain : false},{where : {seller_id : user_id}});
     const res={};
     for (const OrderID in OrderList){
       const CurrentOrder = await Order.findOne({where : {no : OrderID}});
@@ -46,7 +44,7 @@ class OrderController extends Controller {
         goodsList : ItemsWanted,
       });
     }
-    ctx.body = res;
+    ctx.body = OrderList;
   }
 
   async SellerSetOrderStatus() {

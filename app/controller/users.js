@@ -117,7 +117,7 @@ class UserController extends Controller {
     const userData = await ctx.service.utils.getTokenData(usertoken)
     const user_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
       .then(res => { return res['dataValues']['id']; })
-      .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err; _err = true; return err; });
+      .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err; sumtingwong = true; return err; });
     if (sumtingwong === true) { return; }
     const result = await ctx.service.user.ChangeInfo(user_id, NewData);
     if (result==='ok'){
