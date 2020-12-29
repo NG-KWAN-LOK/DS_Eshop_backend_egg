@@ -259,3 +259,67 @@ goodList = [{
 respond:
 OK
 ########################################################################
+10:增加comment
+(ok)
+: /comment/create
+{
+    userToken : "",
+    goodsId: "",
+    content: "很不錯的產品"
+}
+respond:OK
+#######################################################################
+11:取得商品comment
+(ok)
+: /comment/findAll
+{
+    goodsId: "",
+}
+respond:
+{
+  commentData = [
+  {
+    userId: "0",
+    userName: "admin",
+    date: "2020-12-07",
+    content: "很不錯的產品"
+  },
+  {
+    userId: "0",
+    userName: "peter",
+    date: "2020-12-07",
+    content: "爽的咧"
+  },
+];
+}
+#######################################################################
+8:Seller Page New Product
+: /items/new
+{
+    userToken : "",
+    name:"",
+    description:"",
+    imgURL:"",
+    price:"",
+    stock:"",
+    is_Display: "false",
+    category: "其他類別",
+    deleteHash:"",
+}
+respond:state code is OK
+########################################################################
+12:edit goods info
+: /items/updateInfo
+
+post requset
+{
+    name:"賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
+    imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
+    description: "",
+    price: "999",
+    category: "其他類別",
+    stock: "10",
+    deleteHash:"",
+}
+respond:state code is OK
+#######################################################################

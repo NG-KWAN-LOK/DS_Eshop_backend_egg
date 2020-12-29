@@ -1,69 +1,3 @@
-10:增加comment
-(ok)
-: /comment/create
-{
-    userToken : "",
-    goodsId: "",
-    content: "很不錯的產品"
-}
-respond:OK
-
-########################################################################
-
-11:取得商品comment
-(ok)
-: /comment/findAll
-{
-    goodsId: "",
-}
-respond:
-{
-  commentData = [
-  {
-    userId: "0",
-    userName: "admin",
-    date: "2020-12-07",
-    content: "很不錯的產品"
-  },
-  {
-    userId: "0",
-    userName: "peter",
-    date: "2020-12-07",
-    content: "爽的咧"
-  },
-];
-}
-#######################################################################
-8:Seller Page New Product
-: /items/new
-{
-    userToken : "",
-    name:"",
-    description:"",
-    imgURL:"",
-    price:"",
-    stock:"",
-    is_Display: "false",
-    category: "其他類別",
-    deleteHash:"",
-}
-respond:state code is OK
-########################################################################
-12:edit goods info
-: /items/updateInfo
-
-post requset
-{
-    name:"賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
-    imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
-    description: "",
-    price: "999",
-    category: "其他類別",
-    stock: "10",
-    deleteHash:"",
-}
-respond:state code is OK
-#######################################################################
 7:Seller Page My Product
 : /items/getAllItems
 {
@@ -311,6 +245,34 @@ response:
       enddate : ""
 }
 ########################################################################
+Admin 顯示所有優惠卷(get)
+respone:
+{
+    coupondList =[
+	{
+	    couponName: "",
+	    discountContent: "",
+	    startDate:"",
+	    endDate: "",
+	},
+	{
+	    couponName: "",
+	    discountContent: "",
+	    startDate:"",
+	    endDate: "",
+	}
+    ]
+}
+#######################################################################
+用couponName取得優惠卷資料(get)?couponName=
+respone:
+{
+	couponName: "",
+	discountContent: "",
+	startDate:"",
+	endDate: "",
+}
+#########################################################################
 7:customer取得優惠卷
 {
     userToken : "",
@@ -358,31 +320,6 @@ respond:
             startDate:"2020/12/18",
             endDate: "2020/12/30",
             isTook: false,(在前端會顯示他已領取，按鈕會灰掉)
-        },
-    ]
-}
-
-########################################################################
-9:取得customer所持有的優惠卷
-{
-    userToken : "",
-}
-respond:
-{
-    couponList:[
-        {
-            couponId: "0",
-            couponName: "",
-            discountContent: "",
-            startDate:"",
-            endDate: "",
-        },
-        {
-            couponId: "1",
-            couponName: "",
-            discountContent: "",
-            startDate:"",
-            endDate: "",
         },
     ]
 }
