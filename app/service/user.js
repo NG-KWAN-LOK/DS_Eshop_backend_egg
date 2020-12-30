@@ -67,6 +67,14 @@ class UserService extends Service {
             .catch(err => { console.log(err); return 'err'; });
         return res;
     }
+    async deleteUser(user_id) {
+        const { ctx } = this;
+        //delete user by his ID
+        const res = await ctx.model.Users.findOne({ where: { id: user_id } })
+            .then(res => { res.destroy(); return 'ok'; })
+            .catch(err => { console.log(err); return 'err' });
+        return res;
+    }
 }
 
 module.exports = UserService;

@@ -85,6 +85,14 @@ class ShoppingCartService extends Service {
 
     }
 
+    async deleteUserCart(user_id) {
+        const { ctx } = this;
+        //delete cart all related-user items
+        const res = await ctx.model.ShoppingCart.findAll({ where: { user_id: user_id } })
+            .then(res => { res.destroy(); return 'ok'; })
+            .catch(err => { console.log(err); return 'err' });
+        return res;
+    }
 }
 
 module.exports = ShoppingCartService;
