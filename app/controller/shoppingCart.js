@@ -127,18 +127,33 @@ class ShoppingCartController extends Controller {
     }
     async Checkout(){
         const {ctx} = this;
+        const { ShoppingCart,Order,OrderItems } = ctx.model;
         const usertoken = ctx.request.body.userToken;
-       let userData;
         // Extrac userdata 
-        const tokenPayload = await ctx.service.utils.getTokenData(usertoken)
-            .catch((err) => { ctx.status = 400; ctx.body = err; });
-        if (userData.error === "ok") { userData = tokenPayload.data; }
-        else { ctx.status = 400; ctx.body = err; return; }
-        const user_id = await ctx.service.user.getUserID(userData.username);
+        const userData = await ctx.service.utils.getTokenData(usertoken)
+        const buyer_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
+          .then(res => { return res['dataValues']['id']; })
+          .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err;return err; });    
         // find all user's item in shoppingCart
         const cartcontent = await ShoppingCart.findAll({
-            where: { user_id: user_id },
+            where: { user_id: buyer_id },
         })
+        const thisorder = await Order.create({
+            user_id : buyer_id,
+        });
+       for (const property in cartcontent){
+            console.log('create relation for item ', cartcontent[property]['user_id']);
+            await OrderItems.create({
+                item_id: cartcontent[property]['items_id'],
+                order_no: thisorder['dataValues']['no'],
+                seller_id: cartcontent[property]['seller_id'],
+                items_quantity: cartcontent[property]['quantity'],
+                items_url: cartcontent[property]['items_url'],
+                items_name: cartcontent[property]['items_name']
+            });
+        }
+        ctx.body = cartcontent;
+        ctx.status = 200;
     }
 }
 

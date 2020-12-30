@@ -27,7 +27,7 @@ module.exports = app => {
     },
     items_url: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
       defaultValue: ""
     },
     items_name: {
@@ -42,7 +42,7 @@ module.exports = app => {
     charset: 'utf8'
   });
 
-  OrderItems.sync({ force: true });
+  OrderItems.sync({ force: false });
 
   // Association
   OrderItems.associate = () => {

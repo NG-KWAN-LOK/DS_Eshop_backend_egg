@@ -36,9 +36,7 @@ respond:
 ]
 }
 ########################################################################
-
-2.
-Seller Page My order
+2.Seller Page My order
 (ok)
 /sellermenu/getmyorders
 {
@@ -158,69 +156,6 @@ respond:
 OK
 
 ########################################################################
-1:Admin Page get all Product (post)
-/admin/adminGetAllGoods
-(ok)
-request:{
-  "userToken":"xxxxxx......"
-}
-respond:
-{
-    goodList = [{
-    id: "0jkdfgjkfdjgfhdkg",
-    name:
-      "賣老婆1 新垣結衣 gaki Aragaki Yui 可愛日本人妻 明星 美女 星野原真是爽",
-    imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
-    price: "999",
-    stock: "999",
-    sales : "123",
-    isDisplay: "true", //是否上架
-    category: "其他類別",
-  },
-    {
-    id: "1gkldfjgkfdjgkldfjgdfg",
-    name:
-      "賣老婆2 石原里美 石原聰美 石神国子 Ishihara Satomi 可愛日本人妻 明星 美女",
-    imgURL:
-      "https://images.chinatimes.com/newsphoto/2020-10-07/900/20201007003536.jpg",
-    price: "999",
-    stock: "999",
-    isDisplay: "true" //是否上架
-    category: "其他類別",
-  },
-]
-}
-########################################################################
-2:Admin Page get all Member (post)
-(ok)
-/admin/adminGetAllUsers
-request:{
-  "userToken":"xxxxxx......"
-}
-respond:
-{
-memberList = [
-  {
-    id: "0",
-    userName: "admin",
-    customerName: "陳小明",
-    address: "台北市中正區忠孝東路二段87號",
-    email: "chenming@gmail.com",
-    phoneNumber: "0912345678",
-    createTime: "2020-12-16 04:41:14"
-  },
-  {
-    id: "1",
-    userName: "peter",
-    customerName: "on9",
-    address: "台北市中正區忠孝東路二段87號",
-    email: "chenming@gmail.com",
-    phoneNumber: "0912345678",
-    createTime: "2020-12-16 04:41:14"
-  },
-];
-}
-########################################################################
 3:Admin Page delete member (連同meber的商品/shoppingCart/coupond也要delete)
 request:
 {
@@ -230,16 +165,16 @@ request:
 respond:
 OK
 ########################################################################
-Admin 增新優惠卷
-/coupon/create
+3:Admin Page edit member data
 request:
 {
-    couponName: "",
-    discountContent: "",
-    startDate:"",
-    endDate: "",
+    userId:"",
+    customerName: "陳小明",
+    address: "台北市中正區忠孝東路二段87號",
+    email: "chenming@gmail.com",
+    phoneNumber: "0912345678",
 }
-response:
+respond:
 OK
 ########################################################################
 Admin 修改優惠卷
@@ -268,88 +203,6 @@ request:
 }
 response:
 OK
-########################################################################
-Admin 顯示所有優惠卷(get)
-respone:
-{
-    coupondList =[
-	{
-	    couponName: "",
-	    discountContent: "",
-	    startDate:"",
-	    endDate: "",
-            createAt:"",
-	},
-	{
-	    couponName: "",
-	    discountContent: "",
-	    startDate:"",
-	    endDate: "",
-            createAt:"",
-	}
-    ]
-}
-#######################################################################
-用couponName取得優惠卷資料(get)?couponName=
-respone:
-{
-	couponName: "",
-	discountContent: "",
-	startDate:"",
-	endDate: "",
-}
-#########################################################################
-7:customer取得優惠卷
-{
-    userToken : "",
-    couponId: "",
-}
-respond:
-{
-    couponList:[
-        {
-            couponId: "0",
-            couponName: "",
-            discountContent: "",
-            startDate:"",
-            endDate: "",
-        },
-        {
-            couponId: "1",
-            couponName: "",
-            discountContent: "",
-            startDate:"",
-            endDate: "",
-        },
-    ]
-}
-########################################################################
-8:取得customer可領取的優惠卷(會顯示所有有效期內的所有優惠卷，會有一個位置存customer是否有領到)
-{
-    userToken : "",
-}
-respond:
-{
-    couponList:[
-        {
-            couponId: "0",
-            couponName: "訂單減100元",
-            discountContent: "100",
-            startDate:"2020/12/18",
-            endDate: "2020/12/20",
-            isTook: true,(在前端會顯示可以讓他按的按鈕)
-        },
-        {
-            couponId: "1",
-            couponName: "訂單減50元",
-            discountContent: "50",
-            startDate:"2020/12/18",
-            endDate: "2020/12/30",
-            isTook: false,(在前端會顯示他已領取，按鈕會灰掉)
-        },
-    ]
-}
-
 ########################################################################
 12:再買一次商品 (完成訂單後想再買一次商品功能，將訂單內的商品再一次放到購物車)
 {
