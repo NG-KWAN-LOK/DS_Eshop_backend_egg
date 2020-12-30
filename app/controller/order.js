@@ -18,11 +18,11 @@ class OrderController extends Controller {
     const user_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
       .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err; _err = true; return err; });
     // find id by username
-    const OrderList = await OrderItems.aggregate('order_no','DISTINCT',{plain : false},{where : {seller_id : user_id}});
-    let res={};
-    for (const property in OrderList){
-      const CurrentOrder = await Order.findOne({where : {no : OrderList[property]}});
-      const ItemList = await orderItems.findAll({where : {seller_id : user_id}});
+    const OrderList = await OrderItems.aggregate('order_no', 'DISTINCT', { plain: false }, { where: { seller_id: user_id } });
+    let res = {};
+    for (const property in OrderList) {
+      const CurrentOrder = await Order.findOne({ where: { no: OrderList[property] } });
+      const ItemList = await orderItems.findAll({ where: { seller_id: user_id } });
       const ItemsInfo = await Items.findOne({
         where: { id: ItemList.item_id }
       });
@@ -34,7 +34,7 @@ class OrderController extends Controller {
         count: ItemList.items_quantity
       }
       Object.assign(res, {
-        orderID: CurrentOrder.OrderList[property],
+        orderId: CurrentOrder.OrderList[property],
         status: CurrentOrder.status,
         customerUserName: await ctx.service.user.getNameByID(CurrentOrder.user_id),
         customerName: await ctx.service.user.getUNameByID(CurrentOrder.user_id),
@@ -93,7 +93,7 @@ class OrderController extends Controller {
         count: ItemList.items_quantity
       }
       Object.assign(res, {
-        orderID: CurrentOrder.OrderList[property],
+        orderId: CurrentOrder.OrderList[property],
         status: CurrentOrder.status,
         customerUserName: await ctx.service.user.getNameByID(CurrentOrder.userid),
         customerName: await ctx.service.user.getUNameByID(CurrentOrder.userid),
