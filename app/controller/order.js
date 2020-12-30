@@ -20,8 +20,8 @@ class OrderController extends Controller {
     // find id by username
     const OrderList = await OrderItems.aggregate('order_no','DISTINCT',{plain : false},{where : {seller_id : user_id}});
     let res={};
-    for (var OrderID in OrderList){
-      const CurrentOrder = await Order.findOne({where : {no : OrderID}});
+    for (const property in OrderList){
+      const CurrentOrder = await Order.findOne({where : {no : OrderList[property]}});
       const ItemList = await orderItems.findAll({where : {seller_id : user_id}});
       const ItemsInfo = await Items.findOne({
         where: { id: ItemList.item_id }
@@ -34,7 +34,7 @@ class OrderController extends Controller {
         count: ItemList.items_quantity
       }
       Object.assign(res, {
-        orderID: CurrentOrder.orderID,
+        orderID: CurrentOrder.OrderList[property],
         status: CurrentOrder.status,
         customerUserName: await ctx.service.user.getNameByID(CurrentOrder.user_id),
         customerName: await ctx.service.user.getUNameByID(CurrentOrder.user_id),
@@ -79,9 +79,9 @@ class OrderController extends Controller {
     else { throw new ErrorRes(13001, userData.data, 400); }
     const OrderList = await OrderItems.aggregate('order_no', 'DISTINCT', { plain: false }, { where: { user_id: userid } });
     let res = {};
-    for (const OrderID in OrderList) {
-      const CurrentOrder = await Order.findOne({ where: { no: OrderID } });
-      const ItemList = await orderItems.findAll({ where: { order_no: OrderID } });
+    for (const property in OrderList) {
+      const CurrentOrder = await Order.findOne({ where: { no: OrderList[property] } });
+      const ItemList = await orderItems.findAll({ where: { order_no: OrderList[property] } });
       const ItemsInfo = await Items.findOne({
         where: { id: ItemList.item_id }
       });
@@ -93,7 +93,7 @@ class OrderController extends Controller {
         count: ItemList.items_quantity
       }
       Object.assign(res, {
-        orderID: CurrentOrder.orderID,
+        orderID: CurrentOrder.OrderList[property],
         status: CurrentOrder.status,
         customerUserName: await ctx.service.user.getNameByID(CurrentOrder.userid),
         customerName: await ctx.service.user.getUNameByID(CurrentOrder.userid),

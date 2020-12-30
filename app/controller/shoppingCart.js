@@ -141,7 +141,7 @@ class ShoppingCartController extends Controller {
         const thisorder = await Order.create({
             user_id : buyer_id,
         });
-       /*for (const property in cartcontent){
+       for (const property in cartcontent){
             console.log('create relation for item ', cartcontent[property]['user_id']);
             await OrderItems.create({
                 item_id: cartcontent[property]['items_id'],
@@ -151,7 +151,7 @@ class ShoppingCartController extends Controller {
                 items_url: cartcontent[property]['items_url'],
                 items_name: cartcontent[property]['items_name']
             });
-        }*/
+        }
         ctx.body = cartcontent;
         ctx.status = 200;
     }
