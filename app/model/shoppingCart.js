@@ -80,8 +80,8 @@ module.exports = app => {
   ShoppingCart.sync({ force: false });
   ShoppingCart.associate = () => {
     const { Users, Items, } = app.model;
-    Users.belongsToMany(Items, { through: ShoppingCart, foreignKey: 'user_id' });
-    Items.belongsToMany(Users, { through: ShoppingCart, foreignKey: 'items_id' });
+    Users.belongsToMany(Items, { through: ShoppingCart, foreignKey: 'user_id', onDelete: 'CASCADE' });
+    Items.belongsToMany(Users, { through: ShoppingCart, foreignKey: 'items_id', onDelete: 'SET NULL' });
   };
 
   return ShoppingCart;
