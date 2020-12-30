@@ -11,6 +11,7 @@ class CouponController extends Controller {
     // create a new coupon
     const res = await ctx.model.Coupon.create({
       content: ctx.request.body.couponName,
+      description: ctx.request.body.description,
       discount_rate: ctx.request.body.discountContent,
       startdate: ctx.request.startDate,
       enddate: ctx.request.endDate
@@ -25,13 +26,15 @@ class CouponController extends Controller {
     const {request,response} = ctx;
     const NewData = {
       couponName : ctx.request.body.NewcouponName,
-      discount_rate : ctx.request.body.discountContent,
-      startdate : ctx.request.startDate,
-      enddate : ctx.request.endDate
+      description:ctx.request.body.Newdescription,
+      discount_rate : ctx.request.body.NewdiscountContent,
+      startdate : ctx.request.NewstartDate,
+      enddate : ctx.request.NewendDate
     };
     let result;
     console.log('changing coupon');
-    await ctx.model.Coupon.findByPk(request.body.couponName)
+    const couponID = await ctx.service.coupon.getID(request.body.couponName);
+    await ctx.model.Coupon.findOne({where: {id : couponID}})
       .then((foundCoupon) => {
         result = 'ok';
           foundCoupon.update({NewData});
@@ -44,6 +47,25 @@ class CouponController extends Controller {
     } else {
       throw new ErrorRes(15001, 'Input or server error, please check your request or contact backend', 400);  
     }
+  }
+
+  async getAll(){
+    const {ctx} = this;
+    const {response} = ctx;
+    const {Coupon} = ctx.model;
+    console.log('Fetching all coupon');
+    const couponList = await ctx.model.Coupon.findAll();
+    ctx.body = couponList;
+    ctx.status = 200;
+  }
+
+  async getbycontent(){
+    const {ctx} = this;
+    const {request,response} = ctx;
+    console.log('searching by coupon content(name)');
+    const result = await ctx.model.Coupon.findOne({where: {content: request.body.couponName}});
+    ctx.body = result;
+    ctx.status = 200;
   }
 }
 

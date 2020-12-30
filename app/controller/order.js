@@ -18,11 +18,11 @@ class OrderController extends Controller {
     const user_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
       .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err; _err = true; return err; });
     // find id by username
-    const OrderList = await OrderItems.aggregate('order_no', 'DISTINCT', { plain: false }, { where: { seller_id: user_id } });
-    let res = {};
-    for (const OrderID in OrderList) {
-      const CurrentOrder = await Order.findOne({ where: { no: OrderID } });
-      const ItemList = await orderItems.findAll({ where: { seller_id: user_id } });
+    const OrderList = await OrderItems.aggregate('order_no','DISTINCT',{plain : false},{where : {seller_id : user_id}});
+    let res={};
+    for (var OrderID in OrderList){
+      const CurrentOrder = await Order.findOne({where : {no : OrderID}});
+      const ItemList = await orderItems.findAll({where : {seller_id : user_id}});
       const ItemsInfo = await Items.findOne({
         where: { id: ItemList.item_id }
       });
