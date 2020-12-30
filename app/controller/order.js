@@ -18,30 +18,30 @@ class OrderController extends Controller {
     const user_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
       .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err; _err = true; return err; });
     // find id by username
-    const OrderList = await OrderItems.aggregate('order_no','DISTINCT',{plain : false},{where : {seller_id : user_id}});
-    let res={};
-    for (const OrderID in OrderList){
-      const CurrentOrder = await Order.findOne({where : {no : OrderID}});
-      const ItemList = await orderItems.findAll({where : {seller_id : user_id}});
+    const OrderList = await OrderItems.aggregate('order_no', 'DISTINCT', { plain: false }, { where: { seller_id: user_id } });
+    let res = {};
+    for (const OrderID in OrderList) {
+      const CurrentOrder = await Order.findOne({ where: { no: OrderID } });
+      const ItemList = await orderItems.findAll({ where: { seller_id: user_id } });
       const ItemsInfo = await Items.findOne({
-        where : {id : ItemList.item_id}
+        where: { id: ItemList.item_id }
       });
       const ItemsWanted = {
-        goodId : ItemList.item_id,
-        name : ItemList.items_name,
-        imgURL : ItemList.items_url,
-        price : ItemsInfo.price,
-        count : ItemList.items_quantity
+        goodId: ItemList.item_id,
+        name: ItemList.items_name,
+        imgURL: ItemList.items_url,
+        price: ItemsInfo.price,
+        count: ItemList.items_quantity
       }
-      Object.assign(res,{
-        orderID : CurrentOrder.orderID,
-        status : CurrentOrder.status,
-        customerUserName : await ctx.service.user.getNameByID(CurrentOrder.user_id),
-        customerName : await ctx.service.user.getUNameByID(CurrentOrder.user_id),
-        customerAddress : userData.address,
-        customerPhoneNumber : userData.telephone,
-        createDate : CurrentOrder.created_at,
-        goodsList : ItemsWanted,
+      Object.assign(res, {
+        orderID: CurrentOrder.orderID,
+        status: CurrentOrder.status,
+        customerUserName: await ctx.service.user.getNameByID(CurrentOrder.user_id),
+        customerName: await ctx.service.user.getUNameByID(CurrentOrder.user_id),
+        customerAddress: userData.address,
+        customerPhoneNumber: userData.telephone,
+        createDate: CurrentOrder.created_at,
+        goodsList: ItemsWanted,
       });
     }
     ctx.body = res;
@@ -77,30 +77,30 @@ class OrderController extends Controller {
       .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err; _err = true; return err; });
     if (userData.error === "ok") { userPayload = userData.data; }
     else { throw new ErrorRes(13001, userData.data, 400); }
-    const OrderList = await OrderItems.aggregate('order_no','DISTINCT',{plain : false},{where : {user_id: userid}});
-    let res={};
-    for (const OrderID in OrderList){
-      const CurrentOrder = await Order.findOne({where : {no : OrderID}});
-      const ItemList = await orderItems.findAll({where : {order_no: OrderID}});
+    const OrderList = await OrderItems.aggregate('order_no', 'DISTINCT', { plain: false }, { where: { user_id: userid } });
+    let res = {};
+    for (const OrderID in OrderList) {
+      const CurrentOrder = await Order.findOne({ where: { no: OrderID } });
+      const ItemList = await orderItems.findAll({ where: { order_no: OrderID } });
       const ItemsInfo = await Items.findOne({
-        where : {id : ItemList.item_id}
+        where: { id: ItemList.item_id }
       });
       const ItemsWanted = {
-        goodId : ItemList.item_id,
-        name : ItemList.items_name,
-        imgURL : ItemList.items_url,
-        price : ItemsInfo.price,
-        count : ItemList.items_quantity
+        goodId: ItemList.item_id,
+        name: ItemList.items_name,
+        imgURL: ItemList.items_url,
+        price: ItemsInfo.price,
+        count: ItemList.items_quantity
       }
-      Object.assign(res,{
-        orderID : CurrentOrder.orderID,
-        status : CurrentOrder.status,
-        customerUserName : await ctx.service.user.getNameByID(CurrentOrder.userid),
-        customerName : await ctx.service.user.getUNameByID(CurrentOrder.userid),
-        customerAddress : userData.address,
-        customerPhoneNumber : userData.telephone,
-        createDate : CurrentOrder.created_at,
-        goodsList : ItemsWanted,
+      Object.assign(res, {
+        orderID: CurrentOrder.orderID,
+        status: CurrentOrder.status,
+        customerUserName: await ctx.service.user.getNameByID(CurrentOrder.userid),
+        customerName: await ctx.service.user.getUNameByID(CurrentOrder.userid),
+        customerAddress: userData.address,
+        customerPhoneNumber: userData.telephone,
+        createDate: CurrentOrder.created_at,
+        goodsList: ItemsWanted,
       });
     }
     ctx.body = res;
