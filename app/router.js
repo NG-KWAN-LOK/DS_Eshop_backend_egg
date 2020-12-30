@@ -43,4 +43,5 @@ module.exports = app => {
   router.post('/coupon/getbyname', controller.coupon.getbycontent);
 
   router.post('/admin/adminGetAllGoods', controller.admin.adminGetAllGoods);
+  router.post('/admin/adminGetAllUsers', controller.admin.adminGetAllUsers);
 };

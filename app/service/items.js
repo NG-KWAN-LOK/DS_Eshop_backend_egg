@@ -115,11 +115,7 @@ class ItemsService extends Service {
       limit: 20,
     }).then(res => {
       let resData = [];
-      for (let i = 0; i < res.length; i++) {
-        // console.log('1', res[i].dataValues.category);    
-        resData.push(res[i].dataValues);
-        // console.log(i, 'is :', res[i].dataValues);
-      }
+      for (let i = 0; i < res.length; i++) { resData.push(res[i].dataValues); }
       return resData;
     }).catch(err => {
       console.log(err);

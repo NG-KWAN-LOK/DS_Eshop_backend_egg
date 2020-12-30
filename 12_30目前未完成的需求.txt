@@ -159,6 +159,7 @@ OK
 
 ########################################################################
 1:Admin Page get all Product (post)
+/admin/adminGetAllGoods
 (ok)
 request:{
   "userToken":"xxxxxx......"
@@ -191,7 +192,7 @@ respond:
 }
 ########################################################################
 2:Admin Page get all Member (Get)
-/admin/adminGetAllGoods
+/admin/adminGetAllUsers
 respond:
 {
 memberList = [
@@ -237,6 +238,7 @@ response:
 OK
 ########################################################################
 Admin 修改優惠卷
+(ok)
 /coupon/modify
 request:
 {
