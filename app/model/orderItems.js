@@ -27,7 +27,7 @@ module.exports = app => {
     },
     items_url: {
       type: Sequelize.STRING,
-      allowNull: false,
+      allowNull: true,
       defaultValue: ""
     },
     items_name: {

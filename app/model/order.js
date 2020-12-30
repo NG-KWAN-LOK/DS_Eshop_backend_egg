@@ -47,7 +47,7 @@ module.exports = app => {
     charset: 'utf8'
   });
 
-  Order.sync({ force: false });
+  Order.sync({ force: true });
 
   // Association
   Order.associate = () => {
