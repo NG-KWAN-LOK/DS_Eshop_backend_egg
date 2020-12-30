@@ -12,23 +12,6 @@ class CouponService extends Service {
         return couponID;
     }
 
-    async ModifyCoupon(couponID,NewData) {
-        const { ctx } = this;
-        let result;
-        await ctx.model.Users.findByPk(couponID)
-            .then((foundCoupon) => {
-            result = 'ok';
-            foundCoupon.update({
-                couponName : ctx.request.body.NewcouponName,
-                description:ctx.request.body.Newdescription,
-                discount_rate : ctx.request.body.NewdiscountContent,
-                startdate : ctx.request.NewstartDate,
-                enddate : ctx.request.NewendDate
-            });
-            })
-            .catch(err => { result = err; });
-    return result;
-    }
 }
 
 module.exports = CouponService;

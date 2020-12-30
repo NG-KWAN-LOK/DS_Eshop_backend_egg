@@ -38,7 +38,7 @@ module.exports = app => {
     charset: 'utf8'
   });
 
-  Coupon.sync({ force: true });
+  Coupon.sync({ force: false });
 
   // Association
   Coupon.associate = () => {

@@ -59,8 +59,13 @@ class CouponController extends Controller {
     ctx.status = 200;
   }
 
-  async getDesignated(){
-    
+  async getbycontent(){
+    const {ctx} = this;
+    const {request,response} = ctx;
+    console.log('searching by coupon content(name)');
+    const result = await ctx.model.Coupon.findOne({where: {content: request.body.couponName}});
+    ctx.body = result;
+    ctx.status = 200;
   }
 }
 
