@@ -37,8 +37,10 @@ module.exports = app => {
 
   router.post('/buyermenu/getmyorders', controller.order.BuyerGetOrder);
 
-  router.post('/coupon/create',controller.coupon.create);
-  router.post('/coupon/modify',controller.coupon.Modify);
-  router.get('/coupon/getAll',controller.coupon.getAll);
-  router.post('/coupon/getbyname',controller.coupon.getbycontent);
+  router.post('/coupon/create', controller.coupon.create);
+  router.post('/coupon/modify', controller.coupon.Modify);
+  router.get('/coupon/getAll', controller.coupon.getAll);
+  router.post('/coupon/getbyname', controller.coupon.getbycontent);
+
+  router.post('/admin/adminGetAllGoods', controller.admin.adminGetAllGoods);
 };

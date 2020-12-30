@@ -105,6 +105,29 @@ class ItemsService extends Service {
 
   }
 
+  async findTBAllGoods() {
+    const { ctx } = this;
+    const res = await ctx.model.Items.findAll({
+      attributes: ['id', 'name', ['image_url', 'imgURL'], 'price', ["remain_quantity", "stock"], ['is_display', 'isDisplay'], 'sales', 'category', 'updated_at'],
+      order: [
+        ['updated_at', 'DESC']
+      ],
+      limit: 20,
+    }).then(res => {
+      let resData = [];
+      for (let i = 0; i < res.length; i++) {
+        // console.log('1', res[i].dataValues.category);    
+        resData.push(res[i].dataValues);
+        // console.log(i, 'is :', res[i].dataValues);
+      }
+      return resData;
+    }).catch(err => {
+      console.log(err);
+      return 'err';
+    });
+    return res;
+
+  }
 }
 
 module.exports = ItemsService;

@@ -1,4 +1,5 @@
 7:Seller Page My Product
+(ok)
 : /items/getAllItems
 {
     userToken : "",
@@ -38,6 +39,7 @@ respond:
 
 2.
 Seller Page My order
+(ok)
 /sellermenu/getmyorders
 {
     userToken : "",
@@ -92,6 +94,7 @@ respond:
 ##################################################################
 3.
 Customer Page My Order
+(ok)
 /buyermenu/getmyorders
 {
     userToken : "",
@@ -155,7 +158,11 @@ respond:
 OK
 
 ########################################################################
-1:Admin Page get all Product (Get)
+1:Admin Page get all Product (post)
+(ok)
+request:{
+  "userToken":"xxxxxx......"
+}
 respond:
 {
     goodList = [{
@@ -165,6 +172,7 @@ respond:
     imgURL: "https://attach.setn.com/newsimages/2020/04/28/2527272-XXL.jpg",
     price: "999",
     stock: "999",
+    sales : "123",
     isDisplay: "true", //是否上架
     category: "其他類別",
   },
@@ -183,6 +191,7 @@ respond:
 }
 ########################################################################
 2:Admin Page get all Member (Get)
+/admin/adminGetAllGoods
 respond:
 {
 memberList = [
