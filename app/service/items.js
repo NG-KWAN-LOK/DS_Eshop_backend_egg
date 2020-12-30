@@ -124,6 +124,14 @@ class ItemsService extends Service {
     return res;
 
   }
+  async checkItemExist(item_id) {
+    const { ctx } = this;
+    const res = ctx.model.Items.findOne({ where: { id: item_id } })
+      .then(res => { console.log(res.dataValues); return 'yes'; })
+      .catch(err => 'no');
+    return res;
+  }
+
 }
 
 module.exports = ItemsService;

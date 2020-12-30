@@ -125,25 +125,30 @@ class ShoppingCartController extends Controller {
         else { ctx.body = result; ctx.status = 400; }
 
     }
-    async Checkout(){
-        const {ctx} = this;
-        const { ShoppingCart,Order,OrderItems } = ctx.model;
+    async Checkout() {
+        const { ctx } = this;
+        const { ShoppingCart, Order, OrderItems } = ctx.model;
         const usertoken = ctx.request.body.userToken;
+        let resData = [];
+        let temp = {};
         // Extrac userdata 
         const userData = await ctx.service.utils.getTokenData(usertoken)
         const buyer_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
-          .then(res => { return res['dataValues']['id']; })
-          .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err;return err; });    
+            .then(res => { return res['dataValues']['id']; })
+            .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err; return err; });
         // find all user's item in shoppingCart
         const cartcontent = await ShoppingCart.findAll({
             where: { user_id: buyer_id },
         })
         const thisorder = await Order.create({
-            user_id : buyer_id,
+            user_id: buyer_id,
         });
-       for (const property in cartcontent){
+        for (const property in cartcontent) {
             console.log('create relation for item ', cartcontent[property]['user_id']);
-            await OrderItems.create({
+            // console.log('create relation for item ', cartcontent[property]);
+            const res = await ctx.service.items.checkItemExist(cartcontent[property]['items_id']);
+            if (res === 'no') { console.log('Not Exist ', cartcontent[property]['items_id']); continue; }
+            temp = await OrderItems.create({
                 item_id: cartcontent[property]['items_id'],
                 order_no: thisorder['dataValues']['no'],
                 seller_id: cartcontent[property]['seller_id'],
@@ -151,6 +156,7 @@ class ShoppingCartController extends Controller {
                 items_url: cartcontent[property]['items_url'],
                 items_name: cartcontent[property]['items_name']
             });
+            Object.assign(resData, temp);
         }
         ctx.body = cartcontent;
         ctx.status = 200;
