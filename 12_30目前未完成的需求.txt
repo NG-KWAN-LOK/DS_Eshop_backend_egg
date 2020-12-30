@@ -191,8 +191,12 @@ respond:
 ]
 }
 ########################################################################
-2:Admin Page get all Member (Get)
+2:Admin Page get all Member (post)
+(ok)
 /admin/adminGetAllUsers
+request:{
+  "userToken":"xxxxxx......"
+}
 respond:
 {
 memberList = [
