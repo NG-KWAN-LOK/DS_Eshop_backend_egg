@@ -157,6 +157,8 @@ OK
 
 ########################################################################
 3:Admin Page delete member (連同meber的商品/shoppingCart/coupond也要delete)
+(ok)
+/admin/adminGetAllUsers
 request:
 {
     userToken:"",
