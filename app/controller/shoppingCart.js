@@ -139,7 +139,6 @@ class ShoppingCartController extends Controller {
         const cartcontent = await ShoppingCart.findAll({
             where: { user_id: user_id },
         })
-        
     }
 }
 

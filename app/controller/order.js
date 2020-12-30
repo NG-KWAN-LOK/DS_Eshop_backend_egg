@@ -20,7 +20,7 @@ class OrderController extends Controller {
     // find id by username
     const OrderList = await OrderItems.aggregate('order_no','DISTINCT',{plain : false},{where : {seller_id : user_id}});
     let res={};
-    for (const OrderID in OrderList){
+    for (var OrderID in OrderList){
       const CurrentOrder = await Order.findOne({where : {no : OrderID}});
       const ItemList = await orderItems.findAll({where : {seller_id : user_id}});
       const ItemsInfo = await Items.findOne({
