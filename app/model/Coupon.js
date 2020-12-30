@@ -12,7 +12,6 @@ module.exports = app => {
       allowNull:false,
     },
     content: {
-      primaryKey:true,
       type: Sequelize.STRING(30),
       unique: true,
       allowNull: false,

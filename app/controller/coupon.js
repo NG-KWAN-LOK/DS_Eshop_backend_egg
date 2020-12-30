@@ -33,7 +33,8 @@ class CouponController extends Controller {
     };
     let result;
     console.log('changing coupon');
-    await ctx.model.Coupon.findOne({where: {couponName : NewData.couponName}})
+    const couponID = await ctx.service.coupon.getID(request.body.couponName);
+    await ctx.model.Coupon.findOne({where: {id : couponID}})
       .then((foundCoupon) => {
         result = 'ok';
           foundCoupon.update({NewData});
@@ -49,8 +50,15 @@ class CouponController extends Controller {
   }
 
   async getAll(){
-
+    const {ctx} = this;
+    const {response} = ctx;
+    const {Coupon} = ctx.model;
+    console.log('Fetching all coupon');
+    const couponList = await ctx.model.Coupon.findAll();
+    ctx.body = couponList;
+    ctx.status = 200;
   }
+
   async getDesignated(){
     
   }

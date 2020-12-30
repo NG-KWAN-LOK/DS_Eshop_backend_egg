@@ -39,4 +39,5 @@ module.exports = app => {
 
   router.post('/coupon/create',controller.coupon.create);
   router.post('/coupon/modify',controller.coupon.Modify);
+  router.get('/coupon/getAll',controller.coupon.getAll);
 };
