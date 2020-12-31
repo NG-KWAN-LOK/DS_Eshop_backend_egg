@@ -11,38 +11,32 @@ class OrderController extends Controller {
     const { ctx } = this;
     const { OrderItems, Order, Items } = ctx.model;
     const usertoken = ctx.request.body.userToken;
-
+    let res,ItemID_Current = {};
     // extract data from token
     const userData = await ctx.service.utils.getTokenData(usertoken)
-      .catch((err) => { throw new ErrorRes(13001, err, 400); });
     const user_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
-      .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err; _err = true; return err; });
+      .then(res => { return res['dataValues']['id']; })
     // find id by username
-    const OrderList = await OrderItems.aggregate('order_no', 'DISTINCT', { plain: false }, { where: { seller_id: user_id } });
-    let res = {};
+    const OrderList = await ctx.service.order.getUserOrderIDs(user_id);
     for (const property in OrderList) {
-      const CurrentOrder = await Order.findOne({ where: { no: OrderList[property] } });
-      const ItemList = await orderItems.findAll({ where: { seller_id: user_id } });
-      const ItemsInfo = await Items.findOne({
-        where: { id: ItemList.item_id }
-      });
-      const ItemsWanted = {
-        goodId: ItemList.item_id,
-        name: ItemList.items_name,
-        imgURL: ItemList.items_url,
-        price: ItemsInfo.price,
-        count: ItemList.items_quantity
-      }
-      Object.assign(res, {
-        orderId: CurrentOrder.OrderList[property],
-        status: CurrentOrder.status,
-        customerUserName: await ctx.service.user.getNameByID(CurrentOrder.user_id),
-        customerName: await ctx.service.user.getUNameByID(CurrentOrder.user_id),
-        customerAddress: userData.address,
-        customerPhoneNumber: userData.telephone,
-        createDate: CurrentOrder.created_at,
-        goodsList: ItemsWanted,
-      });
+      const CurrentOrder = await Order.findOne({ where: { no: OrderList[property]['DISTINCT'] } });
+      const CurrentClient = await ctx.service.user.getDatabyID(CurrentOrder.user_id);
+      const ItemList = await ctx.service.order.getOrderContent(CurrentOrder['no']);
+      let ItemInfo;
+      for (const property in ItemList){
+       ItemInfo = await ctx.service.items.getItemsInfo(ItemList[property]['item_id']);}
+      const TempRes = {
+        orderId: CurrentOrder.no,
+        status: CurrentOrder.transportState,
+        customerUserName: CurrentClient.username,
+        customerName: CurrentClient.name,
+        customerAddress: CurrentClient.address,
+        customerPhoneNumber: CurrentClient.telephone,
+        createDate: CurrentOrder.createdAt,
+        goodsList: ItemList,
+      };
+      res = TempRes;
+      //res = Object.assign(res, TempRes);
     }
     ctx.body = res;
   }

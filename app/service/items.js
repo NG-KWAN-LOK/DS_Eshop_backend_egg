@@ -22,6 +22,7 @@ class ItemsService extends Service {
       .catch(err => { result.success = false; result.data = err; });
     return result;
   }
+
   async minusItemsQuantities(item_id, amount) {
     const { ctx } = this;
     let result;
