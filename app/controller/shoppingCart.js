@@ -130,12 +130,13 @@ class ShoppingCartController extends Controller {
         const { ShoppingCart, Order, OrderItems } = ctx.model;
         const usertoken = ctx.request.body.userToken;
         let resData = [];
-        let temp = {};
+        let temp = [];
         // Extrac userdata 
         const userData = await ctx.service.utils.getTokenData(usertoken)
         const buyer_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
             .then(res => { return res['dataValues']['id']; })
             .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err; return err; });
+
         // find all user's item in shoppingCart
         const cartcontent = await ShoppingCart.findAll({
             where: { user_id: buyer_id },
@@ -143,12 +144,26 @@ class ShoppingCartController extends Controller {
         const thisorder = await Order.create({
             user_id: buyer_id,
         });
+
+        //檢查購物車Goods 是否有存在 & 有足夠存貨 
         for (const property in cartcontent) {
             console.log('create relation for item ', cartcontent[property]['user_id']);
             // console.log('create relation for item ', cartcontent[property]);
-            const res = await ctx.service.items.checkItemExist(cartcontent[property]['items_id']);
-            if (res === 'no') { console.log('Not Exist ', cartcontent[property]['items_id']); continue; }
-            temp = await OrderItems.create({
+
+            //檢測商品是否存在(被下架/撤銷)
+            const GoodExistres = await ctx.service.items.checkItemExist(cartcontent[property]['items_id']);
+            if (GoodExistres === 'no') { console.log('Not Exist ', cartcontent[property]['items_id']); continue; }
+
+            // 檢測商品是否有存貨
+            const GoodEnoughres = await ctx.service.items.checkItemEnough(cartcontent[property]['items_id'], cartcontent[property]['quantity']);
+            if (GoodEnoughres === 'no') {
+                console.log(cartcontent[property]['items_name'], 'Not Enough');
+                ctx.body = cartcontent[property]['items_id'] + ' ' + cartcontent[property]['items_name'] + 'Not Enough';
+                ctx.status = 400;
+                return;
+            }
+            //紀錄Cart 的所有商品
+            resData.push({
                 item_id: cartcontent[property]['items_id'],
                 order_no: thisorder['dataValues']['no'],
                 seller_id: cartcontent[property]['seller_id'],
@@ -156,9 +171,25 @@ class ShoppingCartController extends Controller {
                 items_url: cartcontent[property]['items_url'],
                 items_name: cartcontent[property]['items_name']
             });
-            Object.assign(resData, temp);
         }
-        ctx.body = cartcontent;
+        for (let i = 0; i < resData.length; i++) {
+            const cartItem = resData[i];
+
+            console.log(cartItem.item_id, cartItem.items_quantity);
+            // console.log(cartItem);
+            //新增orderItem
+            await ctx.model.OrderItems.create(cartItem);
+
+            //減少item的stock
+            await ctx.service.items.decreaseStock(cartItem.item_id, cartItem.items_quantity);
+
+            //增加item的sale
+            await ctx.service.items.increaseSales(cartItem.item_id, cartItem.items_quantity);
+
+            //刪除購物車的item
+            await ctx.service.shoppingCart.deleteCartItem(buyer_id, cartItem.item_id);
+        }
+        ctx.body = resData;
         ctx.status = 200;
     }
 }

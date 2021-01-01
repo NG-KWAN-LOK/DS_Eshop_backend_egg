@@ -17,9 +17,11 @@ class ItemsService extends Service {
   async getItemsInfo(item_id) {
     const { ctx } = this;
     let result = [];
+
     await ctx.model.Items.findByPk(item_id)
       .then((findeddata) => { result.success = true; result.data = findeddata['dataValues']; })
       .catch(err => { result.success = false; result.data = err; });
+
     return result;
   }
 
@@ -128,11 +130,28 @@ class ItemsService extends Service {
   async checkItemExist(item_id) {
     const { ctx } = this;
     const res = ctx.model.Items.findOne({ where: { id: item_id } })
-      .then(res => { console.log(res.dataValues); return 'yes'; })
+      .then(res => { return 'yes'; })
       .catch(err => 'no');
     return res;
   }
+  async checkItemEnough(item_id, cart_quantity) {
+    const { ctx } = this;
+    const itemInfo = await ctx.service.items.getItemsInfo(item_id);
 
+    if (cart_quantity <= itemInfo.data.remain_quantity) { return 'yes'; }
+    else { return 'no'; }
+  }
+
+  async decreaseStock(item_id, cart_quantity) {
+    const { ctx } = this;
+    await ctx.model.Items.decrement(['remain_quantity'], { by: cart_quantity, where: { id: item_id } });
+    return;
+  }
+  async increaseSales(item_id, cart_quantity) {
+    const { ctx } = this;
+    await ctx.model.Items.increment(['sales'], { by: cart_quantity, where: { id: item_id } });
+    return;
+  }
 }
 
 module.exports = ItemsService;
