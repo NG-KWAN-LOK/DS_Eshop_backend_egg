@@ -4,21 +4,25 @@ module.exports = app => {
   const { Sequelize } = app;
 
   const OrderItems = app.model.define('orderItems', {
-    item_id: {
+    order_no: {
+      primaryKey: true,
       foreignKey: true,
       type: Sequelize.UUID,
       allowNull: false,
     },
-    order_no: {
+    item_id: {
+      primaryKey: true,
       foreignKey: true,
       type: Sequelize.UUID,
       allowNull: false,
+      unique: false,
     },
     seller_id: {
+      primaryKey: true,
       foreignKey: true,
       type: Sequelize.UUID,
       allowNull: false,
-      defaultValue: ""
+      unique: false,
     },
     items_quantity: {
       type: Sequelize.INTEGER,
@@ -38,8 +42,7 @@ module.exports = app => {
   }, {
     freezeTableName: true,
     timestamps: true,
-    underscored: true,
-    charset: 'utf8'
+    arset: 'utf8'
   });
 
   OrderItems.sync({ force: false });
@@ -48,8 +51,8 @@ module.exports = app => {
   OrderItems.associate = () => {
     const { Order, Items, Users } = app.model;
     Order.belongsToMany(Items, { through: OrderItems, foreignKey: 'order_no' });
-    Items.belongsToMany(Order, { through: OrderItems, foreignKey: 'item_id' });
-    Users.belongsToMany(Items, { through: OrderItems, foreignKey: 'seller_id', targetKey: 'id' });
+    Items.belongsToMany(Order, { through: OrderItems, foreignKey: 'item_id', unique: false });
+    Users.belongsToMany(Items, { through: OrderItems, foreignKey: 'seller_id', targetKey: 'id', unique: false });
   };
 
   return OrderItems;

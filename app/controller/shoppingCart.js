@@ -131,6 +131,7 @@ class ShoppingCartController extends Controller {
         const usertoken = ctx.request.body.userToken;
         let resData = [];
         let temp = [];
+        let _err = false;
         // Extrac userdata 
         const userData = await ctx.service.utils.getTokenData(usertoken)
         const buyer_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
@@ -178,8 +179,9 @@ class ShoppingCartController extends Controller {
             console.log(cartItem.item_id, cartItem.items_quantity);
             // console.log(cartItem);
             //新增orderItem
-            await ctx.model.OrderItems.create(cartItem);
-
+            await ctx.model.OrderItems.create(cartItem)
+                .catch(err => { _err = true; console.log(err); return; });
+            if (_err === true) { break; }
             //減少item的stock
             await ctx.service.items.decreaseStock(cartItem.item_id, cartItem.items_quantity);
 
