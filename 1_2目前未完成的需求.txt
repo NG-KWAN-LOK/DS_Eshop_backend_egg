@@ -45,6 +45,8 @@ respond:
 }
 respond:
 {
+    orderList = [
+    {
     orderId: "0",
     status: "1", //狀態(0:已取消,1:備貨中,2:待出貨,3:待收貨,4已完成)
     customerUserName:"",
@@ -89,6 +91,8 @@ respond:
       count: 4,
     },]
   }
+  ]
+}
 ##################################################################
 3.
 Customer Page My Order
@@ -100,6 +104,8 @@ Customer Page My Order
 }
 respond:
 {
+    orderList=[
+    {
     orderId: "0",
     status: "1", //狀態(0:已取消,1:備貨中,2:待出貨,3:待收貨,4已完成)
     sellerUserId:"",
@@ -146,6 +152,8 @@ respond:
       count: 4,
     },]
   }
+  ]
+}
 ########################################################################
 6:增加訂單(買單)，增加後所持優惠卷刪除，減商品數量，商品加sales數量
 {
