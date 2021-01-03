@@ -264,6 +264,20 @@ class ItemsController extends Controller {
         ctx.body = res;
 
     }
+    
+    async SellerpageItemInfo(){
+        const {ctx} = this;
+        const {Items} = ctx.model;
+        const ItemInfo = await Items.findByPk(ctx.request.body.id);
+        const res ={
+            goodId: ItemInfo.id,
+            name: ItemInfo.name,
+            price: ItemInfo.price,
+            imgURL: ItemInfo.image_url
+        }
+        ctx.body = res;
+        ctx.status = 200;
+    }
 }
 
 module.exports = ItemsController;

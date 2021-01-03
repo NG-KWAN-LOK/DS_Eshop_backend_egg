@@ -42,7 +42,7 @@ class OrderService extends Service {
     async getOrderContent(OrderID){
         const {ctx} = this;
         const { OrderItems } = ctx.model;
-        const ItemList = await OrderItems.findAll({attributes:['item_id'],where: { order_no: OrderID } });
+        const ItemList = await OrderItems.findAll({attributes:['item_id','items_quantity'],where: { order_no: OrderID } });
         return ItemList;
     }
 }
