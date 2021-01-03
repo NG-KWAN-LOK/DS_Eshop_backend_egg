@@ -62,40 +62,27 @@ class OrderController extends Controller {
     const { ctx } = this;
     const { OrderItems, Order, Items } = ctx.model;
     const usertoken = ctx.request.body.userToken;
-    let userPayload;
+    let userPayload,res,Wrapper;
 
     // extract data from token
     const userData = await ctx.service.utils.getTokenData(usertoken)
       .catch((err) => { throw new ErrorRes(13001, err, 400); });
-    const userid = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
+    const user_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
       .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err; _err = true; return err; });
     if (userData.error === "ok") { userPayload = userData.data; }
     else { throw new ErrorRes(13001, userData.data, 400); }
-    const OrderList = await OrderItems.aggregate('order_no', 'DISTINCT', { plain: false }, { where: { user_id: userid } });
-    let res = {};
+    const OrderList = await ctx.service.order.getUserBuyOrderIDs(user_id);
     for (const property in OrderList) {
-      const CurrentOrder = await Order.findOne({ where: { no: OrderList[property] } });
-      const ItemList = await orderItems.findAll({ where: { order_no: OrderList[property] } });
-      const ItemsInfo = await Items.findOne({
-        where: { id: ItemList.item_id }
-      });
-      const ItemsWanted = {
-        goodId: ItemList.item_id,
-        name: ItemList.items_name,
-        imgURL: ItemList.items_url,
-        price: ItemsInfo.price,
-        count: ItemList.items_quantity
-      }
-      Object.assign(res, {
-        orderId: CurrentOrder.OrderList[property],
-        status: CurrentOrder.status,
-        customerUserName: await ctx.service.user.getNameByID(CurrentOrder.userid),
-        customerName: await ctx.service.user.getUNameByID(CurrentOrder.userid),
-        customerAddress: userData.address,
-        customerPhoneNumber: userData.telephone,
-        createDate: CurrentOrder.created_at,
-        goodsList: ItemsWanted,
-      });
+      const CurrentOrder = await Order.findOne({ where: { no: OrderList[property]['DISTINCT'] } });
+      const ItemList = await OrderItems.findAll({attributes:['item_id','seller_id'],where: { order_no: CurrentOrder['no'] } });
+      const Formatter = {
+        orderId: CurrentOrder.no,
+        status: CurrentOrder.transportState,
+        createDate: CurrentOrder.createdAt,
+        goodsList: ItemList,
+      };
+      Wrapper = Object.assign({},res,Formatter);
+      res = Wrapper;
     }
     ctx.body = res;
   }

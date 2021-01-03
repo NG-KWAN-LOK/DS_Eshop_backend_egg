@@ -152,6 +152,12 @@ class ItemsService extends Service {
     await ctx.model.Items.increment(['sales'], { by: cart_quantity, where: { id: item_id } });
     return;
   }
+  async getSellerID(item_id){
+    const {ctx} = this;
+    const Item = await ctx.model.Items.findOne({where:{id:item_id}});
+    const SellerID = Item.user_id;
+    return SellerID;
+  }
 }
 
 module.exports = ItemsService;

@@ -32,6 +32,13 @@ class OrderService extends Service {
         return OrderList;
     }
 
+    async getUserBuyOrderIDs(user_id){
+        const {ctx} = this;
+        const { Order } = ctx.model;
+        const OrderList = await Order.aggregate('no', 'DISTINCT', { plain: false }, { where: { user_id: user_id } });
+        return OrderList;
+    }
+
     async getOrderContent(OrderID){
         const {ctx} = this;
         const { OrderItems } = ctx.model;
