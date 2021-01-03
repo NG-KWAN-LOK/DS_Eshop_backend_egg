@@ -16,6 +16,12 @@ class CommentController extends Controller {
       .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err; _err = true; return err; });
     if (_err === true) { return; }
 
+    //check is existed
+    const existedRes = await ctx.model.Comment.findOne({ user_id: user_id, items_id: ctx.request.body.goodsI })
+      .then(res => { return 'yes' })
+      .catch(err => { return 'no' });
+    if (existedRes === 'yes') { ctx.body = 'is existed'; ctx.status = 400; return; }
+
     // create a new comment
     const res = await ctx.model.Comment.create({
       user_id: user_id,

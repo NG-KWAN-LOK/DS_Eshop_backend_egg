@@ -6,20 +6,17 @@ module.exports = app => {
   const OrderItems = app.model.define('orderItems', {
     order_no: {
       primaryKey: true,
-      foreignKey: true,
       type: Sequelize.UUID,
       allowNull: false,
     },
     item_id: {
       primaryKey: true,
-      foreignKey: true,
       type: Sequelize.UUID,
       allowNull: false,
       unique: false,
     },
     seller_id: {
       primaryKey: true,
-      foreignKey: true,
       type: Sequelize.UUID,
       allowNull: false,
       unique: false,
