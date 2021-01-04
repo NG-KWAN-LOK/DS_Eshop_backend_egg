@@ -100,16 +100,16 @@ class UserController extends Controller {
 
     // response.body = _res;
   }
-  
-  async ModifyData(){
-    const {ctx} = this;
-    const {request,response} = ctx;
+
+  async ModifyData() {
+    const { ctx } = this;
+    const { request, response } = ctx;
     const usertoken = ctx.request.body.userToken;
     const NewData = {
-      customerName : request.body.customerName,
-      phoneNumber : request.body.phoneNumber,
-      email : request.body.email,
-      address : request.body.address
+      customerName: request.body.customerName,
+      phoneNumber: request.body.phoneNumber,
+      email: request.body.email,
+      address: request.body.address
     };
     let sumtingwong = false;
     console.log('Enter');
@@ -120,27 +120,27 @@ class UserController extends Controller {
       .catch(err => { console.log('err1'); ctx.status = 400; ctx.body = err; sumtingwong = true; return err; });
     if (sumtingwong === true) { return; }
     const result = await ctx.service.user.ChangeInfo(user_id, NewData);
-    if (result==='ok'){
+    if (result === 'ok') {
       const res = NewData;
       ctx.body = res;
       ctx.status = 200;
     } else {
-      throw new ErrorRes(15001, 'Input or server error, please check your request or contact backend', 400);  
+      throw new ErrorRes(15001, 'Input or server error, please check your request or contact backend', 400);
     }
   }
 
-  async getNamesByID(){
-    const {ctx} = this;
-    const {request} = ctx;
-    const usertoken = ctx.request.body.userToken;
-    const userData = await ctx.service.utils.getTokenData(usertoken)
-    const user_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
-      .then(res => { return res['dataValues']['id']; })
+  async getNamesByID() {
+    const { ctx } = this;
+    const { request } = ctx;
+    const user_id = ctx.request.body.userId;
+    // const userData = await ctx.service.utils.getTokenData(usertoken)
+    // const user_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
+    //   .then(res => { return res['dataValues']['id']; })
     const result = await ctx.model.Users.findByPk(user_id)
       .catch(err => { throw new ErrorRes(13001, err, 400) });
     const username = result['dataValues']['name'];
     const customerName = result['dataValues']['username'];
-    const res = {username,customerName};
+    const res = { username, customerName };
     ctx.body = res;
     ctx.status = 200;
   }
