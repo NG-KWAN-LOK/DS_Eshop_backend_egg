@@ -78,7 +78,7 @@ class UserService extends Service {
         const res = await ctx.model.Users.findAll({
             attributes: ['id', ['username', 'userName'], ['name', 'customerName'], 'address', 'email', ['telephone', 'phoneNumber'], ['created_at', 'createTime']],
             order: [['created_at', 'DESC']],
-            limit: 20,
+            //limit: 20,
         }).then(res => {
             let resData = [];
             for (let i = 0; i < res.length; i++) { resData.push(res[i].dataValues); }
