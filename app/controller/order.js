@@ -74,7 +74,7 @@ class OrderController extends Controller {
     const OrderList = await ctx.service.order.getUserBuyOrderIDs(user_id);
     for (const property in OrderList) {
       const CurrentOrder = await Order.findOne({ where: { no: OrderList[property]['DISTINCT'] } });
-      const ItemList = await OrderItems.findAll({attributes:['item_id','seller_id'],where: { order_no: CurrentOrder['no'] } });
+      const ItemList = await OrderItems.findAll({attributes:['item_id','seller_id','items_quantity'],where: { order_no: CurrentOrder['no'] } });
       const Formatter = {
         orderId: CurrentOrder.no,
         status: CurrentOrder.transportState,
