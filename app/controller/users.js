@@ -133,9 +133,6 @@ class UserController extends Controller {
     const { ctx } = this;
     const { request } = ctx;
     const user_id = ctx.request.body.userId;
-    // const userData = await ctx.service.utils.getTokenData(usertoken)
-    // const user_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
-    //   .then(res => { return res['dataValues']['id']; })
     const result = await ctx.model.Users.findByPk(user_id)
       .catch(err => { throw new ErrorRes(13001, err, 400) });
     const username = result['dataValues']['name'];
