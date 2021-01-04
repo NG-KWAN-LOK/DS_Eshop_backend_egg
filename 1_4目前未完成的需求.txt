@@ -1,12 +1,3 @@
-SetOrderStatus
-request
-{
-    orderId:""
-    status: "4", //狀態(0:已取消,1:備貨中,2:待出貨,3:待收貨,4已完成)
-}
-respond
-OK
-#############################################################################
 admin getAllOrder
 {
     userToken : "",//check is admin

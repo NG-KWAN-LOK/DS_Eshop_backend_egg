@@ -18,26 +18,33 @@ class AdminController extends Controller {
     }
     
     async adminGetAllOrders(){
-        const {ctx} = this;
+        const { ctx } = this;
+        const { Order } = ctx.model;        
         let res,Wrapper;
         const idAdmin = await ctx.service.user.checkIsAdmin(ctx.request.body.userToken);
         if (idAdmin != 'ok') { ctx.status = 400; ctx.body = 'Not admin'; return; }
-        const orderList = await ctx.model.Order.findAll();
-        for (const property in orderList){
-            const goodsList = await ctx.service.order.getOrderContent(orderList[property]['no']);
-            const customer_id = orderList[property]['dataValues']['no'];
-            const CurrentClient = ctx.service.user.getDatabyID(customer_id);
-            const clientdata = {
-                customerUserName: CurrentClient.username,
-                customerName: CurrentClient.name,
-                customerAddress: CurrentClient.address,
-                customerPhoneNumber: CurrentClient.telephone
-            }
-            Wrapper = Object.assign({res},orderList[property],clientdata,goodsList);
-            res = Wrapper;
-        };
+        const OrderList = await ctx.service.order.getallorderIDs();
+        for (const property in OrderList) {
+          const CurrentOrder = await Order.findOne({ where: { no: OrderList[property]['no'] } });
+          const CurrentClient = await ctx.service.user.getDatabyID(CurrentOrder.user_id);
+          const ItemList = await ctx.service.order.getOrderContent(CurrentOrder['no']);
+          let ItemInfo;
+          for (const property in ItemList){
+           ItemInfo = await ctx.service.items.getItemsInfo(ItemList[property]['item_id']);}
+          const TempRes = {
+            orderId: CurrentOrder.no,
+            status: CurrentOrder.transportState,
+            customerUserName: CurrentClient.username,
+            customerName: CurrentClient.name,
+            customerAddress: CurrentClient.address,
+            customerPhoneNumber: CurrentClient.telephone,
+            createDate: CurrentOrder.createdAt,
+            goodsList: ItemList,
+          };
+          Wrapper = Object.assign({},res, TempRes);
+          res = Wrapper;
+        }
         ctx.body = res;
-        ctx.status = 200;
     }
 
     async adminGetAllUsers() {

@@ -32,6 +32,13 @@ class OrderService extends Service {
         return OrderList;
     }
 
+    async getallorderIDs(){
+        const {ctx} = this;
+        const {Order} = ctx.model;
+        const OrderList = await Order.findAll({attributes:['no']});
+        return OrderList;
+    }
+    
     async getUserBuyOrderIDs(user_id){
         const {ctx} = this;
         const { Order } = ctx.model;
