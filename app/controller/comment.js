@@ -7,6 +7,8 @@ class CommentController extends Controller {
   async create() {
     const { ctx } = this;
     let _err = false;
+
+    console.log('______________create___');
     // find user's data of token
     const userPayload = await ctx.service.utils.getTokenData(ctx.request.body.userToken);
 
@@ -17,9 +19,9 @@ class CommentController extends Controller {
     if (_err === true) { return; }
 
     //check is existed
-    const existedRes = await ctx.model.Comment.findOne({ user_id: user_id, items_id: ctx.request.body.goodsI })
-      .then(res => { return 'yes' })
-      .catch(err => { return 'no' });
+    const existedRes = await ctx.model.Comment.findOne({ where: { user_id: user_id, items_id: ctx.request.body.goodsId } })
+      .then(res => { let existres = (res === null) ? 'no' : 'yes'; return existres; })
+      .catch(err => { return 'no'; });
     if (existedRes === 'yes') { ctx.body = 'is existed'; ctx.status = 400; return; }
 
     // create a new comment
@@ -37,6 +39,7 @@ class CommentController extends Controller {
   async findAll() {
     const { ctx } = this;
     let _err = false;
+    // console.log('______________find_all___');
     //找comment 所有資料 by goodId
     const res = await ctx.model.Comment.findAll({
       attributes: [['user_id', 'userId'], ['user_name', 'userName'], ['updated_at', 'date'], 'content'],
