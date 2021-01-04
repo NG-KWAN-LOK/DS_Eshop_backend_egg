@@ -47,5 +47,6 @@ module.exports = app => {
   router.post('/admin/adminGetAllGoods', controller.admin.adminGetAllGoods);
   router.post('/admin/adminGetAllUsers', controller.admin.adminGetAllUsers);
   router.post('/admin/adminDeleteUser', controller.admin.adminDeleteUser);
+  router.post('/admin/adminGetAllOrders',controller.admin.adminGetAllOrders);
 
 };
