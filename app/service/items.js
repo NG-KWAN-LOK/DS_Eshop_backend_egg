@@ -115,7 +115,7 @@ class ItemsService extends Service {
       order: [
         ['updated_at', 'DESC']
       ],
-      limit: 20,
+      //limit: 20,
     }).then(res => {
       let resData = [];
       for (let i = 0; i < res.length; i++) { resData.push(res[i].dataValues); }
