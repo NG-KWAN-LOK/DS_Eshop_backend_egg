@@ -7,8 +7,6 @@ class CommentController extends Controller {
   async create() {
     const { ctx } = this;
     let _err = false;
-
-    console.log('______________create___');
     // find user's data of token
     const userPayload = await ctx.service.utils.getTokenData(ctx.request.body.userToken);
 
