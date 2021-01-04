@@ -11,7 +11,7 @@ class OrderController extends Controller {
     const { ctx } = this;
     const { OrderItems, Order, Items } = ctx.model;
     const usertoken = ctx.request.body.userToken;
-    let res,ItemID_Current = {};
+    let res,Wrapper = {};
     // extract data from token
     const userData = await ctx.service.utils.getTokenData(usertoken)
     const user_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
@@ -35,8 +35,8 @@ class OrderController extends Controller {
         createDate: CurrentOrder.createdAt,
         goodsList: ItemList,
       };
-      res = TempRes;
-      //res = Object.assign(res, TempRes);
+      Wrapper = Object.assign({},res, TempRes);
+      res = Wrapper;
     }
     ctx.body = res;
   }
