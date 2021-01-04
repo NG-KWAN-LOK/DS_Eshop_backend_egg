@@ -242,7 +242,7 @@ class ItemsController extends Controller {
         const res = await ctx.model.Items.findAll({
             attributes: ['id', 'name', 'image_url', 'price', 'remain_quantity', 'sales', 'sales', 'category'],
             order: [['sales', 'desc']],
-            limit: 12
+            limit: 30
         }).then(res => {
             let goodlist = [];
             for (let i = 0; i < res.length; i++) {
@@ -264,12 +264,12 @@ class ItemsController extends Controller {
         ctx.body = res;
 
     }
-    
-    async SellerpageItemInfo(){
-        const {ctx} = this;
-        const {Items} = ctx.model;
+
+    async SellerpageItemInfo() {
+        const { ctx } = this;
+        const { Items } = ctx.model;
         const ItemInfo = await Items.findByPk(ctx.request.body.id);
-        const res ={
+        const res = {
             goodId: ItemInfo.id,
             name: ItemInfo.name,
             price: ItemInfo.price,
