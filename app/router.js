@@ -9,6 +9,8 @@ module.exports = app => {
   router.post('/users/login', controller.session.login);
   router.post('/users/signUp', controller.users.register);
   router.post('/users/modifydata', controller.users.ModifyData);
+  router.post('/users/getNamesByID',controller.users.getNamesByID);
+  
   router.post('/items/new', controller.items.create);
   router.post('/items/getAllItems', controller.items.getAllItems);
   router.post('/items/getItemsbyIsDisplay', controller.items.getItemsbyIsDisplay);

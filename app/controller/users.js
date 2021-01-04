@@ -128,6 +128,23 @@ class UserController extends Controller {
       throw new ErrorRes(15001, 'Input or server error, please check your request or contact backend', 400);  
     }
   }
+
+  async getNamesByID(){
+    const {ctx} = this;
+    const {request} = ctx;
+    const usertoken = ctx.request.body.userToken;
+    const userData = await ctx.service.utils.getTokenData(usertoken)
+    const user_id = await ctx.model.Users.findOne({ where: { username: userData['data']['username'] } })
+      .then(res => { return res['dataValues']['id']; })
+    const result = await ctx.model.Users.findByPk(user_id)
+      .catch(err => { throw new ErrorRes(13001, err, 400) });
+    const username = result['dataValues']['name'];
+    const customerName = result['dataValues']['username'];
+    const res = {username,customerName};
+    ctx.body = res;
+    ctx.status = 200;
+  }
+
 };
 
 module.exports = UserController;
