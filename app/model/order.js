@@ -21,7 +21,7 @@ module.exports = app => {
     transportState: {
       type: Sequelize.INTEGER(3).UNSIGNED,
       allowNull: false,
-      defaultValue: 0
+      defaultValue: 1
     },
     completed: {
       type: Sequelize.INTEGER(1).UNSIGNED,
