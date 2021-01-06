@@ -230,7 +230,6 @@ class ItemsController extends Controller {
         if (ctx.request.body.category === "") { res = await ctx.service.items.searchGoodsbyKeyword(reqData); }
         else { res = await ctx.service.items.searchGoodsWithCategory(reqData); }
 
-
         if (res === 'err') { ctx.body = '404 ' + res; console.log(res); ctx.status = 400; return; }
         ctx.status = 200;
         ctx.body = res;

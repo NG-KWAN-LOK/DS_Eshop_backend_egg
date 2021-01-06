@@ -71,6 +71,11 @@ class ItemsService extends Service {
     if (_err === true) { return 'err' + res; }
     else { return res; }
 
+    // SELECT`id`, `name`, `image_url`, `price`, `remain_quantity`, `sales`, `category`
+    // FROM`items` AS`items` WHERE`items`.`name` REGEXP name AND`items`.`is_display` = is_display AND`items`.`price`
+    // BETWEEN requestData.minPrice AND requestData.maxPrice 
+    // ORDER BY`items`.requestData.orderByKeyword requestData.orderBy;
+    
   }
 
   async searchGoodsWithCategory(requestData) {
